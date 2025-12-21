@@ -10,7 +10,7 @@
 # swing-clean-layers
 
 **Project Overview:**  
-"Swing Clean Layers"  takes an old  **Java Swing** of mine, and with **augmented AI**, to create a **swing front end locally and servlet for remote access**.  
+"Swing Clean Layers"  takes an old  **Java Swing** created in 2014, and uses **augmented AI**, to create a **swing front end locally and servlet for remote access**.  
 
 **Project Purpose:**  
 - **Reorganize a legacy Swing app into clean layers**

@@ -3,34 +3,29 @@ package WareHouse.domain;
 import java.io.Serializable;
 
 /*---------------------------------------------------------------------------------------
-/*
  * The 'User' class is used to hold details for said users of the system 
- * 
  ---------------------------------------------------------------------------------------*/
-
 
 public class User implements Serializable{
 	private int userId,companyId;
 	private String username,password;
-	
-	
+
 	public User(int userId,int companyId,String username,String password){
 		this.userId=userId;
 		this.companyId=companyId;
 		this.password=password;
-		
 	}
-	
+
 	public void ListUsers(){
-		
+		// ...
 	}
-	
+
 	public void changePassw(){
-		
+		// ...
 	}
-	
+
 	public void login(){
-		
+		// ...
 	}
 
 	public int getUserId() {
@@ -59,9 +54,4 @@ public class User implements Serializable{
 	public String getUsername() {
 		return username;
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 }

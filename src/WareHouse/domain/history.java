@@ -4,16 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 /*---------------------------------------------------------------------------------------
-/*
  * The 'History class holds all the historical data associated with past transactions 
  * for particular item being stocked by particular manufacturer and said suppliers.
- * 
  ---------------------------------------------------------------------------------------*/
 public class history implements Serializable{
-		// Compatibility method for legacy code
-		public void setSupplier(String supplier) {
-			setProvider(supplier);
-		}
+	// Compatibility method for legacy code
+	public void setSupplier(String supplier) {
+		setProvider(supplier);
+	}
 	private int historyId, itemId, amount;
 	private String location;
 	private String provider;
@@ -36,9 +34,8 @@ public class history implements Serializable{
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	
+
 	public history(){
-		
 	}
 
 	public int getHistoryId() {
@@ -87,9 +84,5 @@ public class history implements Serializable{
 
 	public void setDeliveryDate(String deliveryDate) {
 		this.deliveryDate = deliveryDate;
-	}
-	
-	public String getSupplier() {
-		return provider;
 	}
 }
