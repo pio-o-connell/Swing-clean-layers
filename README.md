@@ -277,7 +277,7 @@
     <summary>Details
     </summary>
         7️⃣ Centralise object creation
-
+                    This centralizes all object creation and wiring, replacing the need for Spring or any DI framework. You can now launch your app from ApplicationBootstrap.
         Create:
 
             WareHouse.infrastructure
@@ -302,6 +302,8 @@
 
 
         Then introduce an infrastructure or bootstrap layer. This is where you manually wire everything together since you are not using Spring. You create the database connection, repositories, services, controllers, and pass controllers into the UI. This replaces dependency injection frameworks with explicit construction.
+
+        The infrastructure layer is now created: WareHouse.infrastructure.ApplicationBootstrap sets up the database connection, repositories, service, controller, and launches the Mainframe. This centralizes all object creation and wiring, replacing the need for Spring or any DI framework. You can now launch your app from ApplicationBootstrap. Let me know if you want to fully remove the old main or further refactor!
 
 
 
