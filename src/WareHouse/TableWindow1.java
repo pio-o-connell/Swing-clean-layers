@@ -38,6 +38,10 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Date;
+import WareHouse.domain.Company;
+import WareHouse.domain.Item;
+import WareHouse.domain.User;
+import WareHouse.domain.history;
 import java.util.List;
 
 

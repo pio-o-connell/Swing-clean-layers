@@ -15,6 +15,14 @@ public class Company implements Serializable{
 		return getCompanyName();
 	}
 
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
 	private int companyId;
 	private String companyName;
 	private ArrayList<Item> Items = new ArrayList<Item>();

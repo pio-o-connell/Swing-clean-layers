@@ -11,6 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import WareHouse.domain.Company;
+import WareHouse.domain.Item;
+import WareHouse.domain.User;
+import WareHouse.domain.history;
 
 //import com.mysql.jdbc.Connection;
 //import com.mysql.jdbc.PreparedStatement;

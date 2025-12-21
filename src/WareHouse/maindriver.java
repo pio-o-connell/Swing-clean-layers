@@ -7,6 +7,10 @@ import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import WareHouse.domain.Company;
+import WareHouse.domain.Item;
+import WareHouse.domain.User;
+import WareHouse.domain.history;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

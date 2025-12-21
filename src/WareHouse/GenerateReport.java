@@ -16,6 +16,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import WareHouse.domain.Company;
+import WareHouse.domain.Item;
+import WareHouse.domain.User;
+import WareHouse.domain.history;
+import WareHouse.domain.Index;
 import java.util.Date;
 
 //import com.mysql.jdbc.Connection;

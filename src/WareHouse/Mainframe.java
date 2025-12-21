@@ -18,6 +18,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import WareHouse.domain.Company;
+import WareHouse.domain.Item;
+import WareHouse.domain.User;
+import WareHouse.domain.history;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;

@@ -10,6 +10,29 @@ import java.util.Date;
  ---------------------------------------------------------------------------------------*/
 
 public class Item implements Serializable {
+		public int getItemId() {
+			return itemId;
+		}
+
+		public int getCompanyId() {
+			return companyId;
+		}
+
+		public int getQuantity() {
+			return quantity;
+		}
+
+		public void setQuantity(int quantity) {
+			this.quantity = quantity;
+		}
+
+		public String getItemName() {
+			return itemName;
+		}
+
+		public ArrayList<history> getHistory() {
+			return historyItem;
+		}
 	private int itemId,companyId,quantity,historyId;
 	private String itemName;
 	private String notes; // Notes field

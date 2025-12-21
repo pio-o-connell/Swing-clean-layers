@@ -8,6 +8,9 @@ import java.util.Date;
  * for particular item being stocked by particular manufacturer and said suppliers.
  ---------------------------------------------------------------------------------------*/
 public class history implements Serializable{
+		public String getSupplier() {
+			return provider;
+		}
 	// Compatibility method for legacy code
 	public void setSupplier(String supplier) {
 		setProvider(supplier);

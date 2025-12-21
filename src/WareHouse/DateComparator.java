@@ -8,6 +8,7 @@ package WareHouse;
 
 import java.util.Comparator;
 import java.util.Date;
+import WareHouse.domain.Index;
 
 @SuppressWarnings("rawtypes")
 public class DateComparator implements Comparator<Index> {

@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import WareHouse.Company;
-import WareHouse.Item;
-import WareHouse.User;
-import WareHouse.history;
+import WareHouse.domain.Company;
+import WareHouse.domain.Item;
+import WareHouse.domain.User;
+import WareHouse.domain.history;
 import WareHouse.Mainframe;
 import WareHouse.DetailsPanel;
 
