@@ -1,0 +1,9 @@
+We need to add another field for notes in the west detailPanel panel 
+
+it should be able to accodate becomes 
+
+JTextArea textArea = new JTextArea(5, 20); // 5 rows, 20 columns
+
+it should be be displayed below the quantity label and edit field 
+
+selecting an item in the hostory this will also get updated

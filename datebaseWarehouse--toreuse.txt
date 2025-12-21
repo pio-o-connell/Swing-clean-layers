@@ -1,0 +1,109 @@
+DROP DATABASE if exists WareHouse;
+
+CREATE DATABASE WareHouse;
+
+USE WareHouse;
+
+
+
+/*
+The Company database.
+*/
+CREATE TABLE Company(
+		Company_ID INT NOT NULL,
+		Company_title CHAR(25) NULL,
+		PRIMARY KEY(Company_ID)
+                    )
+		     ENGINE = InnoDB  ;
+			 
+			 
+/*
+The Users database
+*/
+CREATE TABLE Users(
+		User_ID INT NOT NULL,
+		User_Name CHAR(25) NULL,
+		User_Password CHAR(25) NOT NULL,
+		Company_ID INT NOT NULL,
+		PRIMARY KEY(User_ID)/*,
+		CONSTRAINT fk_companies1 FOREIGN KEY(Company_ID) 
+			REFERENCES Company(Company_ID)*/
+                    )
+		     ENGINE = InnoDB  ;
+
+
+
+/* The Items database 
+*/			 
+CREATE TABLE Item(
+		Item_ID INT NOT NULL AUTO_INCREMENT,
+		Company_ID INT NOT NULL,
+		quantity INT NULL,
+		itemName CHAR(25) NULL,
+		Location CHAR(25) NULL,
+		PRIMARY KEY(Item_ID,Company_ID)/*,
+		CONSTRAINT fk_companies FOREIGN KEY(Company_ID) 
+			REFERENCES Company(Company_ID)*/
+			)
+		ENGINE = InnoDB  ;
+		
+/* The history database
+*/
+CREATE TABLE History(
+		history_id INT NOT NULL AUTO_INCREMENT,
+		item_ID INT NOT NULL,
+		amount INT NULL,
+		description CHAR(25) NULL,
+		Supplier CHAR(25) NULL,
+		Delivery_Date DATE NULL,
+		PRIMARY KEY(history_id)/*,
+		CONSTRAINT fk_items FOREIGN KEY(item_id)
+			REFERENCES Item(item_ID)*/
+			)
+		ENGINE = InnoDB  ;
+		
+		
+
+/*
+Insert the Company Information
+*/
+insert into Company(Company_ID,Company_title) values (1001,"Green Thumb Ltd");
+
+/*
+Insert into Users database
+*/
+insert into Users(User_ID,User_Name,User_Password,Company_ID) values (2001,"Daisy Gardener","growmore",1001);
+
+
+/*
+Insert Item
+*/
+insert into item(Item_ID,Company_ID,quantity,itemName,Location) values (3001,1001,250,"Tomato Seeds","Greenhouse");
+insert into item(Item_ID,Company_ID,quantity,itemName,Location) values (3002,1001,100,"Garden Shovel","Tool Shed");
+insert into item(Item_ID,Company_ID,quantity,itemName,Location) values (3003,1001,75,"Rose Bush","Nursery");
+insert into item(Item_ID,Company_ID,quantity,itemName,Location) values (3004,1001,40,"Compost Bag","Compost Area");
+
+
+/*
+Insert into history
+*/
+/* item 33008177 */
+
+-- Tomato Seeds
+insert into history(history_id,item_ID,amount,description,Supplier,Delivery_Date) values (4001,3001,50,"Seed delivery","SeedMasters","2025-03-15");
+insert into history(history_id,item_ID,amount,description,Supplier,Delivery_Date) values (4002,3001,30,"Planted in greenhouse","Green Thumb Ltd","2025-03-20");
+
+-- Garden Shovel
+insert into history(history_id,item_ID,amount,description,Supplier,Delivery_Date) values (4003,3002,20,"Tool shipment","ToolTown","2025-04-01");
+insert into history(history_id,item_ID,amount,description,Supplier,Delivery_Date) values (4004,3002,5,"Issued to staff","Green Thumb Ltd","2025-04-05");
+
+-- Rose Bush
+insert into history(history_id,item_ID,amount,description,Supplier,Delivery_Date) values (4005,3003,25,"Received from nursery","PlantDepot","2025-05-10");
+insert into history(history_id,item_ID,amount,description,Supplier,Delivery_Date) values (4006,3003,10,"Planted in flower bed","Green Thumb Ltd","2025-05-12");
+
+-- Compost Bag
+insert into history(history_id,item_ID,amount,description,Supplier,Delivery_Date) values (4007,3004,40,"Compost delivery","CompostCo","2025-06-01");
+		
+		
+		
+			

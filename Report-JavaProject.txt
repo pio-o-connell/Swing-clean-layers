@@ -1,0 +1,60 @@
+DateSun Dec 21 01:05:51 GMT 2025
+Company Name: Kanturk-Services	Company Id: 44008177
+Item Name: 			Item Id: 		 Item Quantity: 		Item Location: 
+Shovel			 44020000			34
+			History Location: 			HistoryId:  		 Amount: 		Supplier: 		Delivery Date: 
+			 Garden Shed			 21000000		22		  GardenWorld		 2025-12-11
+			 Nursery			 21000001		19		  ToolTown		 2025-12-04
+			 Compost Area			 21000002		16		  GardenWorld		 2025-12-14
+			 Greenhouse			 21000003		21		  GardenWorld		 2025-12-04
+Item Name: 			Item Id: 		 Item Quantity: 		Item Location: 
+Rake			 44020001			80
+			History Location: 			HistoryId:  		 Amount: 		Supplier: 		Delivery Date: 
+			 Nursery			 21000010		15		  PlantDepot		 2025-12-08
+			 Compost Area			 21000011		13		  SeedMasters		 2025-12-20
+			 Compost Area			 21000012		8		  SeedMasters		 2025-12-14
+			 Greenhouse			 21000013		11		  ToolTown		 2025-12-14
+Item Name: 			Item Id: 		 Item Quantity: 		Item Location: 
+Lawn Mower			 44020002			53
+			History Location: 			HistoryId:  		 Amount: 		Supplier: 		Delivery Date: 
+			 Nursery			 21000020		7		  ToolTown		 2025-12-06
+			 Greenhouse			 21000021		24		  PlantDepot		 2025-12-13
+			 Garden Shed			 21000022		15		  PlantDepot		 2025-12-11
+			 Greenhouse			 21000023		5		  GardenWorld		 2025-12-09
+Item Name: 			Item Id: 		 Item Quantity: 		Item Location: 
+Hose			 44020003			61
+			History Location: 			HistoryId:  		 Amount: 		Supplier: 		Delivery Date: 
+			 Compost Area			 21000030		19		  ToolTown		 2025-12-11
+			 Compost Area			 21000031		8		  SeedMasters		 2025-12-14
+			 Garden Shed			 21000032		11		  GardenWorld		 2025-12-12
+			 Greenhouse			 21000033		23		  SeedMasters		 2025-12-09
+DateSun Dec 21 01:05:51 GMT 2025
+Company Name: GreenThumb Supplies	Company Id: 77008177
+Item Name: 			Item Id: 		 Item Quantity: 		Item Location: 
+Compost Bin			 44010000			93
+			History Location: 			HistoryId:  		 Amount: 		Supplier: 		Delivery Date: 
+			 Nursery			 20000000		19		  ToolTown		 2025-12-13
+			 Nursery			 20000001		6		  ToolTown		 2025-12-17
+			 Garden Shed			 20000002		19		  ToolTown		 2025-12-13
+			 Compost Area			 20000003		10		  ToolTown		 2025-12-10
+Item Name: 			Item Id: 		 Item Quantity: 		Item Location: 
+Garden Hoe			 44010001			43
+			History Location: 			HistoryId:  		 Amount: 		Supplier: 		Delivery Date: 
+			 Nursery			 20000010		5		  PlantDepot		 2025-12-20
+			 Compost Area			 20000011		18		  PlantDepot		 2025-12-15
+			 Garden Shed			 20000012		23		  PlantDepot		 2025-12-04
+			 Greenhouse			 20000013		18		  PlantDepot		 2025-12-17
+Item Name: 			Item Id: 		 Item Quantity: 		Item Location: 
+Tomato Seeds			 44010002			71
+			History Location: 			HistoryId:  		 Amount: 		Supplier: 		Delivery Date: 
+			 Compost Area			 20000020		22		  PlantDepot		 2025-12-07
+			 Nursery			 20000021		23		  SeedMasters		 2025-12-12
+			 Garden Shed			 20000022		14		  ToolTown		 2025-12-15
+			 Nursery			 20000023		17		  ToolTown		 2025-12-14
+Item Name: 			Item Id: 		 Item Quantity: 		Item Location: 
+Watering Can			 44010003			39
+			History Location: 			HistoryId:  		 Amount: 		Supplier: 		Delivery Date: 
+			 Garden Shed			 20000030		24		  PlantDepot		 2025-12-05
+			 Compost Area			 20000031		9		  SeedMasters		 2025-12-14
+			 Nursery			 20000032		23		  ToolTown		 2025-12-08
+			 Nursery			 20000033		14		  ToolTown		 2025-12-12

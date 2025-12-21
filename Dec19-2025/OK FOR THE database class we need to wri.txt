@@ -1,0 +1,12 @@
+OK FOR THE database class we need to write a new function init() that reads the database into memeory
+
+
+
+ It will be called from maindriver.java class first checking Itf it exists, so the way it works
+
+ check if database exists, if it does poplate the databse db.init()
+
+ if it doesnt generate test data 	db.setup(con,Company);
+
+ So thats each table mapped to memory: 
+ siniliar to db.setup() finction

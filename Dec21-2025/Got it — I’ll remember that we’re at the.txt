@@ -1,0 +1,21 @@
+Got it — I’ll remember that we’re at the point where we’ve mapped all your existing Swing/DB code into a layered architecture with:
+
+domain (Company, Item, history, User)
+
+repository (Databases → CompanyRepository, BackupRepository, RestoreRepository, Serialized/FileStateRepository)
+
+service (InventoryService, BackupService, RestoreService, ReportService)
+
+controller (InventoryController, BackupController, RestoreController, ReportController)
+
+ui.swing (Mainframe, dialogs, etc.)
+
+ui.servlet (WarehouseServlet, BackupServlet, etc.)
+
+infrastructure (manual DI / ApplicationBootstrap / ConnectionFactory)
+
+And we’ve designed the bootstrap wiring: repositories → services → controllers → UI/Servlet.
+
+We’re ready to start refactoring one class at a time into this structure.
+
+I’ll remember this exact point for when you continue.

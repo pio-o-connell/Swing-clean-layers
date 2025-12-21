@@ -1,0 +1,32 @@
+1. when an item is selected from the item-list detailTanle1 , 
+   the history table detailTable2 south panel is u0pdated witht the correct values 
+   however the west detailPanel panel is not updated with SupplierName, Location, Date
+
+
+On launch, 
+    Company Name is selected correctly
+    Item Name is selected correctly 
+   
+   incorrect:  History List is not selected although it has values
+               West Panel, Service Name has value. Current company has value
+               The others do not -- they should be the same as those selected in the history detailPanel
+
+we are taLKING about steady state -- everywhere has to have a value or a selectio by default
+
+3, Please ensure in 
+
+Could we create a new script that simply adds another company name, 
+4 more items and accompanying history keep the gardening them
+
+add the functionality to db.init()
+
+reset the entire database with everything 
+
+
+
+
+
+9
+
+
+

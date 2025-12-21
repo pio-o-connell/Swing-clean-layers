@@ -1,0 +1,25 @@
+so we need to redesign the front end to match the dtabase 
+
+
+
+everything is working as expected, 
+
+I want to be able to add a new transaction to the history
+
+ so to do so
+ 1, In the "New Transaction To Add: area " i.r. detailsPanel WEST, I wish to add another label  and edit field called Company Name
+ It will contain the current slected Company in the "Company N?ame" list
+
+ Clicking the Add Tx button will add the new trabsaction to the history list, it will also update the database
+
+
+  setBorder(BorderFactory.createTitledBorder("New Transaction/Item To Add:"));
+        	// JLabel transactionLabel = new JLabel("Transaction");
+        JLabel nameLabel = new JLabel("Company Name: ");
+        JLabel txCompanyNameLabel = new JLabel("Company Name (Tx): ");
+        JLabel currentCompanyLabel = new JLabel("Current Company: ");
+        JLabel itemNameLabel = new JLabel("Item Name: ");
+        JLabel providerNameLabel = new JLabel("Provider Name: ");
+        JLabel quantityLabel = new JLabel("Quantity: ");
+        JLabel locationLabel = new JLabel("Location: ");
+        JLabel deliveryLabel = new JLabel("Date: ");

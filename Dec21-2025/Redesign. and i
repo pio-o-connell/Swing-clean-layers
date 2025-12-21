@@ -1,0 +1,153 @@
+Architectural Refactoring to a Layered Architecture
+
+Layered Architecture with Annotation-Driven Semantics (without a framework)
+
+This is the same refactor path used when:
+
+Legacy Swing apps evolve into web-backed systems
+
+Desktop apps gain REST APIs
+
+Monoliths prepare for microservices
+
+
+We are reorganizing  application into distinct layers where each layer has a specific responsibility:
+
+| Layer                               | Responsibility                         | Example Classes                                                             |
+| ----------------------------------- | -------------------------------------- | --------------------------------------------------------------------------- |
+| **@Repository**                     | Database access                        | `CompanyRepository`, `ItemRepository`, `HistoryRepository`                  |
+| **@Service**                        | Business logic / transactions          | `CompanyService`, `ItemService`, `HistoryService`                           |
+| **@Component / Servlet Controller** | Expose endpoints, handle HTTP requests | `WarehouseServlet` or multiple servlets for items, history, companies       |
+| **UI (Swing)**                      | Optional desktop client                | `DetailsPanel`, `TableWindow2` (would call Services instead of DB directly) |
+
+
+Or you could keep Swing as a local client and servlets only for remote access.
+
+
+The NEW layer model (top → bottom)
+┌───────────────────────────────┐
+│ UI Layer (Swing / Servlet)    │
+├───────────────────────────────┤
+│ Controller Layer (@Component) │
+├───────────────────────────────┤
+│ Service Layer (@Service)      │
+├───────────────────────────────┤
+│ Repository Layer (@Repository)│
+├───────────────────────────────┤
+│ Infrastructure Layer          │
+│ (JDBC, Files, Serialization)  │
+├───────────────────────────────┤
+│ Domain Model                  │
+│ (Company, Item, History...)   │
+└───────────────────────────────┘
+
+
+
+1️⃣ Domain Model (pure, already mostly correct)
+
+What lives here
+        Company
+        Item
+        history
+        User
+
+    Rules
+        No JDBC
+        No Swing
+        No file IO
+        No SQL
+
+    Serializable is allowed
+
+    ✅ Your domain objects are already mostly correct
+
+
+2️⃣ Repository Layer — Data access only
+    Annotation          @Repository
+
+    | Existing class         | Becomes             |
+    | ---------------------- | ------------------- |
+    | `Databases` (DB parts) | `CompanyRepository` |
+    | `DatabaseBackup`       | `BackupRepository`  |
+    | `DatabaseRestore`      | `RestoreRepository` |
+
+
+3️⃣ Service Layer — Business logic
+
+    | Logic currently in                         | Moves to           |
+    | ------------------------------------------ | ------------------ |
+    | `Databases.insertTransactionintoDatabase`  | `InventoryService` |
+    | `Databases.updateHistoryTransintoDatabase` | `HistoryService`   |
+    | Quantity calculations                      | `InventoryService` |
+    | Report orchestration                       | `ReportService`    |
+
+4️⃣ Controller Layer — Application boundary
+
+    @Component
+        This is NOT Swing and NOT servlet
+
+        Your app has two controller types
+    🟦 Desktop Controller
+
+    🟩 Servlet Controller
+
+    Both call the same services.
+
+5️⃣ UI Layer — Presentation only
+        Swing classes:
+
+                Mainframe
+
+                DetailsPanel
+
+                Tables, buttons, labels
+
+                Rules
+
+                ❌ No SQL
+                ❌ No JDBC
+                ❌ No repositories
+                ❌ No business rules
+
+                ✅ Collect user input
+                ✅ Display results
+                ✅ Call controller methods
+
+6️⃣ Infrastructure Layer — technical plumbing
+        What lives here
+
+            JDBC connections
+
+            Serialization
+
+            File IO
+
+            Configuration
+
+        Your classes here
+            Class	    Role
+            Serialized	File persistence
+            JDBC setup	Connection factory
+
+7️⃣ Annotations — what they mean without Spring
+        They are semantic markers, not behavior.
+
+    They give you:
+
+        Architectural clarity
+
+        Searchability
+
+        Enforcement by convention
+
+        Optional future framework compatibility
+
+    They do NOT:
+
+        Inject dependencies
+
+        Create objects
+
+        Manage transactions
+
+    You wire manually:
