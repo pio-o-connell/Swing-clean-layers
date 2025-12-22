@@ -149,8 +149,8 @@ public class Mainframe extends JFrame {
 			   // --- Restore inter-panel selection logic ---
 			// On launch, select first company, first item, first history, and update AdminPanel
 			   if (!companyList.isEmpty()) {
-				   detailTable1.table.setRowSelectionInterval(0, 0);
-				   detailTable1.table2.setRowSelectionInterval(0, 0);
+								   detailTable1.companyTable.setRowSelectionInterval(0, 0);
+								   detailTable1.itemTable.setRowSelectionInterval(0, 0);
 				   detailTable2.table3.setRowSelectionInterval(0, 0);
 				   Company firstCompany = companyList.get(0);
 				   Item firstItem = firstCompany.getItems().isEmpty() ? null : firstCompany.getItems().get(0);
@@ -164,28 +164,28 @@ public class Mainframe extends JFrame {
 			   }
 
 			   // Add selection listeners to keep panels in sync
-			   detailTable1.table.getSelectionModel().addListSelectionListener(e -> {
+						   detailTable1.companyTable.getSelectionModel().addListSelectionListener(e -> {
 				   if (!e.getValueIsAdjusting()) {
-					   int companyIdx = detailTable1.table.getSelectedRow();
+										   int companyIdx = detailTable1.companyTable.getSelectedRow();
 					   if (companyIdx >= 0 && companyIdx < companyList.size()) {
 						   Company selectedCompany = companyList.get(companyIdx);
 						   detailPanel.setCurrentCompanyField(selectedCompany.getCompanyName());
 						   // Update items table for selected company
 						   ArrayList<Item> filteredItems = new ArrayList<>(selectedCompany.getItems());
-						   detailTable1.model2[0] = new CompanyItemTablePanel.MyTableModel2(filteredItems, 0);
-						   detailTable1.table2.setModel(detailTable1.model2[0]);
-						   detailTable1.sorter2.setModel(detailTable1.model2[0]);
-						   if (!filteredItems.isEmpty()) {
-							   detailTable1.table2.setRowSelectionInterval(0, 0);
+						   detailTable1.itemModelRefreshRef[0] = new CompanyItemTablePanel.ItemModel(filteredItems, 0);
+                                                   detailTable1.itemTable.setModel(detailTable1.itemModelRefreshRef[0]);
+                                                   detailTable1.itemNameSorter.setModel(detailTable1.itemModelRefreshRef[0]);
+                                                   if (!filteredItems.isEmpty()) {
+                                                       detailTable1.itemTable.setRowSelectionInterval(0, 0);
 						   }
 					   }
 				   }
 			   });
 
-			   detailTable1.table2.getSelectionModel().addListSelectionListener(e -> {
+						   detailTable1.itemTable.getSelectionModel().addListSelectionListener(e -> {
 				   if (!e.getValueIsAdjusting()) {
-					   int companyIdx = detailTable1.table.getSelectedRow();
-					   int itemIdx = detailTable1.table2.getSelectedRow();
+										   int companyIdx = detailTable1.companyTable.getSelectedRow();
+										   int itemIdx = detailTable1.itemTable.getSelectedRow();
 					   if (companyIdx >= 0 && companyIdx < companyList.size()) {
 						   Company selectedCompany = companyList.get(companyIdx);
 						   ArrayList<Item> filteredItems = new ArrayList<>(selectedCompany.getItems());
@@ -210,8 +210,8 @@ public class Mainframe extends JFrame {
 
 			   detailTable2.table3.getSelectionModel().addListSelectionListener(e -> {
 				   if (!e.getValueIsAdjusting()) {
-					   int companyIdx = detailTable1.table.getSelectedRow();
-					   int itemIdx = detailTable1.table2.getSelectedRow();
+										   int companyIdx = detailTable1.companyTable.getSelectedRow();
+										   int itemIdx = detailTable1.itemTable.getSelectedRow();
 					   int historyIdx = detailTable2.table3.getSelectedRow();
 					   if (companyIdx >= 0 && companyIdx < companyList.size()) {
 						   Company selectedCompany = companyList.get(companyIdx);

@@ -1,6 +1,5 @@
 package WareHouse;
 
-
 /*------------------------------------------------------------------------------------------------------------------*/
 //TableWindow2 Class retrieves the data structure (from memory) and renders the History tables.
 //CompanyItemTablePanel also has 1 anonymous class containing  action listeners,called for when user selects an table item
@@ -31,9 +30,9 @@ import WareHouse.domain.history;
 import WareHouse.controller.InventoryController;
 
 public class TransactionHistoryPanel extends JPanel {
-    private ArrayList<history> history11,history;
-    private ArrayList<Company> companies11;
-    private ArrayList<Item> items11,item;
+    private ArrayList<history> history;
+    private ArrayList<Company> companies;
+    private ArrayList<Item> items, item;
 
     private static final long serialVersionUID = 1L;
     private static final boolean FALSE = false;
@@ -47,22 +46,23 @@ public class TransactionHistoryPanel extends JPanel {
     public MyTableModel model;
     private final InventoryController controller;
 
-    public TransactionHistoryPanel(ArrayList<Item> items, ArrayList<Company> companies, ArrayList<history> history11, InventoryController controller) {
+        public TransactionHistoryPanel(ArrayList<Item> items, ArrayList<Company> companies, ArrayList<history> history,
+            InventoryController controller) {
         super();
         setOpaque(true);
         setBackground(new java.awt.Color(255, 240, 240));
         setMinimumSize(new java.awt.Dimension(300, 200));
         setPreferredSize(new java.awt.Dimension(400, 300));
-        this.history11 = history11;
-        this.items11 = items;
-        this.companies11 = companies;
+        this.history = history;
+        this.items = items;
+        this.companies = companies;
         this.controller = controller;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        model = new MyTableModel(companies.get(0).getItems().get(0).getHistory(),0);
+        model = new MyTableModel(companies.get(0).getItems().get(0).getHistory(), 0);
         sorter3 = new TableRowSorter<MyTableModel>(model);
-        table3 = new JTable(model){
+        table3 = new JTable(model) {
             public boolean isCellEditable(int rowIndex, int colIndex) {
-                return false; //Disallow the editing of any cell
+                return false; // Disallow the editing of any cell
             }
         };
         java.awt.Font tableFont = new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 13);
@@ -73,7 +73,7 @@ public class TransactionHistoryPanel extends JPanel {
         table3.setRowSorter(sorter3);
         table3.setPreferredScrollableViewportSize(new Dimension(500, 200));
         table3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
+
         table3.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
                     public void valueChanged(ListSelectionEvent event) {
@@ -90,112 +90,100 @@ public class TransactionHistoryPanel extends JPanel {
                         // Example: controller.onHistorySelected(modelRow);
                         statusText3.setText(String.format("History row selected: %d", modelRow));
                     }
-                }
-        );
-        
+                });
+
         JScrollPane scrollPane3 = new JScrollPane(table3);
-        add(scrollPane3);       
+        add(scrollPane3);
         JPanel form3 = new JPanel(new SpringLayout());
         JLabel l13 = new JLabel("Filter Text:", SwingConstants.TRAILING);
-        l13.setPreferredSize(new Dimension(10,10));
+        l13.setPreferredSize(new Dimension(10, 10));
         form3.add(l13);
         filterText3 = new JTextField();
-        //Whenever filterText changes, invoke newFilter.
+        // Whenever filterText changes, invoke newFilter.
         filterText3.getDocument().addDocumentListener(
                 new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
                         newFilter();
                     }
+
                     public void insertUpdate(DocumentEvent e) {
                         newFilter();
                     }
+
                     public void removeUpdate(DocumentEvent e) {
                         newFilter();
                     }
                 });
-       
+
         l13.setLabelFor(filterText3);
         form3.add(filterText3);
         JLabel l23 = new JLabel("Notes:", SwingConstants.TRAILING);
-        l23.setPreferredSize(new Dimension(50,50));
+        l23.setPreferredSize(new Dimension(50, 50));
         l23.setLabelFor(statusText3);
         form3.add(l23);
-        statusText3 = new JTextArea("History for" ,1,4);
-       statusText3.setPreferredSize(new Dimension(50,50));
-       statusText3.setEditable(true); 
-       JScrollPane scrollPane12 = new JScrollPane(statusText3);
-       scrollPane12.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        statusText3 = new JTextArea("History for", 1, 4);
+        statusText3.setPreferredSize(new Dimension(50, 50));
+        statusText3.setEditable(true);
+        JScrollPane scrollPane12 = new JScrollPane(statusText3);
+        scrollPane12.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         form3.add(l23);
         form3.add(scrollPane12);
         SpringUtilites.makeCompactGrid(form3, 2, 2, 6, 6, 6, 6);
-        add(form3);    
+        add(form3);
     }
 
-    /** 
+    /**
      * Update the row filter regular expression from the expression in
      * the text box.
      */
     private void newFilter() {
         RowFilter<MyTableModel, Object> rf = null;
-        //If current expression doesn't parse, don't update.
+        // If current expression doesn't parse, don't update.
         try {
-        	rf = RowFilter.regexFilter(filterText3.getText(), 0);
+            rf = RowFilter.regexFilter(filterText3.getText(), 0);
         } catch (java.util.regex.PatternSyntaxException e) {
             return;
         }
         sorter3.setRowFilter(rf);
     }
 
-
-
-
     public static class MyTableModel extends AbstractTableModel {
-    	private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
         private String[] columnNames = {
-                        "Delivery Date",
-                        "Location",
-                        "Quantity",
-                        "Supplier"};
-        private ArrayList<history> history11;
-        
+                "Delivery Date",
+                "Location",
+                "Quantity",
+                "Supplier" };
+        private ArrayList<history> history;
+
         @SuppressWarnings("deprecation")
-		private Object[][] data;
-        
-            public MyTableModel(ArrayList<history> history,int index1){
-                this.history11=history;
-                int index=index1;
-                int listSize = history11.size();
-                data = new Object[listSize][4];
-                for(int i = 0; i < listSize; i++)
-                {
-                    data[i][0]=(Object)history11.get(i).getDeliveryDate();
-                    data[i][1]=(Object)history11.get(i).getLocation();
-                    data[i][2]=(Object)history11.get(i).getAmount();
-                    data[i][3]=(Object)history11.get(i).getSupplier();
-                }
+        private Object[][] data;
+
+        public MyTableModel(ArrayList<history> history, int index1) {
+            this.history = history;
+            int index = index1;
+            int listSize = history.size();
+            data = new Object[listSize][4];
+            for (int i = 0; i < listSize; i++) {
+                data[i][0] = (Object) history.get(i).getDeliveryDate();
+                data[i][1] = (Object) history.get(i).getLocation();
+                data[i][2] = (Object) history.get(i).getAmount();
+                data[i][3] = (Object) history.get(i).getSupplier();
             }
-        
-        
-	
-	
-       
-        public Object[][] convertTo2D() {
-        	
-        	int listSize = history11.size();
-        	final Object[][] data2 = new Object[listSize][4];
-        
-        	for(int i = 0; i < listSize; i++)
-        	{
-       // 		data2[0][i]=(Object)history11.get(i).getHistoryId();
-       // 		data2[i][1]=(Object)history11.get(i).getItemId();
-        		data2[i][0]=(Object)history11.get(i).getDeliveryDate();
-                data2[i][1]=(Object)history11.get(i).getLocation();
-        		data2[i][2]=(Object)history11.get(i).getAmount();
-        		data2[i][3]=(Object)history11.get(i).getSupplier();
-        	}
-			return data2;
         }
-  
+
+        public Object[][] convertTo2D() {
+            int listSize = history.size();
+            final Object[][] data2 = new Object[listSize][4];
+            for (int i = 0; i < listSize; i++) {
+                data2[i][0] = (Object) history.get(i).getDeliveryDate();
+                data2[i][1] = (Object) history.get(i).getLocation();
+                data2[i][2] = (Object) history.get(i).getAmount();
+                data2[i][3] = (Object) history.get(i).getSupplier();
+            }
+            return data2;
+        }
+
         public int getColumnCount() {
             return columnNames.length;
         }
@@ -214,11 +202,11 @@ public class TransactionHistoryPanel extends JPanel {
 
         /*
          * JTable uses this method to determine the default renderer/
-         * editor for each cell.  If we didn't implement this method,
+         * editor for each cell. If we didn't implement this method,
          * then the last column would contain text ("true"/"false"),
          * rather than a check box.
          */
-       public Class getColumnClass(int c) {
+        public Class getColumnClass(int c) {
             return getValueAt(0, c).getClass();
         }
 
@@ -226,9 +214,9 @@ public class TransactionHistoryPanel extends JPanel {
          * Don't need to implement this method unless your table's
          * editable.
          */
-       public boolean isCellEditable(int row, int col) {
-            //Note that the data/cell address is constant,
-            //no matter where the cell appears onscreen.
+        public boolean isCellEditable(int row, int col) {
+            // Note that the data/cell address is constant,
+            // no matter where the cell appears onscreen.
             if (col < 2) {
                 return false;
             } else {
@@ -241,34 +229,39 @@ public class TransactionHistoryPanel extends JPanel {
          * data can change.
          */
         public void setValueAt(Object value, int row, int col) {
-            if (data == null || data.length == 0) return;
-            if (row < 0 || row >= data.length) return;
-            if (data[0] == null) return;
+            if (data == null || data.length == 0)
+                return;
+            if (row < 0 || row >= data.length)
+                return;
+            if (data[0] == null)
+                return;
             // Defensive: check all rows for null and correct length
-            if (col < 0) return;
-            if (row >= data.length) return;
-            if (data[row] == null || col >= data[row].length) return;
+            if (col < 0)
+                return;
+            if (row >= data.length)
+                return;
+            if (data[row] == null || col >= data[row].length)
+                return;
             data[row][col] = value;
             fireTableCellUpdated(row, col);
         }
 
-       private void printDebugData() {
+        private void printDebugData() {
             int numRows = getRowCount();
             int numCols = getColumnCount();
 
-            for (int i=0; i < numRows; i++) {
+            for (int i = 0; i < numRows; i++) {
                 System.out.print("    row " + i + ":");
-                for (int j=0; j < numCols; j++) {
+                for (int j = 0; j < numCols; j++) {
                     System.out.print("  " + data[i][j]);
                 }
                 System.out.println();
             }
             System.out.println("--------------------------");
         }
-        
-       public void set(){
-    	   
-       }
+
+        public void set() {
+
+        }
     }
 }
-
