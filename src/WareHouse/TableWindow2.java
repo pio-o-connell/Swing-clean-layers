@@ -53,25 +53,26 @@ public class TableWindow2 extends JPanel {
         setBackground(new java.awt.Color(255, 240, 240));
         setMinimumSize(new java.awt.Dimension(300, 200));
         setPreferredSize(new java.awt.Dimension(400, 300));
-        //  private static final long serialVersionUID = 1L;
         this.history11 = history11;
         this.items11 = items;
         this.companies11 = companies;
         this.controller = controller;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-     //   final MyTableModel
         model = new MyTableModel(companies.get(0).getItems().get(0).getHistory(),0);
         sorter3 = new TableRowSorter<MyTableModel>(model);
         table3 = new JTable(model){
-			public boolean isCellEditable(int rowIndex, int colIndex) {
-        		  return false; //Disallow the editing of any cell
-        		  }
-           };
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false; //Disallow the editing of any cell
+            }
+        };
+        java.awt.Font tableFont = new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 13);
+        table3.setFont(tableFont);
+        table3.setRowHeight(24);
+        table3.setSelectionBackground(new java.awt.Color(255, 220, 220));
+        table3.setSelectionForeground(java.awt.Color.BLACK);
         table3.setRowSorter(sorter3);
         table3.setPreferredScrollableViewportSize(new Dimension(500, 200));
         table3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-    //    table3.setRowSelectionAllowed(TRUE);
         
         table3.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {

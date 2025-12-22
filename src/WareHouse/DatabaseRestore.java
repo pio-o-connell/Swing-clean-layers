@@ -23,7 +23,6 @@ import WareHouse.domain.history;
 public class DatabaseRestore {
 
     Connection con;
-    ArrayList<Company> Company11 = new ArrayList<Company>();
     ArrayList<history> history11 = new ArrayList<history>();
     ArrayList<Item> Item11 = new ArrayList<Item>();
     ArrayList<User> User11 = new ArrayList<User>();
@@ -34,10 +33,8 @@ public class DatabaseRestore {
 
     }
 
-    public void setup(Connection con1, ArrayList<Company> Company11) throws SQLException {
+    public void setup(Connection con1, ArrayList<Company> companies) throws SQLException {
         this.con = con1;
-        this.Company11 = Company11;
-
         //select distinct items for the company
         try {
 
@@ -97,7 +94,7 @@ public class DatabaseRestore {
             ResultSet result4 = statement4.executeQuery();
             while (result4.next()) {
                 System.out.println("\n" + result4.getInt(1) + " name:" + result4.getString(2));
-                Company11.add(new Company(result4.getInt(1), result4.getString(2), Item11, User11));
+                companies.add(new Company(result4.getInt(1), result4.getString(2), Item11, User11));
             }
         } catch (SQLException sqlex) {
             sqlex.printStackTrace();

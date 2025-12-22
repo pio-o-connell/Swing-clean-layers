@@ -345,6 +345,43 @@
         Only at the end should you remove legacy shortcuts like static globals, hidden dependencies, and circular references. Do this last, when the structure is stable.
 
 
+Phase 7 – Kill legacy shortcuts
+
+
+
+Only now:
+
+ fully remove the old main or further refactor!
+
+Remove static globals
+
+Remove maindriver.Company
+
+Remove hidden dependencies
+
+Remove circular references
+
+At this point:
+✔ Testable
+✔ Understandable
+✔ Framework-ready include 
+
+
+
+
+
+
+Only at the end should you remove legacy shortcuts like static globals, hidden dependencies, and circular references. Do this last, when the structure is stable.
+
+
+Annotations are labels, not magic:
+
+@Repository
+
+@Service
+
+@Component
+
 
 
 

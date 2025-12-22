@@ -1,4 +1,3 @@
-
 package WareHouse;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
@@ -175,7 +174,22 @@ public class DetailsPanel extends JPanel {
             setPreferredSize(new Dimension(500, 350));
         // Make DetailsPanel visually prominent as the front panel
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
-        setBackground(new Color(255, 255, 220)); // Light yellow background
+        setBackground(new java.awt.Color(240, 240, 255));
+        java.awt.Font labelFont = new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13);
+        java.awt.Font fieldFont = new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 13);
+        txCompanyNameLabel.setFont(labelFont);
+        currentCompanyLabel.setFont(labelFont);
+        nameLabel.setFont(labelFont);
+        providerNameLabel.setFont(labelFont);
+        locationLabel.setFont(labelFont);
+        deliveryLabel.setFont(labelFont);
+        quantityLabel.setFont(labelFont);
+        nameField.setFont(fieldFont);
+        locationField.setFont(fieldFont);
+        supplierField.setFont(fieldFont);
+        deliveryField.setFont(fieldFont);
+        amountField.setFont(fieldFont);
+        notesArea.setFont(fieldFont);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

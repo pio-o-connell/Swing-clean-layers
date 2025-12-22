@@ -1,4 +1,3 @@
-
 package WareHouse;
 
 
@@ -31,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JScrollPane;
 
 /*---------------------------------------------------------------------------------------
 /*
@@ -100,6 +100,16 @@ public class Mainframe extends JFrame {
 			
 			
 			setLayout(new BorderLayout());
+			// Restore classic layout: DetailsPanel (WEST), TableWindow1 (CENTER), TableWindow2 (EAST)
+			JScrollPane detailsScroll = new JScrollPane(detailPanel);
+			detailsScroll.setPreferredSize(new java.awt.Dimension(300, 250)); // Smaller height for DetailsPanel
+			add(detailsScroll, BorderLayout.WEST);
+			JScrollPane table1Scroll = new JScrollPane(detailTable1);
+			table1Scroll.setPreferredSize(new java.awt.Dimension(500, 700)); // Larger width/height for items/company table
+			add(table1Scroll, BorderLayout.CENTER);
+			JScrollPane table2Scroll = new JScrollPane(detailTable2);
+			table2Scroll.setPreferredSize(new java.awt.Dimension(500, 700)); // Larger width/height for history table
+			add(table2Scroll, BorderLayout.EAST);
 
 			
 			final JTextArea textArea = new JTextArea();
@@ -217,30 +227,30 @@ public class Mainframe extends JFrame {
 				   }
 			   });
 
-			   // Create scroll pane for DetailsPanel (WEST)
-			   javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(detailPanel);
-			   scrollPane.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.GREEN, 3));
-			   scrollPane.setPreferredSize(new java.awt.Dimension(800, 700)); // 2/3 of 1200 width
+			   // Restore classic BorderLayout with a vertical JSplitPane for SOUTH panel
+			   JScrollPane detailsScrollPanel = new JScrollPane(detailPanel);
+			   detailsScrollPanel.setPreferredSize(new java.awt.Dimension(300, 250));
+			   JScrollPane table1ScrollPanel = new JScrollPane(detailTable1);
+			   table1ScrollPanel.setPreferredSize(new java.awt.Dimension(500, 700));
+			   JScrollPane table2ScrollPanel = new JScrollPane(detailTable2);
+			   table2ScrollPanel.setPreferredSize(new java.awt.Dimension(500, 700));
 
-			   // Create a panel to stack company and item tables vertically (EAST)
-			   detailTable1.setPreferredSize(new java.awt.Dimension(400, 350));
-			   detailTable2.setPreferredSize(new java.awt.Dimension(Integer.MAX_VALUE, 350));
-			   detailTable2.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, 350));
-			   detailTable2.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
-			   JPanel eastPanel = new JPanel();
-			   eastPanel.setLayout(new javax.swing.BoxLayout(eastPanel, javax.swing.BoxLayout.Y_AXIS));
-			   eastPanel.add(detailTable1);
+			   // Use JSplitPane to split WEST and EAST panels horizontally
+			   JSplitPane horizontalSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, detailsScrollPanel, table1ScrollPanel);
+			   horizontalSplit.setDividerLocation((int)(getWidth() * 0.3)); // 30% for west
+			   horizontalSplit.setResizeWeight(0.3); // WEST gets 30%, EAST gets 70%
+			   horizontalSplit.setContinuousLayout(true);
 
-			   // Use JSplitPane to split WEST (DetailsPanel) and EAST (tables)
-			   javax.swing.JSplitPane splitPane = new javax.swing.JSplitPane(javax.swing.JSplitPane.HORIZONTAL_SPLIT, scrollPane, eastPanel);
-			   splitPane.setDividerLocation(800); // 2/3 of 1200
-			   splitPane.setResizeWeight(0.67); // WEST gets 2/3
-			   splitPane.setContinuousLayout(true);
+			   detailTable2.setPreferredSize(new java.awt.Dimension(1200, 280)); // 40% of 700px
+
+			   JSplitPane verticalSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, horizontalSplit, detailTable2);
+			   verticalSplit.setDividerLocation(420); // Top 60%, bottom 40%
+			   verticalSplit.setResizeWeight(0.6);
+			   verticalSplit.setContinuousLayout(true);
 
 			   Container c = getContentPane();
 			   c.setLayout(new BorderLayout());
-			   c.add(splitPane, BorderLayout.CENTER);
-			   c.add(detailTable2, BorderLayout.SOUTH);
+			   c.add(verticalSplit, BorderLayout.CENTER);
 		}
 }
 

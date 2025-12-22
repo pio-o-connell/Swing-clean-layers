@@ -21,7 +21,6 @@ import WareHouse.domain.history;
 public class DatabaseBackup {
 
     Connection con;
-    ArrayList<Company> Company11 = new ArrayList<Company>();
     ArrayList<history> history11 = new ArrayList<history>();
     ArrayList<Item> Item11 = new ArrayList<Item>();
     ArrayList<User> User11 = new ArrayList<User>();
@@ -32,10 +31,8 @@ public class DatabaseBackup {
 
     }
 
-    public void backup(Connection con1, ArrayList<Company> Company11) throws SQLException {
+    public void backup(Connection con1, ArrayList<Company> companies) throws SQLException {
         this.con = con1;
-        this.Company11 = Company11;
-
         try {
 
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("DROP DATABASE if exists BackupWareHouse");
@@ -104,58 +101,58 @@ public class DatabaseBackup {
             statement.executeUpdate();
 
             // for Company		
-            System.out.println(Company11.get(0).getCompanyId());
-            System.out.println("Sizeof Company Array" + Company11.size());
+            System.out.println(companies.get(0).getCompanyId());
+            System.out.println("Sizeof Company Array" + companies.size());
 
             //for item
-            System.out.println(Company11.get(0).getItems().get(0).getItemName());
-            System.out.println("Sizeof items array" + Company11.get(0).getItems().size());
+            System.out.println(companies.get(0).getItems().get(0).getItemName());
+            System.out.println("Sizeof items array" + companies.get(0).getItems().size());
 
             //for history
-            System.out.println(Company11.get(0).getItems().get(0).getHistory().get(0).getLocation());
-            System.out.println("Sizeof history array" + Company11.get(0).getItems().get(0).getHistory().size());
+            System.out.println(companies.get(0).getItems().get(0).getHistory().get(0).getLocation());
+            System.out.println("Sizeof history array" + companies.get(0).getItems().get(0).getHistory().size());
 
-            System.out.println("Sizeof history array" + Company11.get(0).getItems().get(1).getHistory().size());
-            System.out.println("HistoryId" + Company11.get(0).getItems().get(1).getHistory().get(0).getHistoryId());
+            System.out.println("Sizeof history array" + companies.get(0).getItems().get(1).getHistory().size());
+            System.out.println("HistoryId" + companies.get(0).getItems().get(1).getHistory().get(0).getHistoryId());
 
             //for users
-            System.out.println("Users" + Company11.get(0).getUsers().get(0).getPassword());
+            System.out.println("Users" + companies.get(0).getUsers().get(0).getPassword());
 
             // backup the data to the backup
-            for (int i = 0; i < Company11.size(); i++) { // will be only one company here
+            for (int i = 0; i < companies.size(); i++) { // will be only one company here
                 statement = (PreparedStatement) con.prepareStatement("INSERT INTO COMPANY(Company_ID,Company_title)  VALUES  (?,?)");
-                statement.setInt(1, Company11.get(i).getCompanyId());
-                statement.setString(2, Company11.get(i).getCompanyName());
+                statement.setInt(1, companies.get(i).getCompanyId());
+                statement.setString(2, companies.get(i).getCompanyName());
                 statement.executeUpdate();
-                for (int j = 0; j < Company11.get(i).getItems().size(); j++) {
+                for (int j = 0; j < companies.get(i).getItems().size(); j++) {
 
                     statement = (PreparedStatement) con.prepareStatement("INSERT INTO ITEM(ITEM_ID,COMPANY_ID,QUANTITY,ITEMNAME)  VALUES  (?,?,?,?)");
-                    statement.setInt(1, Company11.get(i).getItems().get(j).getItemId());
-                    statement.setInt(2, Company11.get(i).getCompanyId());
-                    statement.setInt(3, Company11.get(i).getItems().get(j).getQuantity());
-                    statement.setString(4, Company11.get(i).getItems().get(j).getItemName());
+                    statement.setInt(1, companies.get(i).getItems().get(j).getItemId());
+                    statement.setInt(2, companies.get(i).getCompanyId());
+                    statement.setInt(3, companies.get(i).getItems().get(j).getQuantity());
+                    statement.setString(4, companies.get(i).getItems().get(j).getItemName());
                     statement.executeUpdate();
 
-                    for (int k = 0; k < Company11.get(i).getItems().get(j).getHistory().size(); k++) {
+                    for (int k = 0; k < companies.get(i).getItems().get(j).getHistory().size(); k++) {
                         statement = (PreparedStatement) con.prepareStatement("INSERT  INTO  history(HISTORY_ID,ITEM_id,AMOUNT,LOCATION,Supplier,DELIVERY_DATE)  VALUES  (?,?,?,?,?,?)");
-                        statement.setInt(1, Company11.get(i).getItems().get(j).getHistory().get(k).getHistoryId());
-                        statement.setInt(2, Company11.get(i).getItems().get(j).getItemId());
-                        statement.setInt(3, Company11.get(i).getItems().get(j).getHistory().get(k).getAmount());
-                        statement.setString(4, Company11.get(i).getItems().get(j).getHistory().get(k).getLocation());
-                        statement.setString(5, Company11.get(i).getItems().get(j).getHistory().get(k).getSupplier());
-                        statement.setString(6, Company11.get(i).getItems().get(j).getHistory().get(k).getDeliveryDate());
+                        statement.setInt(1, companies.get(i).getItems().get(j).getHistory().get(k).getHistoryId());
+                        statement.setInt(2, companies.get(i).getItems().get(j).getItemId());
+                        statement.setInt(3, companies.get(i).getItems().get(j).getHistory().get(k).getAmount());
+                        statement.setString(4, companies.get(i).getItems().get(j).getHistory().get(k).getLocation());
+                        statement.setString(5, companies.get(i).getItems().get(j).getHistory().get(k).getSupplier());
+                        statement.setString(6, companies.get(i).getItems().get(j).getHistory().get(k).getDeliveryDate());
 
                         statement.executeUpdate();
 
                     }
 
                     //backup the users
-                    /*	for(int l=0;l<Company11.get(i).getUsers().size();l++){
+                    /*	for(int l=0;l<companies.get(i).getUsers().size();l++){
 				    statement = (PreparedStatement) con.prepareStatement("INSERT INTO USERs(USER_ID,USER_NAME,USER_PASSWORD,COMPANY_ID)  VALUES  (?,?,?,?)"); 
-			    	statement.setInt(1, Company11.get(i).getUsers().get(l).getUserId());
-			    	statement.setString(2, Company11.get(i).getUsers().get(l).getUsername());
-			    	statement.setString(3, Company11.get(i).getUsers().get(l).getPassword());
-			    	statement.setInt(4, Company11.get(i).getUsers().get(l).getCompanyId());
+			    	statement.setInt(1, companies.get(i).getUsers().get(l).getUserId());
+			    	statement.setString(2, companies.get(i).getUsers().get(l).getUsername());
+			    	statement.setString(3, companies.get(i).getUsers().get(l).getPassword());
+			    	statement.setInt(4, companies.get(i).getUsers().get(l).getCompanyId());
 			    	statement.executeUpdate();
 			    	
 			    	}*/

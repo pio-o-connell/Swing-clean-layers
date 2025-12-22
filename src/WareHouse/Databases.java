@@ -157,7 +157,7 @@ public final class Databases {
     }
 
     Connection con;
-    ArrayList<Company> Company = new ArrayList<Company>();
+    // Removed static/global Company. Use dependency injection via constructor or method parameter.
     ArrayList<history> History = new ArrayList<history>();
     ArrayList<Item> Item = new ArrayList<Item>();
     ArrayList<User> User = new ArrayList<User>();
@@ -169,9 +169,9 @@ public final class Databases {
     }
 
     // Loads the database tables into memory (Company, Item, User, History)
-    public boolean init(Connection con, ArrayList<Company> Company) {
+    public boolean init(Connection con, ArrayList<Company> companyList) {
         this.con = con;
-        this.Company = Company;
+        // Use companyList parameter directly. No hidden dependency.
         try {
             // Drop tables if they exist
             String[] dropTables = {
@@ -253,19 +253,18 @@ public final class Databases {
                     }
                     companyItems.add(new Item(itemId, companyId, quantity, itemName, itemNotes, historyList));
                 }
-                Company.add(new Company(companyId, companyName, companyItems, users));
+                companyList.add(new Company(companyId, companyName, companyItems, users));
             }
-            return true;
         } catch (SQLException sqlex) {
             sqlex.printStackTrace();
             return false;
         }
+        return true;
     }
 
-    public void setup(Connection con, ArrayList<Company> Company) throws SQLException {
+    public void setup(Connection con, ArrayList<Company> companyList) throws SQLException {
         this.con = con;
-        this.Company = Company;
-
+        // Use companyList parameter directly. No hidden dependency.
         //select distinct items for the company
         try {
 
@@ -342,7 +341,7 @@ public final class Databases {
             ResultSet result4 = statement4.executeQuery();
             while (result4.next()) {
                 System.out.println("\n" + result4.getInt(1) + " name:" + result4.getString(2));
-                Company.add(new Company(result4.getInt(1), result4.getString(2), Item, User));
+                companyList.add(new Company(result4.getInt(1), result4.getString(2), Item, User));
             }
         } catch (SQLException sqlex) {
             sqlex.printStackTrace();

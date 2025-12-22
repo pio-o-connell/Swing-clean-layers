@@ -80,12 +80,10 @@ public class TableWindow1 extends JPanel {
         this.controller = controller;
         setOpaque(true);
         setBackground(new java.awt.Color(240, 240, 255));
-        setMinimumSize(new java.awt.Dimension(300, 200));
-        setPreferredSize(new java.awt.Dimension(400, 300));
         this.history = history11;
         this.items = items;
         this.companies = companies;
-     
+
         // These are used as workaround for non closures in java
         final MyTableModel2[] model2 = new MyTableModel2[1];
         final MyTableModel[] model = new MyTableModel[1];
@@ -97,6 +95,11 @@ public class TableWindow1 extends JPanel {
                 return false; //Cancel the editing of any cell
             }
         };
+        java.awt.Font itemTableFont = new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 13);
+        table.setFont(itemTableFont);
+        table.setRowHeight(24);
+        table.setSelectionBackground(new java.awt.Color(220, 220, 255));
+        table.setSelectionForeground(java.awt.Color.BLACK);
         table.getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
@@ -120,7 +123,6 @@ public class TableWindow1 extends JPanel {
         );
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane);
-            // ...existing code...
         JPanel form = new JPanel(new SpringLayout());
         JLabel l1 = new JLabel("Filter Text:", SwingConstants.TRAILING);
         l1.setPreferredSize(new Dimension(10,10));
@@ -154,7 +156,6 @@ public class TableWindow1 extends JPanel {
         form.add(l2);
         form.add(scrollPane1);
         SpringUtilites.makeCompactGrid(form, 2, 2, 6, 6, 6, 6);
-     //  took this out  add(form);
     
         // --- FIX: Declare and initialize l12, l22, and form2 for the second filter/notes panel ---
         JPanel form2 = new JPanel(new SpringLayout());
@@ -442,7 +443,7 @@ public class TableWindow1 extends JPanel {
 
 
 
-	    
-	    
-	
+
+
+
 
