@@ -1,4 +1,4 @@
-# Swing - Clean - Layers
+# Concordia
 
 <img src="documentation/images/java-swing-widget.jpg" alt="Widget" style="width:60%;">
 
@@ -7,24 +7,24 @@
 ## Overview
 ---
 
-# swing-clean-layers
+# concordia
 
 **Project Overview:**  
-"Swing Clean Layers"  takes an old  **Java Swing** created in 2014, and uses **augmented AI**, to create a **swing front end locally and servlet for remote access from common code base**.  
+"Concordia" takes an old  **Java Swing** created in 2014, and uses **augmented AI**, to create a **swing front end locally and servlet for remote access from common code base**.  
 
 **Project Purpose:**  
-- **Reorganize a legacy Swing app into clean layers**<br><br>
+- **Reorganize a legacy Concordia app into clean layers**<br><br>
         WareHouse<br>
         ├── domain        (pure data + rules)<br>
         ├── repository    (JDBC / persistence)<br>
         ├── service       (business logic)<br>
-        ├── controller    (Swing + Servlet adapters)<br>
-        ├── ui            (Swing components only)<br>
+        ├── controller    (Concordia + Servlet adapters)<br>
+        ├── ui            (Concordia components only)<br>
         ├── infrastructure (bootstrapping, wiring)<br>
 
 - **Infrastructure** created within app negating any need for Spring or DI      
 - **Annotations** as labels ( semantic markers) 
-- **Remote Acccess** using **servlet**, **Local Access** application building on **Java Swing libraries**
+- **Remote Acccess** using **servlet**, **Local Access** application building on **Java Concordia libraries**
 - Integration of **augmented AI tools** to enhance development speed and functionality.  
 - Fully **responsive design** for **Servlet** with attention to accessibility and user experience.  
 
@@ -34,9 +34,9 @@
 
 <h2 align="center" id="TOC">Index</h2>
 
-- [Swing - Clean - Layers](#swing---clean---layers)
+- [Concordia](#concordia)
   - [Overview](#overview)
-- [swing-clean-layers](#swing-clean-layers)
+- [concordia](#concordia)
   - [Phases-one](#phases-one)
     - [Domain first](#domain-first)
   - [Phases-two](#phases-two)
@@ -47,7 +47,7 @@
   - [Phases-four](#phases-four)
     - [Controller layer (adapters)](#controller-layer-adapters)
   - [Phases-five](#phases-five)
-    - [Clean the Swing UI (liberation phase)](#clean-the-swing-ui-liberation-phase)
+    - [Clean the Concordia UI (liberation phase)](#clean-the-concordia-ui-liberation-phase)
   - [Phases-six](#phases-six)
     - [Infrastructure / Wiring](#infrastructure--wiring)
   - [Phases-seven](#phases-seven)
@@ -73,7 +73,7 @@
 </details>
 <br>
 
-[Back To Top](#swing---clean---layers)
+[Back To Top](#concordia)
 
 ## Phases-two
 ---
@@ -198,7 +198,7 @@
 
             Rules:
 
-            Swing talks only to controllers
+            Concordia talks only to controllers
 
             Controllers talk to services
 
@@ -218,11 +218,11 @@
 
 
 
-        Next, add a controller layer. Controllers are the bridge between the Swing UI (or servlets) and services. The UI should no longer call repositories or services directly. Controllers translate user actions like “Backup pressed” or “Delete item” into service calls. These are application controllers, not web controllers. Label them with @Component.
+        Next, add a controller layer. Controllers are the bridge between the Concordia UI (or servlets) and services. The UI should no longer call repositories or services directly. Controllers translate user actions like “Backup pressed” or “Delete item” into service calls. These are application controllers, not web controllers. Label them with @Component.
 </details>
 <br>
 
-[Back To Top](#swing---clean---layers)
+[Back To Top](#concordia)
 
 
 
@@ -230,16 +230,16 @@
 ## Phases-five
 ---
 
-### Clean the Swing UI (liberation phase)
+### Clean the Concordia UI (liberation phase)
 
 <details>
     <summary>Details
     </summary>
-        6️⃣ Simplify Swing classes
+        6️⃣ Simplify Concordia classes
 
         Now the UI becomes dumb (in a good way).
 
-        Swing does ONLY:
+        Concordia does ONLY:
 
         Read text fields
 
@@ -251,15 +251,15 @@
         ❌ No business logic
         ❌ No static globals
 
-        This is where Swing suddenly becomes pleasant again.
+        This is where Concordia suddenly becomes pleasant again.
 
-        After that, clean up the Swing UI. The UI should now only read user input, show dialogs, and call controller methods. There should be no SQL, no business logic, and no persistence code in Swing classes. This is where Swing becomes simple and manageable again.
+        After that, clean up the Concordia UI. The UI should now only read user input, show dialogs, and call controller methods. There should be no SQL, no business logic, and no persistence code in Concordia classes. This is where Concordia becomes simple and manageable again.
 
 
 </details>
 <br>
 
-[Back To Top](#swing---clean---layers)
+[Back To Top](#concordia)
 
 
 
