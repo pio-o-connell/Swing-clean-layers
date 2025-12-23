@@ -1,4 +1,6 @@
+
 package WareHouse.service;
+import WareHouse.annotations.Service;
 
 import WareHouse.repository.CompanyRepository;
 import WareHouse.repository.ItemRepository;
@@ -9,6 +11,7 @@ import WareHouse.domain.history;
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class InventoryService {
             // Retrieve all items
             public List<Item> getAllItems() throws SQLException {

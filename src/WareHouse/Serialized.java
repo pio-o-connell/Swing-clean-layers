@@ -16,6 +16,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import WareHouse.domain.Company;
 
+import WareHouse.annotations.Configuration;
+
+@Configuration
 public class Serialized {
     private ArrayList<Company> companyList;
 

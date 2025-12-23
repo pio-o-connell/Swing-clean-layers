@@ -5,6 +5,8 @@
 
 package WareHouse;
 
+import WareHouse.annotations.Singleton;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import WareHouse.domain.history;
 import WareHouse.Mainframe;
 import WareHouse.AdminPanel;
 
+@Singleton
 public final class Databases {
     // Resets and repopulates the database with gardening test data
     public void resetAndPopulateGardeningTestData(Connection con) throws SQLException {

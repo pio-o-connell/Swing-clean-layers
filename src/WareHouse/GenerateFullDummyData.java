@@ -6,6 +6,9 @@ import java.util.Random;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+import WareHouse.annotations.Configuration;
+
+@Configuration
 public class GenerateFullDummyData {
     public static void main(String[] args) throws Exception {
         String url = "jdbc:mysql://127.0.0.1:3306/warehouse?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";

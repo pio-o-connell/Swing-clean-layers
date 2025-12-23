@@ -1,4 +1,6 @@
+
 package WareHouse.repository;
+import WareHouse.annotations.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +12,7 @@ import WareHouse.domain.Item;
 import WareHouse.domain.User;
 import WareHouse.domain.history;
 
+@Repository
 public class CompanyRepository {
     private final Connection con;
     public CompanyRepository(Connection con) {

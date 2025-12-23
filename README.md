@@ -10,11 +10,10 @@
 # swing-clean-layers
 
 **Project Overview:**  
-"Swing Clean Layers"  takes an old  **Java Swing** created in 2014, and uses **augmented AI**, to create a **swing front end locally and servlet for remote access**.  
+"Swing Clean Layers"  takes an old  **Java Swing** created in 2014, and uses **augmented AI**, to create a **swing front end locally and servlet for remote access from common code base**.  
 
 **Project Purpose:**  
-- **Reorganize a legacy Swing app into clean layers**
-- **Target layers**<br>
+- **Reorganize a legacy Swing app into clean layers**<br><br>
         WareHouse<br>
         ├── domain        (pure data + rules)<br>
         ├── repository    (JDBC / persistence)<br>
@@ -22,9 +21,10 @@
         ├── controller    (Swing + Servlet adapters)<br>
         ├── ui            (Swing components only)<br>
         ├── infrastructure (bootstrapping, wiring)<br>
-        
-- **Annotations** as labels, **@Repository @Service @Component**
-- **Remote Acccess** using **servlet**
+
+- **Infrastructure** created within app negating any need for Spring or DI      
+- **Annotations** as labels ( semantic markers) 
+- **Remote Acccess** using **servlet**, **Local Access** application building on **Java Swing libraries**
 - Integration of **augmented AI tools** to enhance development speed and functionality.  
 - Fully **responsive design** for **Servlet** with attention to accessibility and user experience.  
 
@@ -52,8 +52,7 @@
     - [Infrastructure / Wiring](#infrastructure--wiring)
   - [Phases-seven](#phases-seven)
     - [Remove legacy shortcuts](#remove-legacy-shortcuts)
-  - [Annotations](#annotations)
-    - [Add annotations](#add-annotations)
+    - [Annotations](#annotations)
   
 
 ## Phases-one
@@ -276,36 +275,9 @@
 <details>
     <summary>Details
     </summary>
-        7️⃣ Centralise object creation
-                    This centralizes all object creation and wiring, replacing the need for Spring or any DI framework. You can now launch your app from ApplicationBootstrap.
-        Create:
 
-            WareHouse.infrastructure
-
-        Add:
-
-                public class ApplicationBootstrap {
-                public static void main(String[] args) {
-                    Connection con = ...
-                    ItemRepository itemRepo = new ItemRepository(con);
-                    InventoryService service = new InventoryService(itemRepo);
-                    InventoryController controller = new InventoryController(service);
-                    new MainFrame(controller);
-                }
-            }
-
-
-        This replaces Spring by hand.
-
-
-
-
-
-        Then introduce an infrastructure or bootstrap layer. This is where you manually wire everything together since you are not using Spring. You create the database connection, repositories, services, controllers, and pass controllers into the UI. This replaces dependency injection frameworks with explicit construction.
-
-        The infrastructure layer is now created: WareHouse.infrastructure.ApplicationBootstrap sets up the database connection, repositories, service, controller, and launches the Mainframe. This centralizes all object creation and wiring, replacing the need for Spring or any DI framework. You can now launch your app from ApplicationBootstrap. Let me know if you want to fully remove the old main or further refactor!
-
-
+        WareHouse.infrastructure.ApplicationBootstrap sets up the database connection, repositories, service, controller, and launches the Mainframe. 
+        This centralizes all object creation and wiring, replacing the need for Spring or any DI framework. You can now launch your app from ApplicationBootstrap. #
 
 </details>
 <br>
@@ -393,34 +365,23 @@ Annotations are labels, not magic:
 [Back To Top](#swing---clean---layers)
 
 
-## Annotations 
+### Annotations 
 ---
-
-### Add annotations
 
 <details>
     <summary>Details
     </summary>
-    Using annotations only as semantic markers means they carry meaning for humans (and future tools), but no runtime behaviour.
-
-    In this project:
-        @Service
-        @Repository
-        @Component
-        @Controller
-        @Transactional
-     Do nothing by themselves
+    Semantic annotations are defined only as semantic markers- they do not carry meaning for humans (and future tools), but and have no runtime behaviour.
 
     They:
-    do not create objects
-    do not inject dependencies
-    do not manage transactions
-    do not change execution
+        do not create objects
+        do not inject dependencies
+        do not manage transactions
+        do not change execution
+
+    In this project @Service, @Repository, @Component, @Controller and @Transactional are used 
     They exist to say:
-    “This class plays this role in the architecture.”
-
-
-
+        “This class plays this role in the architecture.”
 
 </details>
 <br>

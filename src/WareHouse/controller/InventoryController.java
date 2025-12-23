@@ -1,4 +1,6 @@
+
 package WareHouse.controller;
+import WareHouse.annotations.Controller;
 
 import WareHouse.service.InventoryService;
 import WareHouse.domain.Company;
@@ -6,6 +8,7 @@ import WareHouse.domain.history;
 import java.sql.SQLException;
 import java.util.List;
 
+@Controller
 public class InventoryController {
             // Retrieve notes for an item by row index
             public String getItemNotesForRow(int row) {

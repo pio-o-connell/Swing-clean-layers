@@ -1,4 +1,6 @@
+
 package WareHouse.repository;
+import WareHouse.annotations.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import WareHouse.domain.Item;
 import WareHouse.domain.Company;
 import WareHouse.domain.history;
 
+@Repository
 public class ItemRepository {
         // Retrieve all items from the database
         public ArrayList<Item> getAllItems() throws SQLException {

@@ -1,9 +1,12 @@
+
 package WareHouse.repository;
+import WareHouse.annotations.Repository;
 
 import WareHouse.domain.Company;
 import java.io.*;
 import java.util.ArrayList;
 
+@Repository
 public class FileBackupRepository {
     public void saveCompanies(ArrayList<Company> companies) {
         try {

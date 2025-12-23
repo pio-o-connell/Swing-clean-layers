@@ -1,4 +1,6 @@
+
 package WareHouse.repository;
+import WareHouse.annotations.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import WareHouse.domain.Item;
 import WareHouse.domain.User;
 import WareHouse.domain.history;
 
+@Repository
 public class BackupRepository {
     private Connection con;
     public BackupRepository(Connection con) {

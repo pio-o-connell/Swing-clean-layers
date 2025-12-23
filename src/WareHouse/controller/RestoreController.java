@@ -1,7 +1,10 @@
+
 package WareHouse.controller;
+import WareHouse.annotations.Controller;
 
 import WareHouse.service.RestoreService;
 
+@Controller
 public class RestoreController {
     private final RestoreService service;
     public RestoreController(RestoreService service) {

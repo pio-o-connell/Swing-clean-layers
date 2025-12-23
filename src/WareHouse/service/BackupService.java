@@ -1,10 +1,13 @@
+
 package WareHouse.service;
+import WareHouse.annotations.Service;
 
 import WareHouse.repository.BackupRepository;
 import WareHouse.domain.Company;
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class BackupService {
     private final BackupRepository repo;
     public BackupService(BackupRepository repo) {

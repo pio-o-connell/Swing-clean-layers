@@ -18,6 +18,9 @@ import WareHouse.domain.history;
 
 //import com.mysql.jdbc.Connection;
 //import com.mysql.jdbc.PreparedStatement;
+import WareHouse.annotations.Configuration;
+
+@Configuration
 public class DatabaseBackup {
 
     Connection con;

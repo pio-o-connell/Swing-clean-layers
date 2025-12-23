@@ -1,7 +1,10 @@
+
 package WareHouse.controller;
+import WareHouse.annotations.Controller;
 
 import WareHouse.service.BackupService;
 
+@Controller
 public class BackupController {
     private final BackupService service;
     public BackupController(BackupService service) {

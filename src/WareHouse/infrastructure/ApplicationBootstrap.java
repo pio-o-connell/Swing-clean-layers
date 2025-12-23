@@ -1,4 +1,7 @@
+
 package WareHouse.infrastructure;
+import WareHouse.annotations.Component;
+import WareHouse.annotations.Configuration;
 
 import WareHouse.repository.ItemRepository;
 import WareHouse.service.InventoryService;
@@ -7,6 +10,8 @@ import WareHouse.Mainframe;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+@Component
+@Configuration
 public class ApplicationBootstrap {
     public static void main(String[] args) {
         try {
