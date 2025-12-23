@@ -151,7 +151,7 @@ public class Mainframe extends JFrame {
 			   if (!companyList.isEmpty()) {
 								   detailTable1.companyTable.setRowSelectionInterval(0, 0);
 								   detailTable1.itemTable.setRowSelectionInterval(0, 0);
-				   detailTable2.table3.setRowSelectionInterval(0, 0);
+				   detailTable2.transactionHistoryTable.setRowSelectionInterval(0, 0);
 				   Company firstCompany = companyList.get(0);
 				   Item firstItem = firstCompany.getItems().isEmpty() ? null : firstCompany.getItems().get(0);
 				   history firstHistory = (firstItem != null && !firstItem.getHistory().isEmpty()) ? firstItem.getHistory().get(0) : null;
@@ -193,11 +193,11 @@ public class Mainframe extends JFrame {
 							   Item selectedItem = filteredItems.get(itemIdx);
 							   // Update history table for selected item
 							   ArrayList<history> itemHistory = new ArrayList<>(selectedItem.getHistory());
-							   detailTable2.model = new TransactionHistoryPanel.MyTableModel(itemHistory, 0);
-							   detailTable2.table3.setModel(detailTable2.model);
-							   detailTable2.sorter3.setModel(detailTable2.model);
+							   detailTable2.transactionHistoryTableModel = new TransactionHistoryPanel.MyTableModel(itemHistory, 0);
+							   detailTable2.transactionHistoryTable.setModel(detailTable2.transactionHistoryTableModel);
+							   detailTable2.historyTransactionNameSorter.setModel(detailTable2.transactionHistoryTableModel);
 							   if (!itemHistory.isEmpty()) {
-								   detailTable2.table3.setRowSelectionInterval(0, 0);
+								   detailTable2.transactionHistoryTable.setRowSelectionInterval(0, 0);
 								   history firstHistory = itemHistory.get(0);
 								   detailPanel.setFields(selectedItem.getItemName(), firstHistory.getLocation(), firstHistory.getSupplier(), firstHistory.getDeliveryDate(), String.valueOf(firstHistory.getAmount()));
 							   } else {
@@ -208,11 +208,11 @@ public class Mainframe extends JFrame {
 				   }
 			   });
 
-			   detailTable2.table3.getSelectionModel().addListSelectionListener(e -> {
+			   detailTable2.transactionHistoryTable.getSelectionModel().addListSelectionListener(e -> {
 				   if (!e.getValueIsAdjusting()) {
 										   int companyIdx = detailTable1.companyTable.getSelectedRow();
 										   int itemIdx = detailTable1.itemTable.getSelectedRow();
-					   int historyIdx = detailTable2.table3.getSelectedRow();
+					   int historyIdx = detailTable2.transactionHistoryTable.getSelectedRow();
 					   if (companyIdx >= 0 && companyIdx < companyList.size()) {
 						   Company selectedCompany = companyList.get(companyIdx);
 						   ArrayList<Item> filteredItems = new ArrayList<>(selectedCompany.getItems());

@@ -71,8 +71,8 @@ public class CompanyItemTablePanel extends JPanel {
         this.companies = companies;
 
         // These are used as workaround for non closures in java
-        final ItemModel[] model2 = new ItemModel[1];
-        final CompanyModel[] model = new CompanyModel[1];
+        final ItemModel[] itemModel = new ItemModel[1];
+        final CompanyModel[] companyModel = new CompanyModel[1];
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         companyModelRefreshRef[0] = new CompanyModel(this.companies);
         companyNameSorter = new TableRowSorter<CompanyModel>(companyModelRefreshRef[0]);
@@ -106,12 +106,12 @@ public class CompanyItemTablePanel extends JPanel {
                         }
                     }
                 });
-        JScrollPane scrollPane = new JScrollPane(companyTable);
-        add(scrollPane);
-        JPanel form = new JPanel(new SpringLayout());
-        JLabel l1 = new JLabel("Filter Text:", SwingConstants.TRAILING);
-        l1.setPreferredSize(new Dimension(10, 10));
-        form.add(l1);
+        JScrollPane companyTableScrollPane = new JScrollPane(companyTable);
+        add(companyTableScrollPane);
+        JPanel companyFormPanel = new JPanel(new SpringLayout());
+        JLabel companyFilterTextLabel = new JLabel("Filter Text:", SwingConstants.TRAILING);
+        companyFilterTextLabel.setPreferredSize(new Dimension(10, 10));
+        companyFormPanel.add(companyFilterTextLabel);
         companyFilterText = new JTextField();
         // Whenever companyFilterText changes, invoke newFilter.
         companyFilterText.getDocument().addDocumentListener(
@@ -129,39 +129,39 @@ public class CompanyItemTablePanel extends JPanel {
                     }
                 });
 
-        l1.setLabelFor(companyFilterText);
-        form.add(companyFilterText);
-        JLabel l2 = new JLabel("Notes:", SwingConstants.TRAILING);
-        l2.setPreferredSize(new Dimension(50, 50));
-        l2.setLabelFor(companyStatusText);
-        form.add(l2);
+        companyFilterTextLabel.setLabelFor(companyFilterText);
+        companyFormPanel.add(companyFilterText);
+        JLabel companyNotesLabel = new JLabel("Notes:", SwingConstants.TRAILING);
+        companyNotesLabel.setPreferredSize(new Dimension(50, 50));
+        companyNotesLabel.setLabelFor(companyStatusText);
+        companyFormPanel.add(companyNotesLabel);
         companyStatusText = new JTextArea("History for", 1, 4);
         companyStatusText.setPreferredSize(new Dimension(50, 50));
         companyStatusText.setEditable(true);
         JScrollPane scrollPane1 = new JScrollPane(companyStatusText);
         scrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        form.add(l2);
-        form.add(scrollPane1);
-        SpringUtilites.makeCompactGrid(form, 2, 2, 6, 6, 6, 6);
+        companyFormPanel.add(companyNotesLabel);
+        companyFormPanel.add(scrollPane1);
+        SpringUtilites.makeCompactGrid(companyFormPanel, 2, 2, 6, 6, 6, 6);
 
         // --- FIX: Declare and initialize l12, l22, and form2 for the second
         // filter/notes panel ---
-        JPanel form2 = new JPanel(new SpringLayout());
-        JLabel l12 = new JLabel("Filter Text:", SwingConstants.TRAILING);
-        l12.setPreferredSize(new Dimension(10, 10));
+        JPanel itemFormPanel = new JPanel(new SpringLayout());
+        JLabel itemFilterTextLabel = new JLabel("Filter Text:", SwingConstants.TRAILING);
+        itemFilterTextLabel.setPreferredSize(new Dimension(10, 10));
         itemFilterText = new JTextField();
-        JLabel l22 = new JLabel("Notes:", SwingConstants.TRAILING);
-        l22.setPreferredSize(new Dimension(50, 50));
+        JLabel itemNotesLabel = new JLabel("Notes:", SwingConstants.TRAILING);
+        itemNotesLabel.setPreferredSize(new Dimension(50, 50));
         itemStatusText = new JTextArea("History for", 1, 4);
         itemStatusText.setPreferredSize(new Dimension(50, 50));
         itemStatusText.setEditable(true);
         JScrollPane scrollPane12 = new JScrollPane(itemStatusText);
         scrollPane12.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         // Add all 4 components in correct order
-        form2.add(l12);
-        form2.add(itemFilterText);
-        form2.add(l22);
-        form2.add(scrollPane12);
+        itemFormPanel.add(itemFilterTextLabel);
+        itemFormPanel.add(itemFilterText);
+        itemFormPanel.add(itemNotesLabel);
+        itemFormPanel.add(scrollPane12);
 
         // Only show items for the first company on startup
         int firstCompanyId = companies.get(0).getCompanyId();
@@ -214,14 +214,14 @@ public class CompanyItemTablePanel extends JPanel {
                         newFilter2();
                     }
                 });
-        l12.setLabelFor(itemFilterText);
-        l22.setLabelFor(itemStatusText);
-        SpringUtilites.makeCompactGrid(form2, 2, 2, 6, 6, 6, 6);
+        itemFilterTextLabel.setLabelFor(itemFilterText);
+        itemNotesLabel.setLabelFor(itemStatusText);
+        SpringUtilites.makeCompactGrid(itemFormPanel, 2, 2, 6, 6, 6, 6);
         // Now that table2 is fully initialized, add it to the panel above the
         // filter/notes
-        JScrollPane scrollPane2 = new JScrollPane(itemTable);
-        add(scrollPane2);
-        add(form2);
+        JScrollPane itemTableScrollPane = new JScrollPane(itemTable);
+        add(itemTableScrollPane);
+        add(itemFormPanel);
     }
 
     /**

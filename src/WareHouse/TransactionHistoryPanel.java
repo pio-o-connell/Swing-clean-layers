@@ -35,15 +35,13 @@ public class TransactionHistoryPanel extends JPanel {
     private ArrayList<Item> items, item;
 
     private static final long serialVersionUID = 1L;
-    private static final boolean FALSE = false;
-    private static final boolean TRUE = false;
     private boolean DEBUG = false;
-    public static JTable table3;
-    private JTextField filterText3;
-    private JTextArea statusText3;
-    public TableRowSorter<MyTableModel> sorter3;
+    public static JTable transactionHistoryTable;
+    private JTextField historyTransactionFilterText;
+    private JTextArea historyTransactionStatusText;
+    public TableRowSorter<MyTableModel> historyTransactionNameSorter;
     public int nmrRowsTable3;
-    public MyTableModel model;
+    public MyTableModel transactionHistoryTableModel;
     private final InventoryController controller;
 
         public TransactionHistoryPanel(ArrayList<Item> items, ArrayList<Company> companies, ArrayList<history> history,
@@ -58,49 +56,48 @@ public class TransactionHistoryPanel extends JPanel {
         this.companies = companies;
         this.controller = controller;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        model = new MyTableModel(companies.get(0).getItems().get(0).getHistory(), 0);
-        sorter3 = new TableRowSorter<MyTableModel>(model);
-        table3 = new JTable(model) {
+        transactionHistoryTableModel = new MyTableModel(companies.get(0).getItems().get(0).getHistory(), 0);
+        historyTransactionNameSorter = new TableRowSorter<MyTableModel>(transactionHistoryTableModel);
+        transactionHistoryTable = new JTable(transactionHistoryTableModel) {
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 return false; // Disallow the editing of any cell
             }
         };
         java.awt.Font tableFont = new java.awt.Font("SansSerif", java.awt.Font.PLAIN, 13);
-        table3.setFont(tableFont);
-        table3.setRowHeight(24);
-        table3.setSelectionBackground(new java.awt.Color(255, 220, 220));
-        table3.setSelectionForeground(java.awt.Color.BLACK);
-        table3.setRowSorter(sorter3);
-        table3.setPreferredScrollableViewportSize(new Dimension(500, 200));
-        table3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        transactionHistoryTable.setFont(tableFont);
+        transactionHistoryTable.setRowHeight(24);
+        transactionHistoryTable.setSelectionBackground(new java.awt.Color(255, 220, 220));
+        transactionHistoryTable.setSelectionForeground(java.awt.Color.BLACK);
+        transactionHistoryTable.setRowSorter(historyTransactionNameSorter);
+        transactionHistoryTable.setPreferredScrollableViewportSize(new Dimension(500, 200));
+        transactionHistoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        table3.getSelectionModel().addListSelectionListener(
+        transactionHistoryTable.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
                     public void valueChanged(ListSelectionEvent event) {
                         if (event.getValueIsAdjusting()) {
                             return;
                         }
-                        int viewRow = table3.getSelectedRow();
-                        if (viewRow < 0 || viewRow >= table3.getRowCount()) {
-                            statusText3.setText("");
-                            return;
+                        int viewRow = transactionHistoryTable.getSelectedRow();
+                        if (viewRow < 0) {
+                            historyTransactionStatusText.setText("");
+                        } else {
+                            int modelRow = transactionHistoryTable.convertRowIndexToModel(viewRow);
+                            // Example: controller.onHistorySelected(modelRow);
+                            historyTransactionStatusText.setText(String.format("History row selected: %d", modelRow));
                         }
-                        int modelRow = table3.convertRowIndexToModel(viewRow);
-                        // Call controller method for history selection
-                        // Example: controller.onHistorySelected(modelRow);
-                        statusText3.setText(String.format("History row selected: %d", modelRow));
                     }
                 });
 
-        JScrollPane scrollPane3 = new JScrollPane(table3);
-        add(scrollPane3);
-        JPanel form3 = new JPanel(new SpringLayout());
-        JLabel l13 = new JLabel("Filter Text:", SwingConstants.TRAILING);
-        l13.setPreferredSize(new Dimension(10, 10));
-        form3.add(l13);
-        filterText3 = new JTextField();
+        JScrollPane transactionHistoryTableScrollPane = new JScrollPane(transactionHistoryTable);
+        add(transactionHistoryTableScrollPane);
+        JPanel transactionHistoryFormPanel = new JPanel(new SpringLayout());
+        JLabel historyTransactionFilterTextLabel = new JLabel("Filter Text:", SwingConstants.TRAILING);
+        historyTransactionFilterTextLabel.setPreferredSize(new Dimension(10, 10));
+        transactionHistoryFormPanel.add(historyTransactionFilterTextLabel);
+        historyTransactionFilterText = new JTextField();
         // Whenever filterText changes, invoke newFilter.
-        filterText3.getDocument().addDocumentListener(
+        historyTransactionFilterText.getDocument().addDocumentListener(
                 new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
                         newFilter();
@@ -115,21 +112,21 @@ public class TransactionHistoryPanel extends JPanel {
                     }
                 });
 
-        l13.setLabelFor(filterText3);
-        form3.add(filterText3);
-        JLabel l23 = new JLabel("Notes:", SwingConstants.TRAILING);
-        l23.setPreferredSize(new Dimension(50, 50));
-        l23.setLabelFor(statusText3);
-        form3.add(l23);
-        statusText3 = new JTextArea("History for", 1, 4);
-        statusText3.setPreferredSize(new Dimension(50, 50));
-        statusText3.setEditable(true);
-        JScrollPane scrollPane12 = new JScrollPane(statusText3);
+        historyTransactionFilterTextLabel.setLabelFor(historyTransactionFilterText);
+        transactionHistoryFormPanel.add(historyTransactionFilterText);
+        JLabel historyTransactionNotesLabel = new JLabel("Notes:", SwingConstants.TRAILING);
+        historyTransactionNotesLabel.setPreferredSize(new Dimension(50, 50));
+        historyTransactionNotesLabel.setLabelFor(historyTransactionStatusText);
+        transactionHistoryFormPanel.add(historyTransactionNotesLabel);
+        historyTransactionStatusText = new JTextArea("History for", 1, 4);
+        historyTransactionStatusText.setPreferredSize(new Dimension(50, 50));
+        historyTransactionStatusText.setEditable(true);
+        JScrollPane scrollPane12 = new JScrollPane(historyTransactionStatusText);
         scrollPane12.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        form3.add(l23);
-        form3.add(scrollPane12);
-        SpringUtilites.makeCompactGrid(form3, 2, 2, 6, 6, 6, 6);
-        add(form3);
+        // l23 removed, replaced by historyTransactionNotesLabel above
+        transactionHistoryFormPanel.add(scrollPane12);
+        SpringUtilites.makeCompactGrid(transactionHistoryFormPanel, 2, 2, 6, 6, 6, 6);
+        add(transactionHistoryFormPanel);
     }
 
     /**
@@ -140,11 +137,11 @@ public class TransactionHistoryPanel extends JPanel {
         RowFilter<MyTableModel, Object> rf = null;
         // If current expression doesn't parse, don't update.
         try {
-            rf = RowFilter.regexFilter(filterText3.getText(), 0);
+            rf = RowFilter.regexFilter(historyTransactionFilterText.getText(), 0);
         } catch (java.util.regex.PatternSyntaxException e) {
             return;
         }
-        sorter3.setRowFilter(rf);
+        historyTransactionNameSorter.setRowFilter(rf);
     }
 
     public static class MyTableModel extends AbstractTableModel {

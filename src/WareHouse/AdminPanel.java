@@ -1,4 +1,5 @@
 package WareHouse;
+
 import javax.swing.BoxLayout;
 import javax.swing.Box;
 
@@ -71,19 +72,20 @@ import javax.swing.BoxLayout;
 import WareHouse.controller.InventoryController;
 
 public class AdminPanel extends JPanel {
-            /**
-             * Set all main fields in the DetailsPanel.
-             * Call this after reading values from the database.
-             */
-            public void setFields(String name, String location, String supplier, String delivery, String amount) {
-            System.out.println("[DetailsPanel.setFields] name=" + name + ", location=" + location + ", supplier=" + supplier + ", delivery=" + delivery + ", amount=" + amount);
-            nameField.setText(name);
-            locationField.setText(location);
-            supplierField.setText(supplier);
-            deliveryField.setText(delivery);
-            amountField.setText(amount);
-            }
-       
+    /**
+     * Set all main fields in the DetailsPanel.
+     * Call this after reading values from the database.
+     */
+    public void setFields(String name, String location, String supplier, String delivery, String amount) {
+        System.out.println("[DetailsPanel.setFields] name=" + name + ", location=" + location + ", supplier=" + supplier
+                + ", delivery=" + delivery + ", amount=" + amount);
+        nameField.setText(name);
+        locationField.setText(location);
+        supplierField.setText(supplier);
+        deliveryField.setText(delivery);
+        amountField.setText(amount);
+    }
+
     // Field to display current selected company
     private JTextField currentCompanyField = new JTextField(15);
 
@@ -91,7 +93,7 @@ public class AdminPanel extends JPanel {
     public void setCurrentCompanyField(String name) {
         currentCompanyField.setText(name);
     }
- 
+
     private static final long serialVersionUID = 1L;
     private EventListenerList listenerList = new EventListenerList();
 
@@ -131,47 +133,46 @@ public class AdminPanel extends JPanel {
     private JButton serialBackupBtn = new JButton("Serial Backup");
     private JButton serialRestoreBtn = new JButton("Serial Restore");
 
-
     private final InventoryController controller;
 
     public AdminPanel(InventoryController controller) {
-                // Add button action listeners to call controller methods
-                addBtn.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        // Example: call controller to add item/history
-                        // controller.addItem(...); // Fill with actual parameters from fields
-                    }
-                });
-                updateBtn.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        // Example: call controller to update item/history
-                        // controller.updateHistory(...); // Fill with actual parameters from fields
-                    }
-                });
-                removeBtn.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        // Example: call controller to delete item/history
-                        // controller.deleteItem(...); // Fill with actual parameters from fields
-                    }
-                });
+        // Add button action listeners to call controller methods
+        addBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Example: call controller to add item/history
+                // controller.addItem(...); // Fill with actual parameters from fields
+            }
+        });
+        updateBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Example: call controller to update item/history
+                // controller.updateHistory(...); // Fill with actual parameters from fields
+            }
+        });
+        removeBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Example: call controller to delete item/history
+                // controller.deleteItem(...); // Fill with actual parameters from fields
+            }
+        });
         this.controller = controller;
-                    // Set fixed size for the DetailsPanel to prevent stretching
-                    Dimension panelDim = new Dimension(500, 350);
-                    setPreferredSize(panelDim);
-                    setMaximumSize(panelDim);
-                    setMinimumSize(panelDim);
-                    setAlignmentX(CENTER_ALIGNMENT);
-                // Prevent text fields from stretching
-                Dimension fieldDim = new Dimension(120, 24);
-                nameField.setMaximumSize(fieldDim);
-                supplierField.setMaximumSize(fieldDim);
-                locationField.setMaximumSize(fieldDim);
-                deliveryField.setMaximumSize(fieldDim);
-                amountField.setMaximumSize(fieldDim);
-                // notesField removed, notesArea used instead
-                currentCompanyField.setMaximumSize(fieldDim);
-            // Set a fixed preferred size for the panel (adjust as needed)
-            setPreferredSize(new Dimension(500, 350));
+        // Set fixed size for the DetailsPanel to prevent stretching
+        Dimension panelDim = new Dimension(500, 350);
+        setPreferredSize(panelDim);
+        setMaximumSize(panelDim);
+        setMinimumSize(panelDim);
+        setAlignmentX(CENTER_ALIGNMENT);
+        // Prevent text fields from stretching
+        Dimension fieldDim = new Dimension(120, 24);
+        nameField.setMaximumSize(fieldDim);
+        supplierField.setMaximumSize(fieldDim);
+        locationField.setMaximumSize(fieldDim);
+        deliveryField.setMaximumSize(fieldDim);
+        amountField.setMaximumSize(fieldDim);
+        // notesField removed, notesArea used instead
+        currentCompanyField.setMaximumSize(fieldDim);
+        // Set a fixed preferred size for the panel (adjust as needed)
+        setPreferredSize(new Dimension(500, 350));
         // Make DetailsPanel visually prominent as the front panel
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
         setBackground(new java.awt.Color(240, 240, 255));
@@ -195,9 +196,10 @@ public class AdminPanel extends JPanel {
 
         // Set up the current company field (non-editable)
         currentCompanyField.setEditable(false);
-        currentCompanyField.setBackground(new Color(240,240,240));
+        currentCompanyField.setBackground(new Color(240, 240, 240));
 
-        // Helper to create a row panel for label/field (exactly two components per row, each half width)
+        // Helper to create a row panel for label/field (exactly two components per row,
+        // each half width)
         int rowHeight = 28;
         int panelWidth = 500; // Should match DetailsPanel preferred width
         int halfWidth = panelWidth / 2;
@@ -262,7 +264,7 @@ public class AdminPanel extends JPanel {
         statusPanel.add(statusLabel);
         add(statusPanel);
 
-         add(Box.createRigidArea(new Dimension(0, 16))); // ~2 blank lines
+        add(Box.createRigidArea(new Dimension(0, 16))); // ~2 blank lines
         // Add vertical space after separator
 
         // Panel for extra buttons
@@ -320,4 +322,3 @@ public class AdminPanel extends JPanel {
     }
 
 }
-
