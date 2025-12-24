@@ -1,0 +1,151 @@
+
+package Concordia.repository;
+import Concordia.annotations.Repository;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import Concordia.domain.Company;
+import Concordia.domain.Item;
+import Concordia.domain.User;
+import Concordia.domain.history;
+
+@Repository
+public class BackupRepository {
+    private Connection con;
+    public BackupRepository(Connection con) {
+        this.con = con;
+    }
+
+    public void backup(ArrayList<Company> Concordia) throws SQLException {
+        try {
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("DROP DATABASE if exists BackupWareHouse");
+            statement.executeUpdate();
+
+            statement = (PreparedStatement) con.prepareStatement("CREATE DATABASE BackupWareHouse");
+            statement.executeUpdate();
+
+            statement = (PreparedStatement) con.prepareStatement("USE BackupWareHouse");
+            statement.executeUpdate();
+
+            String query = "CREATE TABLE Company(" +
+                    "Company_ID INT NOT NULL," +
+                    "Company_title CHAR(25) NULL," +
+                    "PRIMARY KEY(Company_ID)" +
+                    ")" +
+                    "ENGINE = InnoDB  ";
+            statement = (PreparedStatement) con.prepareStatement(query);
+            statement.executeUpdate();
+
+            statement = (PreparedStatement) con.prepareStatement(
+                "ALTER TABLE Item ADD UNIQUE KEY uq_item_id (Item_ID)"
+            );
+            statement.executeUpdate();
+
+            query = " CREATE TABLE Users(" +
+                    "User_ID INT NOT NULL," +
+                    "User_Name CHAR(25) NULL," +
+                    "User_Password CHAR(25) NOT NULL," +
+                    "Company_ID INT NOT NULL," +
+                    "PRIMARY KEY(User_ID)," +
+                    "CONSTRAINT fk_companies1 FOREIGN KEY(Company_ID)" +
+                    "REFERENCES Company(Company_ID)" +
+                    " )" +
+                    " ENGINE = InnoDB";
+            statement = (PreparedStatement) con.prepareStatement(query);
+            statement.executeUpdate();
+
+            query = "CREATE TABLE Item(" +
+                    "Item_ID INT NOT NULL AUTO_INCREMENT," +
+                    "Company_ID INT NOT NULL," +
+                    "quantity INT NULL," +
+                    "itemName CHAR(25) NULL," +
+                    "PRIMARY KEY(Item_ID)," +
+                    "CONSTRAINT fk_companies FOREIGN KEY(Company_ID)" +
+                    "REFERENCES Company(Company_ID)" +
+                    ")" +
+                    "ENGINE = InnoDB";
+            statement = (PreparedStatement) con.prepareStatement(query);
+            statement.executeUpdate();
+
+            query = "CREATE TABLE History(" +
+                    "history_id INT NOT NULL AUTO_INCREMENT," +
+                    "item_ID INT NOT NULL," +
+                    "amount INT NULL," +
+                    "location CHAR(25) NULL," +
+                    "Supplier CHAR(25) NULL," +
+                    "Delivery_Date DATE NULL," +
+                    "PRIMARY KEY(history_id,item_ID)," +
+                    "CONSTRAINT fk_items FOREIGN KEY(item_ID) " +
+                    "REFERENCES Item(Item_ID)" +
+                    ")" +
+                    "ENGINE = InnoDB ";
+
+            statement = (PreparedStatement) con.prepareStatement(query);
+            statement.executeUpdate();
+
+            // for Company
+            System.out.println(Concordia.get(0).getCompanyId());
+            System.out.println("Sizeof Company Array" + Concordia.size());
+
+            //for item
+            System.out.println(Concordia.get(0).getItems().get(0).getItemName());
+            System.out.println("Sizeof items array" + Concordia.get(0).getItems().size());
+
+            //for history
+            System.out.println(Concordia.get(0).getItems().get(0).getHistory().get(0).getLocation());
+            System.out.println("Sizeof history array" + Concordia.get(0).getItems().get(0).getHistory().size());
+
+            System.out.println("Sizeof history array" + Concordia.get(0).getItems().get(1).getHistory().size());
+            System.out.println("HistoryId" + Concordia.get(0).getItems().get(1).getHistory().get(0).getHistoryId());
+
+            //for users
+            System.out.println("Users" + Concordia.get(0).getUsers().get(0).getPassword());
+
+            // backup the data to the backup
+            for (int i = 0; i < Concordia.size(); i++) { // will be only one company here
+                statement = (PreparedStatement) con.prepareStatement("INSERT INTO COMPANY(Company_ID,Company_title)  VALUES  (?,?)");
+                statement.setInt(1, Concordia.get(i).getCompanyId());
+                statement.setString(2, Concordia.get(i).getCompanyName());
+                statement.executeUpdate();
+                for (int j = 0; j < Concordia.get(i).getItems().size(); j++) {
+
+                    statement = (PreparedStatement) con.prepareStatement("INSERT INTO ITEM(ITEM_ID,COMPANY_ID,QUANTITY,ITEMNAME)  VALUES  (?,?,?,?)");
+                    statement.setInt(1, Concordia.get(i).getItems().get(j).getItemId());
+                    statement.setInt(2, Concordia.get(i).getCompanyId());
+                    statement.setInt(3, Concordia.get(i).getItems().get(j).getQuantity());
+                    statement.setString(4, Concordia.get(i).getItems().get(j).getItemName());
+                    statement.executeUpdate();
+
+                    for (int k = 0; k < Concordia.get(i).getItems().get(j).getHistory().size(); k++) {
+                        statement = (PreparedStatement) con.prepareStatement("INSERT  INTO  history(HISTORY_ID,ITEM_id,AMOUNT,LOCATION,Supplier,DELIVERY_DATE)  VALUES  (?,?,?,?,?,?)");
+                        statement.setInt(1, Concordia.get(i).getItems().get(j).getHistory().get(k).getHistoryId());
+                        statement.setInt(2, Concordia.get(i).getItems().get(j).getItemId());
+                        statement.setInt(3, Concordia.get(i).getItems().get(j).getHistory().get(k).getAmount());
+                        statement.setString(4, Concordia.get(i).getItems().get(j).getHistory().get(k).getLocation());
+                        statement.setString(5, Concordia.get(i).getItems().get(j).getHistory().get(k).getSupplier());
+                        statement.setString(6, Concordia.get(i).getItems().get(j).getHistory().get(k).getDeliveryDate());
+
+                        statement.executeUpdate();
+
+                    }
+
+                    //backup the users
+                    /*  for(int l=0;l<Concordia.get(i).getUsers().size();l++){
+                    statement = (PreparedStatement) con.prepareStatement("INSERT INTO USERs(USER_ID,USER_NAME,USER_PASSWORD,COMPANY_ID)  VALUES  (?,?,?,?)"); 
+                    statement.setInt(1, Concordia.get(i).getUsers().get(l).getUserId());
+                    statement.setString(2, Concordia.get(i).getUsers().get(l).getUsername());
+                    statement.setString(3, Concordia.get(i).getUsers().get(l).getPassword());
+                    statement.setInt(4, Concordia.get(i).getUsers().get(l).getCompanyId());
+                    statement.executeUpdate();
+                    
+                    }*/
+                }
+
+            }
+        } catch (SQLException sqlex) {
+            sqlex.printStackTrace();
+        }
+    }
+}

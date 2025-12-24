@@ -1,0 +1,12 @@
+Download the following JARs and place them in this folder:
+
+1. Servlet API:
+   https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api/5.0.0
+   (or javax.servlet-api/4.0.1 if using Java EE 8)
+
+2. Jackson JSON:
+   https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.17.0
+   https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core/2.17.0
+   https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations/2.17.0
+
+After downloading, rebuild your project.

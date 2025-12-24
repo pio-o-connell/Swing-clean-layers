@@ -39,6 +39,9 @@ hs_err_pid*
 .classpath
 .settings/
 
+# Jetty local server
+jetty-home-12.1.5/
+
 ############################
 # IDE: IntelliJ IDEA
 ############################

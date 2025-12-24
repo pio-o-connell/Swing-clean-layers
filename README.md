@@ -53,6 +53,9 @@
   - [Phases-seven](#phases-seven)
     - [Remove legacy shortcuts](#remove-legacy-shortcuts)
     - [Annotations](#annotations)
+    - [Decouple](#decouple)
+    - [Annotations](#annotations-1)
+    - [Creating WAR file for project](#creating-war-file-for-project)
   
 
 ## Phases-one
@@ -372,13 +375,11 @@ Annotations are labels, not magic:
     <summary>Details
     </summary>
     Semantic annotations are defined only as semantic markers- they do not carry meaning for humans (and future tools), but and have no runtime behaviour.
-
     They:
         do not create objects
         do not inject dependencies
         do not manage transactions
         do not change execution
-
     In this project @Service, @Repository, @Component, @Controller and @Transactional are used 
     They exist to say:
         “This class plays this role in the architecture.”
@@ -389,9 +390,186 @@ Annotations are labels, not magic:
 [Back To Top](#swing---clean---layers)
 
 
+### Decouple 
+---
+
+<details>
+    <summary>Details
+    </summary>
+    Introducing a real API boundary by decoupling the Swing client from the core application using HTTP-based Servlets.
+    New Architecture
+    backend/
+        ├─ controller/      (Servlets = API boundary)<br>
+        ├─ service/         (Business logic)<br>
+        ├─ repository/      (JDBC)<br>
+        ├─ domain/          (Entities)<br>
+        ├─ dto/             (API models)<br>
+        └─ infrastructure/  (DB, wiring)<br>
+<br>
+        swing-client/<br>
+        ├─ ui/<br>
+        ├─ http/<br>
+        └─ dto/<br>
+<br>
+<br>
+<br>
+        ui/ — Swing screens & controllers<br>
+                    JFrame, JPanel, JDialog<br>
+                    Event handling<br>
+                    Table models<br>
+                    Input validation (UI-level only)<br>
+ <br>                   
+        http/ — API clients (boundary adapters)<br>
+                    One class per backend resource<br>
+                    Builds HTTP requests<br>
+                    Handles status codes<br>
+                    Maps JSON ↔ DTOs<br>
+  <br>      
+        dto/ — data transfer objects<br>
+                    Plain data objects (POJOS)<br>
+                    Serializable to/from JSON<br>
+<br>
+        🧠 How data flows (end-to-end)
+                [User clicks button]
+                        ↓
+                UI (ui/)
+                        ↓
+                HTTP client (http/)
+                        ↓   JSON over HTTP
+                Backend Servlet
+                        ↓
+                HTTP response
+                        ↓
+                DTOs
+                        ↓
+                UI updates
 
 
 
+        What Swing actually sends
+                From Swing:
+                GET /api/products
+                POST /api/orders
+                PUT /api/stock/42
+        With:
+        JSON payloads
+        HTTP status codes
+<br>
+        Servlet: 
+            Thin controllers by design
+            REST encourages:
+                No session state
+
+
+            @WebServlet("/users")
+            public class UserServlet {
+                private final UserService userService;
+        }
+
+        4️⃣ REST Servlet (API boundary)
+                controller/ProductServlet.java
+                @WebServlet("/api/products")
+                public class ProductServlet extends HttpServlet {
+
+                    private ProductService service;
+                    private ObjectMapper mapper;
+
+                    @Override
+                    public void init() {
+                        DataSource ds = DataSourceFactory.create();
+                        ProductRepository repo = new ProductRepository(ds);
+                        service = new ProductService(repo);
+                        mapper = new ObjectMapper();
+                    }
+
+                    @Override
+                    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+                            throws IOException {
+
+                        List<Product> products = service.getAllProducts();
+
+                        // Entity → DTO
+                        List<ProductDto> dtoList = products.stream()
+                            .map(p -> {
+                                ProductDto dto = new ProductDto();
+                                dto.id = p.getId();
+                                dto.name = p.getName();
+                                dto.stock = p.getStock();
+                                return dto;
+                            })
+                            .toList();
+
+                        resp.setContentType("application/json");
+                        resp.setStatus(HttpServletResponse.SC_OK);
+                        mapper.writeValue(resp.getOutputStream(), dtoList);
+                    }
+                }
+
+
+🔥 This is the hard boundary
+Everything dangerous stays behind it.
+
+        The annotation:
+        Adds no behavior
+        Declares intent
+        Makes future automation possible
+
+
+</details>
+<br>
+
+[Back To Top](#decouple-swing-with-http-based-servlets)
+
+
+### Annotations 
+---
+
+<details>
+    <summary>Details
+    </summary>
+    decoupling of your Java Swing client from the backend using HTTP-based Servlets. Here’s a concise summary and explanation:
+
+    Key Points:
+
+    The Swing client (swing-client/) communicates with the backend (backend/) only via HTTP/JSON, not by calling Java classes directly.
+    The backend is organized into clear layers: controller (Servlets as API boundary), service (business logic), repository (JDBC), domain (entities), dto (API models), and infrastructure (wiring, DB).
+    The Swing client is split into ui (screens/controllers), http (API clients), and dto (data transfer objects).
+    Data flow: User interacts with UI → HTTP client sends JSON over HTTP → Backend Servlet processes and responds → UI updates with DTOs.
+    Example API calls: GET /api/products, POST /api/orders, PUT /api/stock/42, all using JSON payloads and HTTP status codes.
+    Servlets act as thin controllers, with no session state, and map entities to DTOs for the API.
+    Annotations like @WebServlet, @Service, @Repository, etc., are used as semantic markers only—they declare intent but add no runtime behavior.
+    Purpose:
+
+    This “hard boundary” ensures the UI is fully decoupled from backend logic and persistence, making the system more maintainable, testable, and ready for future automation or framework changes.
+    If you need help implementing this structure, creating DTOs, or wiring up the HTTP client or Servlets, let me know your next step!
+
+
+</details>
+<br>
+
+[Back To Top](#swing---clean---layers)
+
+
+### Creating WAR file for project 
+---
+
+<details>
+    <summary>Details
+    </summary>
+    Semantic annotations are defined only as semantic markers- they do not carry meaning for humans (and future tools), but and have no runtime behaviour.
+    They:
+        do not create objects
+        do not inject dependencies
+        do not manage transactions
+        do not change execution
+    In this project @Service, @Repository, @Component, @Controller and @Transactional are used 
+    They exist to say:
+        “This class plays this role in the architecture.”
+
+</details>
+<br>
+
+[Back To Top](#swing---clean---layers)
 
 
 

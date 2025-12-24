@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <display-name>Concordia</display-name>
+    <!-- Explicit servlet mapping for ConcordiaServlet -->
+    <servlet>
+        <servlet-name>ConcordiaServlet</servlet-name>
+        <servlet-class>Concordia.controller.ConcordiaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConcordiaServlet</servlet-name>
+        <url-pattern>/api/concordia</url-pattern>
+    </servlet-mapping>
+</web-app>
