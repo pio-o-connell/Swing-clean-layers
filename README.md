@@ -2,35 +2,33 @@
 
 <img src="documentation/images/java-swing-widget.jpg" alt="Widget" style="width:60%;">
 
-
-
 ## Overview
+
 ---
 
 # Concordia
 
 **Project Overview:**  
-"Concordia" takes an old  **Java Swing** created in 2014, and uses **augmented AI**, to create a **swing front end locally and servlet for remote access from common code base**.  
+"Concordia" takes an old **Java Swing** created in 2014, and uses **augmented AI**, to create a **swing front end locally and servlet for remote access from common code base**.
 
-**Project Purpose:**  
+**Project Purpose:**
+
 - **Reorganize a legacy Concordia app into clean layers**<br><br>
-        WareHouse<br>
-        ├── domain        (pure data + rules)<br>
-        ├── repository    (JDBC / persistence)<br>
-        ├── service       (business logic)<br>
-        ├── controller    (Concordia + Servlet adapters)<br>
-        ├── ui            (Concordia components only)<br>
-        ├── infrastructure (bootstrapping, wiring)<br>
+  WareHouse<br>
+  ├── domain (pure data + rules)<br>
+  ├── repository (JDBC / persistence)<br>
+  ├── service (business logic)<br>
+  ├── controller (Concordia + Servlet adapters)<br>
+  ├── ui (Concordia components only)<br>
+  ├── infrastructure (bootstrapping, wiring)<br>
 
-- **Infrastructure** created within app negating any need for Spring or DI      
-- **Annotations** as labels ( semantic markers) 
+- **Infrastructure** created within app negating any need for Spring or DI
+- **Annotations** as labels ( semantic markers)
 - **Remote Acccess** using **servlet**, **Local Access** application building on **Java Concordia libraries**
-- Integration of **augmented AI tools** to enhance development speed and functionality.  
-- Fully **responsive design** for **Servlet** with attention to accessibility and user experience.  
+- Integration of **augmented AI tools** to enhance development speed and functionality.
+- Fully **responsive design** for **Servlet** with attention to accessibility and user experience.
 
-**Live Project:** [Harmonia](#)  
-
-
+**Live Project:** [Harmonia](#)
 
 <h2 align="center" id="TOC">Index</h2>
 
@@ -55,14 +53,16 @@
     - [Annotations](#annotations)
     - [Decouple](#decouple)
     - [Annotations](#annotations-1)
-    - [Maven Build  Build file for project](#maven-build--build-file-for-project)
-  
+  - [Maven](#maven)
+    - [Maven Build Build file for project](#maven-build-build-file-for-project)
+    - [Adding Test Harness for Swing and servlet](#adding-test-harness-for-swing-and-servlet)
+  - [Adding JPA and Hibernate](#adding-jpa-and-hibernate)
 
 ## Phases-one
+
 ---
 
 ### Domain first
-
 
 <details>
     <summary>Details
@@ -73,16 +73,17 @@
 
         No logic changes
         Next, start with the domain layer. This is the safest step. Move your core model classes — Company, Item, history, User, Index — into a domain package. Do not add logic, do not add database code, do not add UI code. These classes should only represent data and relationships. Serialization is fine here.
+
 </details>
 <br>
 
 [Back To Top](#concordia)
 
 ## Phases-two
+
 ---
 
-### Repository extraction 
-
+### Repository extraction
 
 <details>
     <summary>Details
@@ -90,7 +91,6 @@
         2️⃣ Create repository package
             WareHouse.repository
 </details>
-
 
 ### Move database code without changing SQL
 
@@ -128,10 +128,10 @@
 [Back To Top](#swing---clean---layers)
 
 ## Phases-three
+
 ---
 
 ### Introduce Services (thin at first)
-    
 
 <details>
     <summary>Details
@@ -168,17 +168,11 @@
 
 [Back To Top](#swing---clean---layers)
 
-
-
-
-
-
-
 ## Phases-four
+
 ---
 
-###  Controller layer (adapters)
-
+### Controller layer (adapters)
 
 <details>
     <summary>Details
@@ -222,15 +216,14 @@
 
 
         Next, add a controller layer. Controllers are the bridge between the Concordia UI (or servlets) and services. The UI should no longer call repositories or services directly. Controllers translate user actions like “Backup pressed” or “Delete item” into service calls. These are application controllers, not web controllers. Label them with @Component.
+
 </details>
 <br>
 
 [Back To Top](#concordia)
 
-
-
-
 ## Phases-five
+
 ---
 
 ### Clean the Concordia UI (liberation phase)
@@ -258,38 +251,31 @@
 
         After that, clean up the Concordia UI. The UI should now only read user input, show dialogs, and call controller methods. There should be no SQL, no business logic, and no persistence code in Concordia classes. This is where Concordia becomes simple and manageable again.
 
+</details>
+<br>
+
+[Back To Top](#concordia)
+
+## Phases-six
+
+---
+
+### Infrastructure / Wiring
+
+<details>
+    <summary>Details
+    </summary>
+
+        WareHouse.infrastructure.ApplicationBootstrap sets up the database connection, repositories, service, controller, and launches the Mainframe.
+        This centralizes all object creation and wiring, replacing the need for Spring or any DI framework. You can now launch your app from ApplicationBootstrap. #
 
 </details>
 <br>
 
 [Back To Top](#concordia)
 
-
-
-## Phases-six
----
-
-
-### Infrastructure / Wiring
-
-
-
-
-<details>
-    <summary>Details
-    </summary>
-
-        WareHouse.infrastructure.ApplicationBootstrap sets up the database connection, repositories, service, controller, and launches the Mainframe. 
-        This centralizes all object creation and wiring, replacing the need for Spring or any DI framework. You can now launch your app from ApplicationBootstrap. #
-
-</details>
-<br>
-
-[Back To Top](#swing---clean---layers)
-
-
-
 ## Phases-seven
+
 ---
 
 ### Remove legacy shortcuts
@@ -318,15 +304,16 @@
 
 
         Only at the end should you remove legacy shortcuts like static globals, hidden dependencies, and circular references. Do this last, when the structure is stable.
+</details>
+<br>
 
+[Back To Top](#concordia)
 
 Phase 7 – Kill legacy shortcuts
 
-
-
 Only now:
 
- fully remove the old main or further refactor!
+fully remove the old main or further refactor!
 
 Remove static globals
 
@@ -339,15 +326,9 @@ Remove circular references
 At this point:
 ✔ Testable
 ✔ Understandable
-✔ Framework-ready include 
-
-
-
-
-
+✔ Framework-ready include
 
 Only at the end should you remove legacy shortcuts like static globals, hidden dependencies, and circular references. Do this last, when the structure is stable.
-
 
 Annotations are labels, not magic:
 
@@ -357,18 +338,13 @@ Annotations are labels, not magic:
 
 @Component
 
-
-
-
-
-
 </details>
 <br>
 
-[Back To Top](#swing---clean---layers)
+[Back To Top](#concordia)
 
+### Annotations
 
-### Annotations 
 ---
 
 <details>
@@ -387,10 +363,10 @@ Annotations are labels, not magic:
 </details>
 <br>
 
-[Back To Top](#swing---clean---layers)
+[Back To Top](#concordia)
 
+### Decouple
 
-### Decouple 
 ---
 
 <details>
@@ -429,37 +405,43 @@ Annotations are labels, not magic:
                     Plain data objects (POJOS)<br>
                     Serializable to/from JSON<br>
 <br>
-        🧠 How data flows (end-to-end)
-                [User clicks button]
+        🧠 How data flows (end-to-end)<br>
+                [User clicks button]<br>
+                        ↓<br>
+                UI (ui/)<br>
                         ↓
-                UI (ui/)
-                        ↓
-                HTTP client (http/)
-                        ↓   JSON over HTTP
-                Backend Servlet
-                        ↓
-                HTTP response
-                        ↓
-                DTOs
-                        ↓
-                UI updates
-
-
+                        ↓<br>
+                HTTP client (http/)<br>
+                        ↓   JSON over HTTP<br>
+                Backend Servlet<br>
+                        ↓<br>
+                HTTP response<br>
+                        ↓<br>
+                DTOs<br>
+                        ↓<br>
+                UI updates<br><br>
 
         What Swing actually sends
-                From Swing:
-                GET /api/products
-                POST /api/orders
-                PUT /api/stock/42
-        With:
-        JSON payloads
-        HTTP status codes
+            From Swing:
+                GET /api/concordia?type=item
+                GET /api/concordia?type=history
+                GET /api/concordia?type=company
+                GET /api/concordia?type=user
+                POST /api/concordia?type=item
+                POST /api/concordia?type=history
+                PUT /api/concordia?type=item
+                PUT /api/concordia?type=history
+                DELETE /api/concordia?type=item&id=...
+                DELETE /api/concordia?type=history&id=...
+            With:
+            JSON payloads
+            HTTP status codes
+
 <br>
         Servlet: 
             Thin controllers by design
             REST encourages:
                 No session state
-
 
             @WebServlet("/users")
             public class UserServlet {
@@ -467,44 +449,32 @@ Annotations are labels, not magic:
         }
 
         4️⃣ REST Servlet (API boundary)
-                controller/ProductServlet.java
-                @WebServlet("/api/products")
-                public class ProductServlet extends HttpServlet {
+                controller/ConciordiaServlet.java
 
-                    private ProductService service;
-                    private ObjectMapper mapper;
+                public class ConcordiaServlet extends HttpServlet {
+                private ObjectMapper mapper;
+                private CompanyRepository companyRepo;
+                private ItemRepository itemRepo;
+                private HistoryRepository historyRepo;
+                private UserRepository userRepo;
 
-                    @Override
+                @Override
                     public void init() {
-                        DataSource ds = DataSourceFactory.create();
-                        ProductRepository repo = new ProductRepository(ds);
-                        service = new ProductService(repo);
-                        mapper = new ObjectMapper();
+                        try {
+                            Connection con = DriverManager.getConnection(
+                                "jdbc:postgresql://127.0.0.1:5432/concordia", "postgres", "password");
+                            companyRepo = new CompanyRepository(con);
+                            itemRepo = new ItemRepository(con);
+                            historyRepo = new HistoryRepository(con);
+                            userRepo = new UserRepository(con);
+                            mapper = new ObjectMapper();
+                        } catch (SQLException e) {
+                            throw new RuntimeException("Database connection failed", e);
+                        }
                     }
 
-                    @Override
-                    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-                            throws IOException {
-
-                        List<Product> products = service.getAllProducts();
-
-                        // Entity → DTO
-                        List<ProductDto> dtoList = products.stream()
-                            .map(p -> {
-                                ProductDto dto = new ProductDto();
-                                dto.id = p.getId();
-                                dto.name = p.getName();
-                                dto.stock = p.getStock();
-                                return dto;
-                            })
-                            .toList();
-
-                        resp.setContentType("application/json");
-                        resp.setStatus(HttpServletResponse.SC_OK);
-                        mapper.writeValue(resp.getOutputStream(), dtoList);
-                    }
-                }
-
+        @Override
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
 🔥 This is the hard boundary
 Everything dangerous stays behind it.
@@ -514,14 +484,13 @@ Everything dangerous stays behind it.
         Declares intent
         Makes future automation possible
 
-
 </details>
 <br>
 
-[Back To Top](#decouple-swing-with-http-based-servlets)
+[Back To Top](#concordia)
 
+### Annotations
 
-### Annotations 
 ---
 
 <details>
@@ -543,14 +512,15 @@ Everything dangerous stays behind it.
     This “hard boundary” ensures the UI is fully decoupled from backend logic and persistence, making the system more maintainable, testable, and ready for future automation or framework changes.
     If you need help implementing this structure, creating DTOs, or wiring up the HTTP client or Servlets, let me know your next step!
 
-
 </details>
 <br>
 
-[Back To Top](#swing---clean---layers)
+[Back To Top](#concordia)
 
+## Maven
 
-### Maven Build  Build file for project 
+### Maven Build Build file for project
+
 ---
 
 <details>
@@ -601,8 +571,7 @@ Everything dangerous stays behind it.
 │   ├─ classes/                   <-- compiled .class files <br> 
 │   │   └─ Concordia/             <-- package folders reflect src/Concordia <br> 
 │   ├─ concordia-backend.war      <-- WAR for Jetty deployment <br> 
-│   └─ concordia-swing.jar        <-- Runnable Swing JAR <br> 
-
+│   └─ concordia-swing.jar        <-- Runnable Swing JAR <br>
 
 Notes
 
@@ -616,13 +585,39 @@ Notes
 
 <main.class>Concordia.Main</main.class>
 
-
 - Your WAR will only include backend + web resources; the Swing JAR is separate.
 
 </details>
 <br>
 
-[Back To Top](#swing---clean---layers)
+[Back To Top](#concordia)
+
+
+### Adding Test Harness for Swing and servlet
+
+
+<details>
+    <summary>Details
+    </summary>
+    ### Adding test for project
+
+    The shared domain 'Shared-Domain'  module  is now set up and built successfully.
+    Added the domain module as a dependency in both pom.xml and pom.xml.
+    Fixed pom.xml structure:
+
+    Both web-app and swing-app now have poms pointing to the domain classes, and tests for domain classes(The test CompanyTest, historyTest,ItemTest and users all runs and passes.) now compile and pass.
+
+    All Maven modules build and install without errors.
+    
+    Your project now follows best practices for shared code in a multi-module Maven setup.
+
+    Moved all domain classes to the new module:
+
+</details>
+
+<br>
+
+[Back To Top](#concordia)
 
 
 
@@ -631,12 +626,150 @@ Notes
 
 
 
+## Adding JPA and Hibernate
+
+    You write JPA code
+    ↓
+    JPA spec
+    ↓
+    Hibernate (implementation you included)
+    ↓
+    JDBC
+    ↓
+    PostgreSQL
+
+    Your code → JPA (interfaces)
+          → Hibernate (implementation)
+          → JDBC
+          → PostgreSQL
+
+Maven setup:<br> - jakarta.persistence-api → JPA spec<br> - hibernate-core → JPA implementation<br> - postgresql → JDBC driver<br>
+```xml
+    <dependencies>
+    <!-- JPA API (interfaces + annotations) -->
+    <dependency>
+    <groupId>jakarta.persistence</groupId>
+    <artifactId>jakarta.persistence-api</artifactId>
+    <version>3.1.0</version>
+    </dependency>
+    <!-- Hibernate = JPA implementation -->
+    <dependency>
+    <groupId>org.hibernate.orm</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>6.4.4.Final</version>
+    </dependency>
+    <!-- PostgreSQL JDBC driver -->
+    <dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.7.3</version>
+    </dependency>
+    </dependencies>
+```
+
+src/main/resources/META-INF/persistence.xml
+- Correct namespace
+- Correct RESOURCE_LOCAL usage
+- Correct Hibernate provider
+- Correct JDBC properties
+- Correct Hibernate properties
 
 
+    ```xml
+        <?xml version="1.0" encoding="UTF-8"?>
+        <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+                    version="3.0">
+            <persistence-unit name="concordiaPU" transaction-type="RESOURCE_LOCAL">
+                <!-- Tell JPA to use Hibernate -->
+                <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+                <!-- Your entities -->
+                <class>com.concordia.domain.User</class>
+                <properties>
+                    <!-- DB -->
+                    <property name="jakarta.persistence.jdbc.url"
+                            value="jdbc:postgresql://localhost:5432/concordia"/>
+                    <property name="jakarta.persistence.jdbc.user" value="postgres"/>
+                    <property name="jakarta.persistence.jdbc.password" value="postgres"/>
+                    <!-- Hibernate settings -->
+                    <property name="hibernate.dialect"
+                            value="org.hibernate.dialect.PostgreSQLDialect"/>
+                    <property name="hibernate.hbm2ddl.auto" value="validate"/>
+                    <property name="hibernate.show_sql" value="true"/>
+                </properties>
+            </persistence-unit>
+        </persistence>
+    ```
 
+1. Entity (pure JPA)
 
+   ```java
+       package com.concordia.domain;
+       import jakarta.persistence.*;
+       @Entity
+       @Table(name = "users")
+       public class User {
 
+           @Id
+           @GeneratedValue
+           private Long id;
 
+           private String email;
 
+           // getters/setters
+       }
+   ```
 
+2. Bootstrap (Infrastructure layer)
 
+   ```java
+        EntityManagerFactory emf =
+        Persistence.createEntityManagerFactory("concordiaPU");
+   ```
+
+   Hibernate is now running underneath.<br>
+
+3. Repository (JPA only)
+
+   ```java
+       public class UserRepository {
+
+           private final EntityManager em;
+
+           public UserRepository(EntityManager em) {
+               this.em = em;
+           }
+
+           public void save(User user) {
+               em.persist(user);
+           }
+
+           public User find(Long id) {
+               return em.find(User.class, id);
+           }
+       }
+   ```
+
+4. Transaction<br>
+
+   ```java
+       EntityManager em = emf.createEntityManager();
+       EntityTransaction tx = em.getTransaction();
+
+       try {
+           tx.begin();
+           repo.save(user);
+           tx.commit();
+       }
+       catch (Exception e) {
+           tx.rollback();
+           throw e;
+       } finally {
+       em.close();
+       }
+   ```
+
+   This is exactly what Spring normally hides. “JPA with Hibernate, without Spring, done properly.”
+
+<br>
+
+[Back To Top](#concordia)
