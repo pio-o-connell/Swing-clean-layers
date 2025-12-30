@@ -91,14 +91,14 @@
 package backend.controller;
 
 import backend.dto.*;
-import WareHouse.repository.CompanyRepository;
-import WareHouse.repository.ItemRepository;
-import WareHouse.repository.HistoryRepository;
-import WareHouse.repository.UserRepository;
-import WareHouse.domain.Company;
-import WareHouse.domain.Item;
-import WareHouse.domain.history;
-import WareHouse.domain.User;
+import Concordia.repository.CompanyRepository;
+import Concordia.repository.ItemRepository;
+import Concordia.repository.HistoryRepository;
+import Concordia.repository.UserRepository;
+import Concordia.domain.Company;
+import Concordia.domain.Item;
+import Concordia.domain.history;
+import Concordia.domain.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.annotation.WebServlet;
@@ -249,14 +249,14 @@ public class ConcordiaServlet extends HttpServlet {
                     }
                     case "company": {
                         CompanyDto dto = mapper.readValue(req.getInputStream(), CompanyDto.class);
-                        companyRepo.updateCompany(new WareHouse.domain.Company(dto.companyId, dto.companyName, new ArrayList<>(), new ArrayList<>()));
+                        companyRepo.updateCompany(new Company(dto.companyId, dto.companyName, new ArrayList<>(), new ArrayList<>()));
                         resp.setStatus(HttpServletResponse.SC_OK);
                         resp.getWriter().write("Company updated");
                         break;
                     }
                     case "user": {
                         UserDto dto = mapper.readValue(req.getInputStream(), UserDto.class);
-                        userRepo.updateUser(new WareHouse.domain.User(dto.userId, dto.companyId, dto.username, "")); // Password handling TBD
+                        userRepo.updateUser(new User(dto.userId, dto.companyId, dto.username, "")); // Password handling TBD
                         resp.setStatus(HttpServletResponse.SC_OK);
                         resp.getWriter().write("User updated");
                         break;

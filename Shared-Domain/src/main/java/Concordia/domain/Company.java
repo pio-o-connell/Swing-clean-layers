@@ -1,25 +1,40 @@
 package Concordia.domain;
 
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Company implements Serializable{
-	public String getName() { return getCompanyName(); }
-	public int getCompanyId() { return companyId; }
-	public String getCompanyName() { return companyName; }
-	private int companyId;
-	private String companyName;
-	private ArrayList<Item> Items = new ArrayList<Item>();
-	private ArrayList<User> Users = new ArrayList<User>();
-	public Company(int companyId,String companyName,ArrayList<Item> items,ArrayList<User> users){
-		this.companyId = companyId;
-		this.companyName=companyName;
-		this.Items=items;
-		this.Users=users;
-	}
-	public ArrayList<Item> getItems() { return Items; }
-	public void setItems(ArrayList<Item> items) { Items = items; }
-	public ArrayList<User> getUsers() { return Users; }
-	public void setUsers(ArrayList<User> users) { Users = users; }
-	public void addItem(){ this.Items.add(new Item()); }
+@Entity
+@Table(name = "company")
+public class Company implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer companyId;
+
+    private String companyName;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Item> Items = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<User> Users = new ArrayList<>();
+
+    public Company() {}
+
+    public Company(Integer companyId, String companyName, List<Item> items, List<User> users) {
+        this.companyId = companyId;
+        this.companyName = companyName;
+        this.Items = items;
+        this.Users = users;
+    }
+    public String getName() { return getCompanyName(); }
+    public Integer getCompanyId() { return companyId; }
+    public String getCompanyName() { return companyName; }
+    public List<Item> getItems() { return Items; }
+    public void setItems(List<Item> items) { Items = items; }
+    public List<User> getUsers() { return Users; }
+    public void setUsers(List<User> users) { Users = users; }
+    public void addItem() { this.Items.add(new Item()); }
 }
+

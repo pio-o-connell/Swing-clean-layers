@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Repository
-public class UserRepository {
+public class UserRepositoryJdbc {
     private final Connection con;
-    public UserRepository(Connection con) {
+    public UserRepositoryJdbc(Connection con) {
         this.con = con;
     }
 

@@ -40,6 +40,24 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.15.3</version>
         </dependency>
+        <!-- JPA API (interfaces + annotations) -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <!-- Hibernate = JPA implementation -->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.4.4.Final</version>
+        </dependency>
+        <!-- PostgreSQL JDBC driver for runtime -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.3</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>concordia-backend</finalName>

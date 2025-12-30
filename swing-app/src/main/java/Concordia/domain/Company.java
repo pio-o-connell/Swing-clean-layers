@@ -3,11 +3,16 @@ package Concordia.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/*---------------------------------------------------------------------------------------
- * The 'Company' class holds the manufacturers companies name and unique id, there are links to the Users
- * of the system and the particular items stocked by this company(from the Manufacturer) together with historical
- * references to past transactions by particular suppliers
- ---------------------------------------------------------------------------------------*/
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+
+
+@Entity
+@Table(name = "company")
+// The 'Company' class holds the manufacturers companies name and unique id, there are links to the Users
+// of the system and the particular items stocked by this company (from the Manufacturer) together with historical
+// references to past transactions by particular suppliers
 
 public class Company implements Serializable{
 	// Compatibility method for legacy code
@@ -23,6 +28,7 @@ public class Company implements Serializable{
 		return companyName;
 	}
 
+	@Id
 	private int companyId;
 	private String companyName;
 	private ArrayList<Item> Items = new ArrayList<Item>();

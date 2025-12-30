@@ -9,9 +9,7 @@
     </parent>
     <artifactId>swing-app</artifactId>
     <packaging>jar</packaging>
-    <properties>
-        <main.class>Concordia.MainDriver</main.class>
-    </properties>
+    <!-- Removed <main.class> property to avoid conflict with exec-maven-plugin -->
     <dependencies>
         <!-- JUnit 5 for testing -->
         <dependency>
@@ -37,10 +35,30 @@
             <artifactId>Shared-Domain</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!-- JPA API (interfaces + annotations) -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <!-- Hibernate = JPA implementation -->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.4.4.Final</version>
+        </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>${project.basedir}/src/Concordia</sourceDirectory>
         <plugins>
+            <!-- Exec plugin for running main classes -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>Concordia.MainDriver</mainClass>
+                </configuration>
+            </plugin>
             <!-- Surefire plugin for running tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

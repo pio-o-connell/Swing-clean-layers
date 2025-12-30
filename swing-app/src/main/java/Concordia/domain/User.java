@@ -11,9 +11,10 @@ public class User implements Serializable{
 	private String username,password;
 
 	public User(int userId,int companyId,String username,String password){
-		this.userId=userId;
-		this.companyId=companyId;
-		this.password=password;
+		this.userId = userId;
+		this.companyId = companyId;
+		this.username = username;
+		this.password = password;
 	}
 
 	public void ListUsers(){

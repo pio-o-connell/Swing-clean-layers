@@ -1,5 +1,4 @@
-
-package Concordia.domain;
+package com.concordia.domain;
 
 import jakarta.persistence.*;
 

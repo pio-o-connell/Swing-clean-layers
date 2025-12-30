@@ -628,7 +628,22 @@ Notes
 
 ## Adding JPA and Hibernate
 
-    You write JPA code
+    Define entity classes for your tables.
+    Replace raw JDBC calls in your DAO/repository layer with JPA/Hibernate code:
+    EntityManager or JpaRepository for CRUD operations.
+    Make sure your transaction handling is clear (@Transactional if using Spring or manual if framework-free).
+    Reason: Doing this after tests ensures that your ORM code can be validated against real data and tested via your test framework.
+
+    Step 4: Update database contents
+    After JPA is set up, you can use either:
+    JPA save/update methods
+    SQL scripts (via data.sql in Maven resources or via JPA’s EntityManager.createNativeQuery())
+    Reason: You can now safely update contents and verify via tests that your ORM layer works as expected.
+
+
+    Refactor to JPA/ORM
+
+    JPA code
     ↓
     JPA spec
     ↓
