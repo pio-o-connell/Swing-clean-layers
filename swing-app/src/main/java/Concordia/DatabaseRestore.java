@@ -1,4 +1,6 @@
-package Concordia;
+//------------------------------------------------------------------//
+package concordia;
+import java.util.List;
 
 //------------------------------------------------------------------//
 
@@ -7,10 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import Concordia.domain.Company;
-import Concordia.domain.Item;
-import Concordia.domain.User;
-import Concordia.domain.history;
+import concordia.domain.Company;
+import concordia.domain.Item;
+import concordia.domain.User;
+import concordia.domain.History;
 
 // Restores the database from backup - loads into memory
 // The 'Restore' button functionality in main window
@@ -20,15 +22,15 @@ import Concordia.domain.history;
 
 //import com.mysql.jdbc.Connection;
 //import com.mysql.jdbc.PreparedStatement;
-import Concordia.annotations.Configuration;
+import concordia.annotations.Configuration;
 
 @Configuration
 public class DatabaseRestore {
 
     Connection con;
-    ArrayList<history> history11 = new ArrayList<history>();
-    ArrayList<Item> Item11 = new ArrayList<Item>();
-    ArrayList<User> User11 = new ArrayList<User>();
+    List<History> history11 = new java.util.ArrayList<>();
+    java.util.Set<Item> Item11 = new java.util.HashSet<>();
+    java.util.Set<User> User11 = new java.util.HashSet<>();
 
     DatabaseRestore(Connection con) throws Exception {
 
@@ -53,10 +55,19 @@ public class DatabaseRestore {
               
                 
                 ResultSet historyResult = statement1.executeQuery();
-                history11 = new ArrayList<history>();
+                history11 = new java.util.ArrayList<>();
                 while (historyResult.next()) {
 
-                    history11.add(new history(historyResult.getInt(1), historyResult.getInt(2), historyResult.getInt(3), historyResult.getString(4), historyResult.getString(5), historyResult.getString(6), historyResult.getString(7)));
+                    // Fix: pass null for Item in History constructor, as only historyId, item, amount, location, provider, deliveryDate, notes are expected
+                    history11.add(new History(
+                        historyResult.getInt(1), // historyId
+                        null, // Item (not available here)
+                        historyResult.getInt(2), // amount
+                        historyResult.getString(4), // location
+                        historyResult.getString(5), // provider
+                        historyResult.getString(6), // deliveryDate
+                        historyResult.getString(7)  // notes
+                    ));
                     System.out.println("\n history_id \t " + historyResult.getInt(1));
                     System.out.println("item_id " + historyResult.getInt(2));
                     System.out.println("amount" + historyResult.getInt(3));
@@ -67,14 +78,30 @@ public class DatabaseRestore {
                 System.out.println("Item-ID" + itemsResult.getInt(1));
 
                 // Updated Item constructor: (int itemId, int companyId, int quantity, String itemName, ArrayList<history> historyItem)
-                Item11.add(new Item(
-                    itemsResult.getInt(1), // itemId
-                    itemsResult.getInt(2), // companyId
-                    itemsResult.getInt(3), // quantity
-                    itemsResult.getString(4), // itemName
-                    itemsResult.getString(5), // notes
-                    history11
-                ));
+                // Refactored: You must fetch the Company object by ID and pass it to the Item constructor
+                // Find the Company object by companyId
+                Company company = null;
+                int companyId = itemsResult.getInt(2);
+                for (Company c : companies) {
+                    if (c.getCompanyId() == companyId) {
+                        company = c;
+                        break;
+                    }
+                }
+                if (company != null) {
+                    Item11.add(new Item(
+                        itemsResult.getInt(1), // itemId
+                        company, // Company object
+                        itemsResult.getInt(3), // quantity
+                        itemsResult.getString(4), // itemName
+                        itemsResult.getString(5), // location
+                        itemsResult.getString(6), // notes
+                        itemsResult.getTimestamp(7), // date
+                        history11
+                    ));
+                } else {
+                    System.err.println("No matching company found for itemId " + itemsResult.getInt(1) + ", companyId " + itemsResult.getInt(2));
+                }
 
                 System.out.println("\n Item id" + itemsResult.getInt(1));
                 System.out.println("\t Company Id" + itemsResult.getInt(2));
@@ -97,7 +124,8 @@ public class DatabaseRestore {
             ResultSet result4 = statement4.executeQuery();
             while (result4.next()) {
                 System.out.println("\n" + result4.getInt(1) + " name:" + result4.getString(2));
-                companies.add(new Company(result4.getInt(1), result4.getString(2), Item11, User11));
+                // Company(int companyId, String companyTitle, String companyName, Set<Item> items, Set<User> users)
+                companies.add(new Company(result4.getInt(1), result4.getString(2), result4.getString(3), Item11, User11));
             }
         } catch (SQLException sqlex) {
             sqlex.printStackTrace();
@@ -106,3 +134,4 @@ public class DatabaseRestore {
     }
 
 }
+// ...existing code...

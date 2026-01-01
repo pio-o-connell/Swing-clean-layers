@@ -1,4 +1,4 @@
-package Concordia;
+package concordia;
 
 import javax.swing.BoxLayout;
 import javax.swing.Box;
@@ -69,7 +69,7 @@ import javax.swing.BoxLayout;
 // If the User Interface was fully completed it should include a calendar on the dash. The date has proven v.difficult
 // with JTextStrings.
 /*-------------------------------------------------------------------------------------------------------------------*/
-import Concordia.controller.InventoryController;
+import concordia.controller.InventoryController;
 
 public class AdminPanel extends JPanel {
     /**

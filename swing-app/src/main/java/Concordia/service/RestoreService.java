@@ -1,9 +1,9 @@
 
-package Concordia.service;
-import Concordia.annotations.Service;
+package concordia.service;
+import concordia.annotations.Service;
 
-import Concordia.repository.RestoreRepository;
-import Concordia.domain.Company;
+import concordia.repository.RestoreRepository;
+import concordia.domain.Company;
 import java.sql.SQLException;
 import java.util.List;
 

@@ -1,8 +1,8 @@
 
-package Concordia.controller;
-import Concordia.annotations.Controller;
+package concordia.controller;
+import concordia.annotations.Controller;
 
-import Concordia.service.BackupService;
+import concordia.service.BackupService;
 
 @Controller
 public class BackupController {
@@ -10,7 +10,7 @@ public class BackupController {
     public BackupController(BackupService service) {
         this.service = service;
     }
-    public void backupPressed(java.util.List<Concordia.domain.Company> companies) throws java.sql.SQLException {
+    public void backupPressed(java.util.List<concordia.domain.Company> companies) throws java.sql.SQLException {
         service.backup(companies);
     }
 }

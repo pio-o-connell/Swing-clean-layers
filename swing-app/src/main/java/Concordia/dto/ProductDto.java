@@ -1,4 +1,4 @@
-package Concordia.dto;
+package concordia.dto;
 
 public class ProductDto {
     public int id;

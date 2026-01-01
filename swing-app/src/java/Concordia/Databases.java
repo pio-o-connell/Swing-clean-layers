@@ -1,5 +1,3 @@
-// ORM/JPA version of Databases.java
-// This file uses JPA (Jakarta Persistence) and EntityManager for ORM-based database operations.
 package concordia;
 
 import jakarta.persistence.*;
@@ -18,18 +16,18 @@ public class Databases {
         this.entityManager = entityManager;
     }
 
-    // Insert a new company using JPA
+    // Example: Insert a new company using JPA
     public void insertCompany(int companyId, String companyName) {
-        Company company = new Company(companyId, "", companyName, new java.util.HashSet<>(), new java.util.HashSet<>());
+        Company company = new Company(companyId, companyName, new ArrayList<>(), new ArrayList<>());
         entityManager.getTransaction().begin();
         entityManager.persist(company);
         entityManager.getTransaction().commit();
     }
 
-    // Update a history record using JPA
+    // Example: Update a history record using JPA
     public void updateHistory(int historyId, String location, String supplier, String delivery, int quantity, String notes) {
         entityManager.getTransaction().begin();
-        History hist = entityManager.find(History.class, historyId);
+        history hist = entityManager.find(history.class, historyId);
         if (hist != null) {
             hist.setLocation(location);
             hist.setSupplier(supplier);
@@ -41,12 +39,12 @@ public class Databases {
         entityManager.getTransaction().commit();
     }
 
-    // Get all companies
+    // Example: Get all companies
     public List<Company> getAllCompanies() {
         return entityManager.createQuery("SELECT c FROM Company c", Company.class).getResultList();
     }
 
-    // Delete a company
+    // Example: Delete a company
     public void deleteCompany(int companyId) {
         entityManager.getTransaction().begin();
         Company company = entityManager.find(Company.class, companyId);

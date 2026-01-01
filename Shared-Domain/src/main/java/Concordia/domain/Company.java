@@ -1,40 +1,71 @@
-package Concordia.domain;
+package concordia.domain;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "company")
 public class Company implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer companyId;
+    @Column(name = "company_id")
+    private int companyId;
 
+    @Column(name = "company_title", length = 25)
+    private String companyTitle;
+
+    @Column(name = "company_name", length = 255)
     private String companyName;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Item> Items = new ArrayList<>();
+    @OneToMany(mappedBy = "company")
+    private java.util.Set<Item> items = new java.util.HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<User> Users = new ArrayList<>();
+    @OneToMany(mappedBy = "company")
+    private java.util.Set<User> users = new java.util.HashSet<>();
 
-    public Company() {}
+        // Legacy no-arg constructor for ORM/compatibility
+        public Company() {}
 
-    public Company(Integer companyId, String companyName, List<Item> items, List<User> users) {
+        // Legacy constructor for compatibility (without users)
+        public Company(int companyId, String companyTitle, String companyName, java.util.Set<Item> items) {
+            this.companyId = companyId;
+            this.companyTitle = companyTitle;
+            this.companyName = companyName;
+            this.items = items;
+            this.users = new java.util.HashSet<>();
+        }
+
+        // Legacy getter/setter for items (if not present)
+        public void addItem(Item item) { this.items.add(item); }
+
+        // Legacy getter/setter for companyId (if not present)
+        public int getId() { return companyId; }
+        public void setId(int id) { this.companyId = id; }
+
+    public Company(int companyId, String companyTitle, String companyName, java.util.Set<Item> items, java.util.Set<User> users) {
         this.companyId = companyId;
+        this.companyTitle = companyTitle;
         this.companyName = companyName;
-        this.Items = items;
-        this.Users = users;
+        this.items = items;
+        this.users = users;
     }
-    public String getName() { return getCompanyName(); }
-    public Integer getCompanyId() { return companyId; }
-    public String getCompanyName() { return companyName; }
-    public List<Item> getItems() { return Items; }
-    public void setItems(List<Item> items) { Items = items; }
-    public List<User> getUsers() { return Users; }
-    public void setUsers(List<User> users) { Users = users; }
-    public void addItem() { this.Items.add(new Item()); }
-}
 
+    public int getCompanyId() { return companyId; }
+    public void setCompanyId(int companyId) { this.companyId = companyId; }
+
+    public String getCompanyTitle() { return companyTitle; }
+    public void setCompanyTitle(String companyTitle) { this.companyTitle = companyTitle; }
+
+    public String getCompanyName() { return companyName; }
+    public void setCompanyName(String companyName) { this.companyName = companyName; }
+
+    public java.util.Set<Item> getItems() { return items; }
+    public void setItems(java.util.Set<Item> items) { this.items = items; }
+
+    public java.util.Set<User> getUsers() { return users; }
+    public void setUsers(java.util.Set<User> users) { this.users = users; }
+
+    }
+
+    

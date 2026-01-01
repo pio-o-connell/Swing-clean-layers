@@ -1,4 +1,4 @@
-package Concordia;
+package concordia;
 
 //----------------------------------------------------------------------------
 // Serialized implements the 'Save Settings' and 'Restore' buttons
@@ -14,9 +14,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import Concordia.domain.Company;
+import concordia.domain.Company;
 
-import Concordia.annotations.Configuration;
+import concordia.annotations.Configuration;
 
 @Configuration
 public class Serialized {
@@ -48,7 +48,11 @@ public class Serialized {
             FileInputStream fileStream= new FileInputStream("Company.ser");
             ObjectInputStream os = new ObjectInputStream(fileStream);
             ArrayList<Company> restoredList =(ArrayList<Company> )os.readObject();
-            System.out.println("Location"+(String) restoredList.get(0).getItems().get(0).getHistory().get(0).getLocation());
+            java.util.Set<concordia.domain.Item> itemSet = restoredList.get(0).getItems();
+            java.util.List<concordia.domain.Item> itemList = new java.util.ArrayList<>(itemSet);
+            java.util.List<concordia.domain.History> historyList = itemList.isEmpty() ? new java.util.ArrayList<>() : itemList.get(0).getHistory();
+            String location = historyList.isEmpty() ? null : historyList.get(0).getLocation();
+            System.out.println("Location" + location);
             os.close();
             fileStream.close();
         } catch (FileNotFoundException e) {

@@ -8,12 +8,14 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>swing-app</artifactId>
   <build>
-    <sourceDirectory>${project.basedir}/src/Concordia</sourceDirectory>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
+        <configuration>
+          <mainClass>concordia.ORMLauncher</mainClass>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -48,7 +50,7 @@
               <finalName>concordia-swing</finalName>
               <transformers>
                 <transformer>
-                  <mainClass>${main.class}</mainClass>
+                  <mainClass>concordia.ORMLauncher</mainClass>
                 </transformer>
               </transformers>
             </configuration>
@@ -75,18 +77,6 @@
         <exclusion>
           <artifactId>junit-jupiter-engine</artifactId>
           <groupId>org.junit.jupiter</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>42.7.3</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>checker-qual</artifactId>
-          <groupId>org.checkerframework</groupId>
         </exclusion>
       </exclusions>
     </dependency>

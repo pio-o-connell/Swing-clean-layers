@@ -1,4 +1,4 @@
-package Concordia.domain;
+package concordia.domain;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -11,7 +11,7 @@ public class CompanyTableCreator {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         // Persist a dummy company to force table creation
-        Company company = new Company(0, "ForceCreate", new ArrayList<>(), new ArrayList<>());
+        Company company = new Company(0, "ForceCreate", "ForceCreate", new java.util.HashSet<>(), new java.util.HashSet<>());
         em.persist(company);
         em.getTransaction().commit();
         em.close();

@@ -1,4 +1,4 @@
-package Concordia;
+package concordia;
 
 //import DetailEvent;
 

@@ -1,25 +1,29 @@
-package Concordia;
+package concordia;
 
-import Concordia.domain.Company;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
+import concordia.domain.Company;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Persistence;
 import java.util.ArrayList;
 
 public class InitDatabase {
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://127.0.0.1:5432/concordia";
-        String user = "postgres";
-        String password = "password";
+        // Set up JPA EntityManagerFactory and EntityManager
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
         try {
-            Connection con = DriverManager.getConnection(url, user, password);
-            ArrayList<Company> companyList = new ArrayList<>();
-            Databases db = new Databases(con);
-            db.init(con, companyList);
-            con.close();
-            System.out.println("Database tables created and populated successfully.");
+            emf = Persistence.createEntityManagerFactory("test-pu");
+            em = emf.createEntityManager();
+            Databases db = new Databases(em);
+            // Example: create a company using ORM
+            db.insertCompany(1, "Example Company");
+            // You can add more ORM-based initialization here as needed
+            System.out.println("Database tables created and populated successfully using JPA/ORM.");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (em != null) em.close();
+            if (emf != null) emf.close();
         }
     }
 }

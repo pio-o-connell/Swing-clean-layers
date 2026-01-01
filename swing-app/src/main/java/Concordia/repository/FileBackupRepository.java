@@ -1,8 +1,8 @@
 
-package Concordia.repository;
-import Concordia.annotations.Repository;
+package concordia.repository;
+import concordia.annotations.Repository;
 
-import Concordia.domain.Company;
+import concordia.domain.Company;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -32,7 +32,11 @@ public class FileBackupRepository {
             FileInputStream fileStream = new FileInputStream("Company.ser");
             ObjectInputStream os = new ObjectInputStream(fileStream);
             companies = (ArrayList<Company>) os.readObject();
-            System.out.println("Location" + companies.get(0).getItems().get(0).getHistory().get(0).getLocation());
+            java.util.Set<concordia.domain.Item> itemSet = companies.get(0).getItems();
+            java.util.List<concordia.domain.Item> itemList = new java.util.ArrayList<>(itemSet);
+            java.util.List<concordia.domain.History> historyList = itemList.isEmpty() ? new java.util.ArrayList<>() : itemList.get(0).getHistory();
+            String location = historyList.isEmpty() ? null : historyList.get(0).getLocation();
+            System.out.println("Location" + location);
             os.close();
             fileStream.close();
         } catch (FileNotFoundException e) {

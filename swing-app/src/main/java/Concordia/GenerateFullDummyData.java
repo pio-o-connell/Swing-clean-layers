@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-import Concordia.annotations.Configuration;
+import concordia.annotations.Configuration;
 
 @Configuration
 public class GenerateFullDummyData {

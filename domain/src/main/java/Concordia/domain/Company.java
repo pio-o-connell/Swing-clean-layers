@@ -1,4 +1,4 @@
-package Concordia.domain;
+package concordia.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;

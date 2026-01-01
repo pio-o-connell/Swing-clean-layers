@@ -1,8 +1,8 @@
-package Concordia.dto;
+package concordia.dto;
 
 import java.util.List;
-import Concordia.dto.ItemDto;
-import Concordia.dto.UserDto;
+import concordia.dto.ItemDto;
+import concordia.dto.UserDto;
 
 public class CompanyDto {
     public int companyId;

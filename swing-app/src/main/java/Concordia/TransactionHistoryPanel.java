@@ -1,4 +1,5 @@
-package Concordia;
+package concordia;
+import java.util.List;
 
 /*------------------------------------------------------------------------------------------------------------------*/
 //TableWindow2 Class retrieves the data structure (from memory) and renders the History tables.
@@ -20,19 +21,19 @@ import java.awt.Dimension;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
-import Concordia.domain.Company;
-import Concordia.domain.Item;
-import Concordia.domain.User;
-import Concordia.domain.history;
+import concordia.domain.Company;
+import concordia.domain.Item;
+import concordia.domain.User;
+import concordia.domain.History;
 
-import Concordia.controller.InventoryController;
+import concordia.controller.InventoryController;
 
 public class TransactionHistoryPanel extends JPanel {
-    private ArrayList<history> history;
-    private ArrayList<Company> companies;
-    private ArrayList<Item> items, item;
+    private List<History> history;
+    private List<Company> companies;
+    private List<Item> items, item;
 
     private static final long serialVersionUID = 1L;
     private boolean DEBUG = false;
@@ -44,7 +45,7 @@ public class TransactionHistoryPanel extends JPanel {
     public MyTableModel transactionHistoryTableModel;
     private final InventoryController controller;
 
-        public TransactionHistoryPanel(ArrayList<Item> items, ArrayList<Company> companies, ArrayList<history> history,
+        public TransactionHistoryPanel(List<Item> items, List<Company> companies, List<History> history,
             InventoryController controller) {
         super();
         setOpaque(true);
@@ -56,7 +57,11 @@ public class TransactionHistoryPanel extends JPanel {
         this.companies = companies;
         this.controller = controller;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        transactionHistoryTableModel = new MyTableModel(companies.get(0).getItems().get(0).getHistory(), 0);
+        // Convert Set to List for indexed access
+        java.util.Set<Item> itemSet = companies.get(0).getItems();
+        java.util.List<Item> itemList = new java.util.ArrayList<>(itemSet);
+        java.util.List<History> historyList = itemList.isEmpty() ? new java.util.ArrayList<>() : itemList.get(0).getHistory();
+        transactionHistoryTableModel = new MyTableModel(historyList, 0);
         historyTransactionNameSorter = new TableRowSorter<MyTableModel>(transactionHistoryTableModel);
         transactionHistoryTable = new JTable(transactionHistoryTableModel) {
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -151,12 +156,12 @@ public class TransactionHistoryPanel extends JPanel {
                 "Location",
                 "Quantity",
                 "Supplier" };
-        private ArrayList<history> history;
+        private List<History> history;
 
         @SuppressWarnings("deprecation")
         private Object[][] data;
 
-        public MyTableModel(ArrayList<history> history, int index1) {
+        public MyTableModel(List<History> history, int index1) {
             this.history = history;
             int index = index1;
             int listSize = history.size();
@@ -262,3 +267,4 @@ public class TransactionHistoryPanel extends JPanel {
         }
     }
 }
+// ...existing code...

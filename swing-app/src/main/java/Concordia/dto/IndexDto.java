@@ -1,4 +1,4 @@
-package Concordia.dto;
+package concordia.dto;
 
 import java.util.Date;
 

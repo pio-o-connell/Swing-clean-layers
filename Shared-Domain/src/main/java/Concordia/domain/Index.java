@@ -1,4 +1,4 @@
-package Concordia.domain;
+package concordia.domain;
 
 //---------------------------------------------------------------------------
 // Used in conjunction for the sort function by date. Not fully implemented.
@@ -35,6 +35,6 @@ public class Index {
 	}
 
    public String toString(){
-	   return ("\n"+i+j+k+date);
+   	return ("\n"+i+j+k+date);
    }
 }

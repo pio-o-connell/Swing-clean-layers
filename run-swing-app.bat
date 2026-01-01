@@ -1,0 +1,6 @@
+@echo off
+cd /d "%~dp0"
+echo Building shaded JAR...
+mvn -pl swing-app package
+echo Launching Concordia Swing App...
+java -jar swing-app\target\concordia-swing.jar

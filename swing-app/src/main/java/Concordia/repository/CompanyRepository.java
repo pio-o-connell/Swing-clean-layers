@@ -1,88 +1,48 @@
 
 
-package Concordia.repository;
-import Concordia.annotations.Repository;
+package concordia.repository;
+import concordia.annotations.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import Concordia.domain.Company;
-import Concordia.domain.Item;
-import Concordia.domain.User;
-import Concordia.domain.history;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import java.util.List;
+import concordia.domain.Company;
+import concordia.domain.Item;
+import concordia.domain.User;
+import concordia.domain.History;
 
 @Repository
 public class CompanyRepository {
-    private final Connection con;
-    public CompanyRepository(Connection con) {
-        this.con = con;
+    private final EntityManager em;
+    public CompanyRepository(EntityManager em) {
+        this.em = em;
     }
 
-    public void insertCompany(int companyId, String companyName) throws SQLException {
-        PreparedStatement statement = con.prepareStatement("INSERT INTO company(company_id, company_name) VALUES (?, ?)");
-        statement.setInt(1, companyId);
-        statement.setString(2, companyName);
-        statement.executeUpdate();
+    public void insertCompany(int companyId, String companyName) {
+        em.getTransaction().begin();
+        Company company = new Company(companyId, "", companyName, new java.util.HashSet<>(), new java.util.HashSet<>());
+        em.persist(company);
+        em.getTransaction().commit();
     }
 
-    public void updateCompany(Company company) throws SQLException {
-        String query = "UPDATE company SET company_name = ? WHERE company_id = ?";
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, company.getCompanyName());
-        stmt.setInt(2, company.getCompanyId());
-        stmt.executeUpdate();
+    public void updateCompany(Company company) {
+        em.getTransaction().begin();
+        em.merge(company);
+        em.getTransaction().commit();
     }
 
-    public void deleteCompany(int companyId) throws SQLException {
-        String query = "DELETE FROM company WHERE company_id = ?";
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setInt(1, companyId);
-        stmt.execute();
-    }
-
-    public ArrayList<Company> loadCompaniesWithItemsAndUsers() throws SQLException {
-        ArrayList<Company> companies = new ArrayList<>();
-        ArrayList<User> users = new ArrayList<>();
-        PreparedStatement userStmt = con.prepareStatement("SELECT * FROM users");
-        ResultSet userResult = userStmt.executeQuery();
-        while (userResult.next()) {
-            users.add(new User(userResult.getInt(1), userResult.getInt(4), userResult.getString(2), userResult.getString(3)));
+    public void deleteCompany(int companyId) {
+        em.getTransaction().begin();
+        Company company = em.find(Company.class, companyId);
+        if (company != null) {
+            em.remove(company);
         }
-        PreparedStatement companyStmt = con.prepareStatement("SELECT * FROM company");
-        ResultSet companyResult = companyStmt.executeQuery();
-        while (companyResult.next()) {
-            int companyId = companyResult.getInt(1);
-            String companyName = companyResult.getString("company_name");
-            ArrayList<Item> companyItems = new ArrayList<>();
-            PreparedStatement itemStmt = con.prepareStatement("SELECT * FROM item WHERE Company_ID = ?");
-            itemStmt.setInt(1, companyId);
-            ResultSet itemsResult = itemStmt.executeQuery();
-            while (itemsResult.next()) {
-                int itemId = itemsResult.getInt(1);
-                int quantity = itemsResult.getInt(3);
-                String itemName = itemsResult.getString("item_name");
-                String itemNotes = null;
-                try { itemNotes = itemsResult.getString("notes"); } catch (Exception e) { itemNotes = null; }
-                ArrayList<history> historyList = new ArrayList<>();
-                PreparedStatement histStmt = con.prepareStatement("SELECT * FROM HISTORY WHERE item_id = ?");
-                histStmt.setInt(1, itemId);
-                ResultSet histResult = histStmt.executeQuery();
-                while (histResult.next()) {
-                    int historyId = histResult.getInt(1);
-                    int amount = histResult.getInt(3);
-                    String location = histResult.getString(4);
-                    String provider = histResult.getString(5);
-                    String deliveryDate = histResult.getString(6);
-                    String historyNotes = null;
-                    try { historyNotes = histResult.getString("notes"); } catch (Exception e) { historyNotes = null; }
-                    historyList.add(new history(historyId, itemId, amount, location, provider, deliveryDate, historyNotes));
-                }
-                companyItems.add(new Item(itemId, companyId, quantity, itemName, itemNotes, historyList));
-            }
-            companies.add(new Company(companyId, companyName, companyItems, users));
-        }
-        return companies;
+        em.getTransaction().commit();
+    }
+
+    public List<Company> loadCompaniesWithItemsAndUsers() {
+        // This will load all companies, items, and users using JPA relationships
+        TypedQuery<Company> query = em.createQuery("SELECT DISTINCT c FROM Company c LEFT JOIN FETCH c.items LEFT JOIN FETCH c.users", Company.class);
+        return query.getResultList();
     }
 }

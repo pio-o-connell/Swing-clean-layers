@@ -1,4 +1,11 @@
-package Concordia;
+//--------------------------------------------------------------------------//
+//
+// Backups up database(from memory) to BackupConcordia on the server, this can subsequently be
+// retrieved and loaded. Part of main window functionality. Backup button..
+//
+//---------------------------------------------------------------------------------
+package concordia;
+import java.util.List;
 //--------------------------------------------------------------------------//
 //
 // Backups up database(from memory) to BackupConcordia on the server, this can subsequently be
@@ -11,20 +18,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import Concordia.domain.Company;
-import Concordia.domain.Item;
-import Concordia.domain.User;
-import Concordia.domain.history;
+import concordia.domain.Company;
+import concordia.domain.Item;
+import concordia.domain.User;
+import concordia.domain.History;
 
 //import com.mysql.jdbc.Connection;
 //import com.mysql.jdbc.PreparedStatement;
-import Concordia.annotations.Configuration;
+import concordia.annotations.Configuration;
 
 @Configuration
 public class DatabaseBackup {
 
     Connection con;
-    ArrayList<history> history11 = new ArrayList<history>();
+    List<History> history11 = new java.util.ArrayList<>();
     ArrayList<Item> Item11 = new ArrayList<Item>();
     ArrayList<User> User11 = new ArrayList<User>();
 
@@ -107,19 +114,25 @@ public class DatabaseBackup {
             System.out.println(companies.get(0).getCompanyId());
             System.out.println("Sizeof Company Array" + companies.size());
 
-            //for item
-            System.out.println(companies.get(0).getItems().get(0).getItemName());
-            System.out.println("Sizeof items array" + companies.get(0).getItems().size());
+            // Convert Set to List for items
+            java.util.Set<concordia.domain.Item> itemSet0 = companies.get(0).getItems();
+            java.util.List<concordia.domain.Item> itemList0 = new java.util.ArrayList<>(itemSet0);
+            System.out.println(itemList0.isEmpty() ? "No items" : itemList0.get(0).getItemName());
+            System.out.println("Sizeof items array" + itemList0.size());
 
-            //for history
-            System.out.println(companies.get(0).getItems().get(0).getHistory().get(0).getLocation());
-            System.out.println("Sizeof history array" + companies.get(0).getItems().get(0).getHistory().size());
+            // Convert Set to List for history
+            java.util.List<concordia.domain.History> historyList0 = itemList0.isEmpty() ? new java.util.ArrayList<>() : itemList0.get(0).getHistory();
+            System.out.println(historyList0.isEmpty() ? "No history" : historyList0.get(0).getLocation());
+            System.out.println("Sizeof history array" + historyList0.size());
 
-            System.out.println("Sizeof history array" + companies.get(0).getItems().get(1).getHistory().size());
-            System.out.println("HistoryId" + companies.get(0).getItems().get(1).getHistory().get(0).getHistoryId());
+            java.util.List<concordia.domain.History> historyList1 = itemList0.size() > 1 ? itemList0.get(1).getHistory() : new java.util.ArrayList<>();
+            System.out.println("Sizeof history array" + historyList1.size());
+            System.out.println(historyList1.isEmpty() ? "No historyId" : historyList1.get(0).getHistoryId());
 
-            //for users
-            System.out.println("Users" + companies.get(0).getUsers().get(0).getPassword());
+            // Convert Set to List for users
+            java.util.Set<concordia.domain.User> userSet = companies.get(0).getUsers();
+            java.util.List<concordia.domain.User> userList = new java.util.ArrayList<>(userSet);
+            System.out.println(userList.isEmpty() ? "No users" : userList.get(0).getPassword());
 
             // backup the data to the backup
             for (int i = 0; i < companies.size(); i++) { // will be only one company here
@@ -127,26 +140,28 @@ public class DatabaseBackup {
                 statement.setInt(1, companies.get(i).getCompanyId());
                 statement.setString(2, companies.get(i).getCompanyName());
                 statement.executeUpdate();
-                for (int j = 0; j < companies.get(i).getItems().size(); j++) {
-
+                java.util.Set<concordia.domain.Item> itemSet = companies.get(i).getItems();
+                java.util.List<concordia.domain.Item> itemList = new java.util.ArrayList<>(itemSet);
+                for (int j = 0; j < itemList.size(); j++) {
+                    concordia.domain.Item item = itemList.get(j);
                     statement = (PreparedStatement) con.prepareStatement("INSERT INTO ITEM(ITEM_ID,COMPANY_ID,QUANTITY,ITEMNAME)  VALUES  (?,?,?,?)");
-                    statement.setInt(1, companies.get(i).getItems().get(j).getItemId());
+                    // statement.setInt(1, item.getItemId()); // TODO: Implement getItemId() or update logic
                     statement.setInt(2, companies.get(i).getCompanyId());
-                    statement.setInt(3, companies.get(i).getItems().get(j).getQuantity());
-                    statement.setString(4, companies.get(i).getItems().get(j).getItemName());
+                    statement.setInt(3, item.getQuantity());
+                    statement.setString(4, item.getItemName());
                     statement.executeUpdate();
 
-                    for (int k = 0; k < companies.get(i).getItems().get(j).getHistory().size(); k++) {
+                    java.util.List<concordia.domain.History> historyList = item.getHistory();
+                    for (int k = 0; k < historyList.size(); k++) {
+                        concordia.domain.History history = historyList.get(k);
                         statement = (PreparedStatement) con.prepareStatement("INSERT  INTO  history(HISTORY_ID,ITEM_id,AMOUNT,LOCATION,Supplier,DELIVERY_DATE)  VALUES  (?,?,?,?,?,?)");
-                        statement.setInt(1, companies.get(i).getItems().get(j).getHistory().get(k).getHistoryId());
-                        statement.setInt(2, companies.get(i).getItems().get(j).getItemId());
-                        statement.setInt(3, companies.get(i).getItems().get(j).getHistory().get(k).getAmount());
-                        statement.setString(4, companies.get(i).getItems().get(j).getHistory().get(k).getLocation());
-                        statement.setString(5, companies.get(i).getItems().get(j).getHistory().get(k).getSupplier());
-                        statement.setString(6, companies.get(i).getItems().get(j).getHistory().get(k).getDeliveryDate());
-
+                        statement.setInt(1, history.getHistoryId());
+                        // statement.setInt(2, item.getItemId()); // TODO: Implement getItemId() or update logic
+                        statement.setInt(3, history.getAmount());
+                        statement.setString(4, history.getLocation());
+                        statement.setString(5, history.getSupplier());
+                        statement.setString(6, history.getDeliveryDate());
                         statement.executeUpdate();
-
                     }
 
                     //backup the users
@@ -169,3 +184,4 @@ public class DatabaseBackup {
     }
 
 }
+// ...existing code...

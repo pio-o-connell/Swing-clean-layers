@@ -1,7 +1,7 @@
-package Concordia.dto;
+package concordia.dto;
 
 import java.util.List;
-import Concordia.dto.HistoryDto;
+import concordia.dto.HistoryDto;
 
 public class ItemDto {
     public int itemId;

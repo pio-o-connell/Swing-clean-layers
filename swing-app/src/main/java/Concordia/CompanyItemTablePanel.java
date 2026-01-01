@@ -1,4 +1,4 @@
-package Concordia;
+package concordia;
 
 //	import Mainframe;
 /*------------------------------------------------------------------------------------------------------------------*/
@@ -26,14 +26,14 @@ import java.awt.Dimension;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
-import Concordia.domain.Company;
-import Concordia.domain.Item;
-import Concordia.domain.User;
-import Concordia.domain.history;
+import concordia.domain.Company;
+import concordia.domain.Item;
+import concordia.domain.User;
+import concordia.domain.History;
 
-import Concordia.controller.InventoryController;
+import concordia.controller.InventoryController;
 import java.util.List;
 
 public class CompanyItemTablePanel extends JPanel {
@@ -51,15 +51,15 @@ public class CompanyItemTablePanel extends JPanel {
     public JTextField itemFilterText;
     public JTextArea itemStatusText;
     public TableRowSorter<ItemModel> itemNameSorter;
-    public final ArrayList<Item> items;
-    public final ArrayList<Company> companies;
-    public final ArrayList<history> history;
+    public final List<Item> items;
+    public final List<Company> companies;
+    public final List<History> history;
     public ItemModel[] itemModelRefreshRef = new ItemModel[1];
     public CompanyModel[] companyModelRefreshRef = new CompanyModel[1];
 
     // Code for first 2 windows i.e. company and items window
 
-    public CompanyItemTablePanel(ArrayList<Item> items, ArrayList<Company> companies, ArrayList<history> history,
+        public CompanyItemTablePanel(List<Item> items, List<Company> companies, List<History> history,
             InventoryController controller) {
         super();
         this.controller = controller;
@@ -94,12 +94,7 @@ public class CompanyItemTablePanel extends JPanel {
                         } else {
                             int modelRow = companyTable.convertRowIndexToModel(viewRow);
                             // Call controller method for company selection
-                            try {
-                                controller.getAllCompanies(); // Replace with actual method if needed
-                            } catch (java.sql.SQLException ex) {
-                                ex.printStackTrace();
-                                companyStatusText.setText("Error loading companies: " + ex.getMessage());
-                            }
+                            controller.getAllCompanies(); // Replace with actual method if needed
                             companyStatusText.setText(String.format(" Company selected: %d.", modelRow));
                             // UI updates should be handled by controller callbacks or returned data
                         }
@@ -164,9 +159,9 @@ public class CompanyItemTablePanel extends JPanel {
 
         // Only show items for the first company on startup
         int firstCompanyId = companies.get(0).getCompanyId();
-        ArrayList<Item> firstCompanyItems = new ArrayList<>();
+        List<Item> firstCompanyItems = new java.util.ArrayList<>();
         for (Item item : items) {
-            if (item.getCompanyId() == firstCompanyId) {
+            if (item.getCompany() != null && item.getCompany().getCompanyId() == firstCompanyId) {
                 firstCompanyItems.add(item);
             }
         }
@@ -257,10 +252,10 @@ public class CompanyItemTablePanel extends JPanel {
          * // "Company Name",
          * };
          */
-        private ArrayList<Company> company;
+        private List<Company> company;
         private Object[][] data;
 
-        public CompanyModel(ArrayList<Company> company) {
+        public CompanyModel(List<Company> company) {
             this.company = company;
             int listSize = company.size();
             data = new Object[listSize][1];
@@ -364,10 +359,10 @@ public class CompanyItemTablePanel extends JPanel {
         };
         @SuppressWarnings("deprecation")
 
-        private ArrayList<Item> items;
+        private List<Item> items;
         private Object[][] data;
 
-        public ItemModel(ArrayList<Item> items, int index) {
+        public ItemModel(List<Item> items, int index) {
             this.items = items;
             int listSize = items.size();
             data = new Object[listSize][2];

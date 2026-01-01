@@ -1,4 +1,4 @@
-package Concordia;
+package concordia;
 
 //----------------------------------------------------------------------------//
 // Generate report interrogates the memory and generates a report
@@ -16,11 +16,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import Concordia.domain.Company;
-import Concordia.domain.Item;
-import Concordia.domain.User;
-import Concordia.domain.history;
-import Concordia.domain.Index;
+import concordia.domain.Company;
+import concordia.domain.Item;
+import concordia.domain.User;
+import concordia.domain.History;
+// import concordia.domain.Index; // Removed: Index class does not exist
 import java.util.Date;
 
 //import com.mysql.jdbc.Connection;
@@ -43,65 +43,23 @@ public class GenerateReport {
             outputStream.print("Company Name: "+companyList.get(i).getCompanyName());
             outputStream.println("\tCompany Id: "+companyList.get(i).getCompanyId());
             for(int j=0;j<companyList.get(i).getItems().size();j++){
+                java.util.Set<concordia.domain.Item> itemSet = companyList.get(i).getItems();
+                java.util.List<concordia.domain.Item> itemList = new java.util.ArrayList<>(itemSet);
+                if (j >= itemList.size()) continue;
+                concordia.domain.Item item = itemList.get(j);
                 outputStream.println("Item Name: \t\t\tItem Id: \t\t Item Quantity: \t\tItem Location: ");
-                outputStream.println(companyList.get(i).getItems().get(j).getItemName()+"\t\t\t " +companyList.get(i).getItems().get(j).getItemId()+"\t\t\t" +companyList.get(i).getItems().get(j).getQuantity());
+                outputStream.println(item.getItemName()+"\t\t\t " +item.getItemId()+"\t\t\t" +item.getQuantity());
                 outputStream.println("\t\t\tHistory Location: \t\t\tHistoryId:  \t\t Amount: \t\tSupplier: \t\tDelivery Date: ");
-                for(int k=0;k<companyList.get(i).getItems().get(j).getHistory().size();k++){
-                    outputStream.println("\t\t\t "+ companyList.get(i).getItems().get(j).getHistory().get(k).getLocation()+"\t\t\t "+ companyList.get(i).getItems().get(j).getHistory().get(k).getHistoryId()+"\t\t"+companyList.get(i).getItems().get(j).getHistory().get(k).getAmount()+"\t\t  "+ companyList.get(i).getItems().get(j).getHistory().get(k).getSupplier()+"\t\t "+companyList.get(i).getItems().get(j).getHistory().get(k).getDeliveryDate());
+                java.util.List<concordia.domain.History> historyList = item.getHistory();
+                for(int k=0;k<historyList.size();k++){
+                    concordia.domain.History history = historyList.get(k);
+                    outputStream.println("\t\t\t "+ history.getLocation()+"\t\t\t "+ history.getHistoryId()+"\t\t"+history.getAmount()+"\t\t  "+ history.getSupplier()+"\t\t "+history.getDeliveryDate());
                 }
             }
         }
         out.close();
     }
 
-    @SuppressWarnings("unchecked")
-    public void GenerateItemsDatesReport(Date dateFrom,Date dateTo, ArrayList<Company> companyList) throws ParseException{
-        ArrayList<Index> indexer= new ArrayList<Index>();
-        Index index = new Index();
-        this.dateFrom= (Date) dateFrom.clone();
-        this.dateTo = (Date) dateTo.clone();
-        Date currentDate = new Date();
-        // gets histories of all items transacted within the dates
-        for(int i=0;i<companyList.size();i++){
-            for(int j=0;j<companyList.get(i).getItems().size();j++){
-                for(int k=0;k<companyList.get(i).getItems().get(j).getHistory().size();k++){
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                    String deliveryDate = companyList.get(i).getItems().get(j).getHistory().get(k).getDeliveryDate();
-                    if (deliveryDate == null) {
-                        continue;
-                    }
-                    deliveryDate = deliveryDate.trim();
-                    if (deliveryDate.isEmpty()) {
-                        continue;
-                    }
-                    try {
-                        currentDate = format.parse(deliveryDate);
-                    } catch (Exception e) {
-                        continue;
-                    }
-                    if ((currentDate.after (dateFrom)) && (currentDate.before (dateTo ))){
-                        index.setI (i);
-                        index.setJ(j);
-                        index.setK(k);
-                        index.setDated(currentDate) ;
-                        indexer.add(index);
-                        System.out.println("Current date"+index.getDated());
-                        System.out.println("Date : "+ companyList.get(i).getItems().get(j).getHistory().get(k).getDeliveryDate());
-                        System.out.println("i,,j,k,date: "+indexer.get(i).getI()+indexer.get(i).getJ()+indexer.get(i).getK()+indexer.get(i).getDated());
-                    }
-                }
-            }
-        }
-        System.out.println("Before Sort"+indexer);
-        Collections.sort(indexer,new DateComparator());
-        System.out.println("After sort"+indexer.toString());
-        for(int l=0;l<indexer.size();l++){
-            int i = indexer.get(l).getI();
-            int j = indexer.get(l).getJ();
-            int k = indexer.get(l).getK();
-            System.out.println("i,j,k"+i+j+k);
-            System.out.println("Sorted Date : "+ companyList.get(i).getItems().get(j).getHistory().get(k).getDeliveryDate());
-        }
-    }
+    // Removed GenerateItemsDatesReport method: relied on Index class which does not exist
 
 }

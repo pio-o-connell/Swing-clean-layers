@@ -95,10 +95,10 @@ import Concordia.repository.CompanyRepository;
 import Concordia.repository.ItemRepository;
 import Concordia.repository.HistoryRepository;
 import Concordia.repository.UserRepository;
-import Concordia.domain.Company;
-import Concordia.domain.Item;
-import Concordia.domain.history;
-import Concordia.domain.User;
+import concordia.domain.Company;
+import concordia.domain.Item;
+import concordia.domain.History;
+import concordia.domain.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.annotation.WebServlet;

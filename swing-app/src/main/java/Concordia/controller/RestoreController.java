@@ -1,8 +1,8 @@
 
-package Concordia.controller;
-import Concordia.annotations.Controller;
+package concordia.controller;
+import concordia.annotations.Controller;
 
-import Concordia.service.RestoreService;
+import concordia.service.RestoreService;
 
 @Controller
 public class RestoreController {
@@ -10,7 +10,7 @@ public class RestoreController {
     public RestoreController(RestoreService service) {
         this.service = service;
     }
-    public void restorePressed(java.util.List<Concordia.domain.Company> companies) throws java.sql.SQLException {
+    public void restorePressed(java.util.List<concordia.domain.Company> companies) throws java.sql.SQLException {
         service.restore(companies);
     }
 }

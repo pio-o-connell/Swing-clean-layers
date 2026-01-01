@@ -9,7 +9,6 @@
     </parent>
     <artifactId>Shared-Domain</artifactId>
     <packaging>jar</packaging>
-    <name>Shared-Domain</name>
     <dependencies>
         <dependency>
             <groupId>jakarta.persistence</groupId>
@@ -17,4 +16,17 @@
             <version>3.1.0</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

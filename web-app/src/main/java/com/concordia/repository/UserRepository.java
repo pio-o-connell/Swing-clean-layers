@@ -1,6 +1,6 @@
 package com.concordia.repository;
 
-import Concordia.domain.User;
+import concordia.domain.User;
 import jakarta.persistence.EntityManager;
 
 public class UserRepository {

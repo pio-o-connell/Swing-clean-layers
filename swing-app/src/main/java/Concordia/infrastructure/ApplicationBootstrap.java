@@ -1,27 +1,25 @@
 
-package Concordia.infrastructure;
-import Concordia.annotations.Component;
-import Concordia.annotations.Configuration;
+package concordia.infrastructure;
+import concordia.annotations.Component;
+import concordia.annotations.Configuration;
 
-import Concordia.repository.ItemRepository;
-import Concordia.service.InventoryService;
-import Concordia.controller.InventoryController;
-import Concordia.Mainframe;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import concordia.repository.ItemRepository;
+import concordia.service.InventoryService;
+import concordia.controller.InventoryController;
+import concordia.Mainframe;
+// import java.sql.Connection;
+// import java.sql.DriverManager;
 
 @Component
 @Configuration
 public class ApplicationBootstrap {
     public static void main(String[] args) {
         try {
-            String url = "jdbc:postgresql://localhost:5432/concordia";
-            String user = "postgres";
-            String password = "password";
-            Connection con = DriverManager.getConnection(url, user, password);
-            Concordia.repository.CompanyRepository companyRepo = new Concordia.repository.CompanyRepository(con);
-            Concordia.repository.ItemRepository itemRepo = new Concordia.repository.ItemRepository(con);
-            Concordia.repository.HistoryRepository historyRepo = new Concordia.repository.HistoryRepository(con);
+            jakarta.persistence.EntityManagerFactory emf = jakarta.persistence.Persistence.createEntityManagerFactory("concordiaPU");
+            jakarta.persistence.EntityManager em = emf.createEntityManager();
+            concordia.repository.CompanyRepository companyRepo = new concordia.repository.CompanyRepository(em);
+            concordia.repository.ItemRepository itemRepo = new concordia.repository.ItemRepository(em);
+            concordia.repository.HistoryRepository historyRepo = new concordia.repository.HistoryRepository(em);
             InventoryService service = new InventoryService(companyRepo, itemRepo, historyRepo);
             InventoryController controller = new InventoryController(service);
             Mainframe frame = new Mainframe("Concordia Inventory System", controller);

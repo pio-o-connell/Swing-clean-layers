@@ -1,4 +1,4 @@
-package Concordia.dto;
+package concordia.dto;
 
 public class UserDto {
     public int userId;

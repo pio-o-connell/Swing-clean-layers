@@ -1,4 +1,4 @@
-package Concordia.annotations;
+package concordia.annotations;
 
 import java.lang.annotation.*;
 

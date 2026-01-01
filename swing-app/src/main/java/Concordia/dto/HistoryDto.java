@@ -1,4 +1,4 @@
-package Concordia.dto;
+package concordia.dto;
 
 public class HistoryDto {
     public int historyId;
