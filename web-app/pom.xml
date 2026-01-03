@@ -61,7 +61,7 @@
     </dependencies>
     <build>
         <finalName>concordia-backend</finalName>
-        <sourceDirectory>${project.basedir}/src/Concordia</sourceDirectory>
+        <sourceDirectory>${project.basedir}/../backend</sourceDirectory>
         <plugins>
             <!-- Surefire plugin for running tests -->
             <plugin>
@@ -93,7 +93,6 @@
                 <configuration>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
                     <webApp>
-                        <contextPath>/concordia</contextPath>
                         <war>${project.build.directory}/concordia-backend.war</war>
                         <resourceBases>
                             <resourceBase>${project.basedir}/webapp</resourceBase>

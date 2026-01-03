@@ -13,50 +13,50 @@
 
 **Project Purpose:**
 
-- **Reorganize a legacy Concordia app into clean layers**<br><br>
-  WareHouse<br>
-  ├── domain (pure data + rules)<br>
-  ├── repository (JDBC / persistence)<br>
-  ├── service (business logic)<br>
-  ├── controller (Concordia + Servlet adapters)<br>
-  ├── ui (Concordia components only)<br>
-  ├── infrastructure (bootstrapping, wiring)<br>
+-   **Reorganize a legacy Concordia app into clean layers**<br><br>
+    WareHouse<br>
+    ├── domain (pure data + rules)<br>
+    ├── repository (JDBC / persistence)<br>
+    ├── service (business logic)<br>
+    ├── controller (Concordia + Servlet adapters)<br>
+    ├── ui (Concordia components only)<br>
+    ├── infrastructure (bootstrapping, wiring)<br>
 
-- **Infrastructure** created within app negating any need for Spring or DI
-- **Annotations** as labels ( semantic markers)
-- **Remote Acccess** using **servlet**, **Local Access** application building on **Java Concordia libraries**
-- Integration of **augmented AI tools** to enhance development speed and functionality.
-- Fully **responsive design** for **Servlet** with attention to accessibility and user experience.
+-   **Infrastructure** created within app negating any need for Spring or DI
+-   **Annotations** as labels ( semantic markers)
+-   **Remote Acccess** using **servlet**, **Local Access** application building on **Java Concordia libraries**
+-   Integration of **augmented AI tools** to enhance development speed and functionality.
+-   Fully **responsive design** for **Servlet** with attention to accessibility and user experience.
 
 **Live Project:** [Harmonia](#)
 
 <h2 align="center" id="TOC">Index</h2>
 
-- [Concordia](#concordia)
-  - [Overview](#overview)
-- [Concordia](#concordia-1)
-  - [Phases-one](#phases-one)
-    - [Domain first](#domain-first)
-  - [Phases-two](#phases-two)
-    - [Repository extraction](#repository-extraction)
-    - [Move database code without changing SQL](#move-database-code-without-changing-sql)
-  - [Phases-three](#phases-three)
-    - [Introduce Services (thin at first)](#introduce-services-thin-at-first)
-  - [Phases-four](#phases-four)
-    - [Controller layer (adapters)](#controller-layer-adapters)
-  - [Phases-five](#phases-five)
-    - [Clean the Concordia UI (liberation phase)](#clean-the-concordia-ui-liberation-phase)
-  - [Phases-six](#phases-six)
-    - [Infrastructure / Wiring](#infrastructure--wiring)
-  - [Phases-seven](#phases-seven)
-    - [Remove legacy shortcuts](#remove-legacy-shortcuts)
-    - [Annotations](#annotations)
-    - [Decouple](#decouple)
-    - [Annotations](#annotations-1)
-  - [Maven](#maven)
-    - [Maven Build Build file for project](#maven-build-build-file-for-project)
-    - [Adding Test Harness for Swing and servlet](#adding-test-harness-for-swing-and-servlet)
-  - [Adding JPA and Hibernate](#adding-jpa-and-hibernate)
+-   [Concordia](#concordia)
+    -   [Overview](#overview)
+-   [Concordia](#concordia-1)
+    -   [Phases-one](#phases-one)
+        -   [Domain first](#domain-first)
+    -   [Phases-two](#phases-two)
+        -   [Repository extraction](#repository-extraction)
+        -   [Move database code without changing SQL](#move-database-code-without-changing-sql)
+    -   [Phases-three](#phases-three)
+        -   [Introduce Services (thin at first)](#introduce-services-thin-at-first)
+    -   [Phases-four](#phases-four)
+        -   [Controller layer (adapters)](#controller-layer-adapters)
+    -   [Phases-five](#phases-five)
+        -   [Clean the Concordia UI (liberation phase)](#clean-the-concordia-ui-liberation-phase)
+    -   [Phases-six](#phases-six)
+        -   [Infrastructure / Wiring](#infrastructure--wiring)
+    -   [Phases-seven](#phases-seven)
+        -   [Remove legacy shortcuts](#remove-legacy-shortcuts)
+        -   [Annotations](#annotations)
+        -   [Decouple](#decouple)
+        -   [Annotations](#annotations-1)
+    -   [Maven](#maven)
+        -   [Maven Build Build file for project](#maven-build-build-file-for-project)
+        -   [Adding Test Harness for Swing and servlet](#adding-test-harness-for-swing-and-servlet)
+    -   [Adding JPA and Hibernate](#adding-jpa-and-hibernate)
 
 ## Phases-one
 
@@ -304,6 +304,7 @@
 
 
         Only at the end should you remove legacy shortcuts like static globals, hidden dependencies, and circular references. Do this last, when the structure is stable.
+
 </details>
 <br>
 
@@ -575,26 +576,24 @@ Everything dangerous stays behind it.
 
 Notes
 
-- Swing files (Main.java, MainDriver.java, AdminPanel.java, CompanyItemTablePanel.java) are directly under src/Concordia/.
+-   Swing files (Main.java, MainDriver.java, AdminPanel.java, CompanyItemTablePanel.java) are directly under src/Concordia/.
 
-- Backend folders (controller, domain, dto, repository, service, etc.) are all in the same src/Concordia/ root.
+-   Backend folders (controller, domain, dto, repository, service, etc.) are all in the same src/Concordia/ root.
 
-- Maven will compile all .java files in src/Concordia/ into target/classes/Concordia/....
+-   Maven will compile all .java files in src/Concordia/ into target/classes/Concordia/....
 
-- The main.class in the POM should point to the class with the Swing main() method, e.g.:
+-   The main.class in the POM should point to the class with the Swing main() method, e.g.:
 
 <main.class>Concordia.Main</main.class>
 
-- Your WAR will only include backend + web resources; the Swing JAR is separate.
+-   Your WAR will only include backend + web resources; the Swing JAR is separate.
 
 </details>
 <br>
 
 [Back To Top](#concordia)
 
-
 ### Adding Test Harness for Swing and servlet
-
 
 <details>
     <summary>Details
@@ -608,7 +607,7 @@ Notes
     Both web-app and swing-app now have poms pointing to the domain classes, and tests for domain classes(The test CompanyTest, historyTest,ItemTest and users all runs and passes.) now compile and pass.
 
     All Maven modules build and install without errors.
-    
+
     Your project now follows best practices for shared code in a multi-module Maven setup.
 
     Moved all domain classes to the new module:
@@ -618,13 +617,6 @@ Notes
 <br>
 
 [Back To Top](#concordia)
-
-
-
-
-
-
-
 
 ## Adding JPA and Hibernate
 
@@ -659,6 +651,7 @@ Notes
           → PostgreSQL
 
 Maven setup:<br> - jakarta.persistence-api → JPA spec<br> - hibernate-core → JPA implementation<br> - postgresql → JDBC driver<br>
+
 ```xml
     <dependencies>
     <!-- JPA API (interfaces + annotations) -->
@@ -683,12 +676,12 @@ Maven setup:<br> - jakarta.persistence-api → JPA spec<br> - hibernate-core →
 ```
 
 src/main/resources/META-INF/persistence.xml
-- Correct namespace
-- Correct RESOURCE_LOCAL usage
-- Correct Hibernate provider
-- Correct JDBC properties
-- Correct Hibernate properties
 
+-   Correct namespace
+-   Correct RESOURCE_LOCAL usage
+-   Correct Hibernate provider
+-   Correct JDBC properties
+-   Correct Hibernate properties
 
     ```xml
         <?xml version="1.0" encoding="UTF-8"?>
@@ -715,75 +708,88 @@ src/main/resources/META-INF/persistence.xml
         </persistence>
     ```
 
+#### Runtime database overrides (web-app)
+
+The servlet now honors optional overrides, so you can keep `persistence.xml` checked in with safe defaults and inject the real credentials through environment variables (or matching JVM system properties) before launching Jetty:
+
+```powershell
+$env:CONCORDIA_DB_URL = "jdbc:postgresql://127.0.0.1:5432/concordia"
+$env:CONCORDIA_DB_USER = "postgres"
+$env:CONCORDIA_DB_PASSWORD = "<your-password>"
+./start-jetty.ps1
+```
+
+Linux/macOS shells can export the same names. If no overrides are provided the values from `web-app/src/main/resources/META-INF/persistence.xml` remain in effect.
+
 1. Entity (pure JPA)
 
-   ```java
-       package com.concordia.domain;
-       import jakarta.persistence.*;
-       @Entity
-       @Table(name = "users")
-       public class User {
+    ```java
+        package com.concordia.domain;
+        import jakarta.persistence.*;
+        @Entity
+        @Table(name = "users")
+        public class User {
 
-           @Id
-           @GeneratedValue
-           private Long id;
+            @Id
+            @GeneratedValue
+            private Long id;
 
-           private String email;
+            private String email;
 
-           // getters/setters
-       }
-   ```
+            // getters/setters
+        }
+    ```
 
 2. Bootstrap (Infrastructure layer)
 
-   ```java
-        EntityManagerFactory emf =
-        Persistence.createEntityManagerFactory("concordiaPU");
-   ```
+    ```java
+         EntityManagerFactory emf =
+         Persistence.createEntityManagerFactory("concordiaPU");
+    ```
 
-   Hibernate is now running underneath.<br>
+    Hibernate is now running underneath.<br>
 
 3. Repository (JPA only)
 
-   ```java
-       public class UserRepository {
+    ```java
+        public class UserRepository {
 
-           private final EntityManager em;
+            private final EntityManager em;
 
-           public UserRepository(EntityManager em) {
-               this.em = em;
-           }
+            public UserRepository(EntityManager em) {
+                this.em = em;
+            }
 
-           public void save(User user) {
-               em.persist(user);
-           }
+            public void save(User user) {
+                em.persist(user);
+            }
 
-           public User find(Long id) {
-               return em.find(User.class, id);
-           }
-       }
-   ```
+            public User find(Long id) {
+                return em.find(User.class, id);
+            }
+        }
+    ```
 
 4. Transaction<br>
 
-   ```java
-       EntityManager em = emf.createEntityManager();
-       EntityTransaction tx = em.getTransaction();
+    ```java
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
 
-       try {
-           tx.begin();
-           repo.save(user);
-           tx.commit();
-       }
-       catch (Exception e) {
-           tx.rollback();
-           throw e;
-       } finally {
-       em.close();
-       }
-   ```
+        try {
+            tx.begin();
+            repo.save(user);
+            tx.commit();
+        }
+        catch (Exception e) {
+            tx.rollback();
+            throw e;
+        } finally {
+        em.close();
+        }
+    ```
 
-   This is exactly what Spring normally hides. “JPA with Hibernate, without Spring, done properly.”
+    This is exactly what Spring normally hides. “JPA with Hibernate, without Spring, done properly.”
 
 <br>
 
