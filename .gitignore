@@ -40,7 +40,7 @@ hs_err_pid*
 .settings/
 
 # Jetty local server
-jetty-home-12.1.5/
+
 
 ############################
 # IDE: IntelliJ IDEA
