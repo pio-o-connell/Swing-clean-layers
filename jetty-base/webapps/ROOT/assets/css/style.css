@@ -1,0 +1,535 @@
+/* Google fonts import */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Macondo&display=swap");
+
+/* CSS Variables */
+:root {
+    --primary-font: "Inter", sans-serif;
+    --secondary-font: "Macondo", cursive;
+    --primary-color: #3a2620;
+    /* dark brown */
+    --secondary-color: #506d1b;
+    /* light brown */
+    --highlight-color: #416a8e;
+
+    --background-color: #e6e2d3;
+    /* blue */
+    --highlight-color-light: #7a9fc2;
+    /* light blue */
+
+    --highlight-footer-header-backgroundcolor: #4d4d4d;
+}
+
+/* Asterisk wildcard selector to override default styles added by the browser */
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* General styles */
+body {
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    /* Generic project styles */
+    font-family: "Inter", sans-serif;
+    font-size: 10pt;
+    color: var(--primary-color);
+    background: var(--background-color);
+}
+
+main {
+    position: relative;
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    box-sizing: border-box;
+
+    background-color: #e9d98a;
+    color: var(--primary-color);
+
+    /* Make main element take up any surplus space to push footer down */
+    /* -webkit-box-flex: 1; */
+    /* -ms-flex: 1 0 auto; */
+    /* flex: 1 0 auto; */
+    margin-top: 50.23px;
+    display: flex;
+    flex-direction: column;
+}
+
+.h1 {
+    /*   font-family: 'Oswald', sans-serif; */
+    font-family: var(--primary-font), sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    /*  color: #506D1B;*/
+    color: var(--primary-color);
+}
+
+h3 {
+    color: var(--secondary-color);
+}
+
+h6 {
+    color: red;
+}
+
+/* Header */
+header {
+    background-color: #ffffff;
+    padding: 0 1rem;
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    -webkit-box-shadow: 0 2px 2px #3a3a3a;
+    box-shadow: 0 2px 2px #3a3a3a;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
+}
+
+header a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#menu {
+    font-size: 110%;
+    letter-spacing: 2px;
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+#menu > li {
+    margin-bottom: 1em;
+    list-style: none;
+}
+
+.submenu {
+    list-style: none;
+    padding-left: 1.25rem;
+    margin-top: 0.4rem;
+    display: grid;
+    gap: 0.3rem;
+}
+
+.submenu li {
+    list-style: none;
+}
+
+.submenu a {
+    font-size: 0.95rem;
+}
+
+.submenu .divider {
+    padding: 0;
+}
+
+.submenu .divider hr {
+    border: 0;
+    border-top: 1px solid #d0d0d0;
+    margin: 0.2rem 0;
+}
+
+.active {
+    border-bottom: 1px solid #a3a3a3;
+}
+
+nav {
+    position: absolute;
+    background-color: #ffffff;
+    width: 100%;
+    left: 0;
+    padding: 0 1rem;
+    -webkit-box-shadow: 0 2px 2px #3a3a3a;
+    box-shadow: 0 2px 2px #3a3a3a;
+    display: none;
+    top: 100%;
+}
+
+/* Nav toggle */
+#nav-toggle:checked ~ nav {
+    display: block;
+}
+
+#nav-toggle {
+    display: none;
+}
+
+.nav-toggle-label {
+    font-size: 2rem;
+}
+
+/* Main content */
+/* main consolidated above */
+
+.controls-area {
+    position: relative;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    background-color: #e6ecf0;
+    box-sizing: border-box;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1%;
+}
+
+#panes {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 1rem;
+    padding: 16px 0;
+    margin-top: 24px;
+    gap: 16px;
+}
+
+.top-panes {
+    flex: 1;
+    background-color: #e6ecf0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    font-weight: bold;
+}
+
+.bottom-pane {
+    /*flex-2 container */
+    flex: 2; /* takes 1 part out of total 3 */
+    background-color: #e6ecf0;
+
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-left-pane {
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid black;
+}
+
+.admin-panel {
+    display: grid;
+    padding-top: 8px;
+    gap: 0.75rem;
+}
+
+.admin-panel .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.admin-panel label {
+    font-weight: 600;
+}
+
+.admin-panel input {
+    padding: 0.45rem 0.6rem;
+    border: 1px solid #c7c7c7;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+.admin-panel textarea {
+    padding: 0.45rem 0.6rem;
+    border: 1px solid #c7c7c7;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    min-height: 110px;
+    resize: vertical;
+}
+
+.admin-panel .form-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.5rem;
+}
+
+.admin-panel .form-actions button {
+    padding: 0.6rem 0.75rem;
+    background: #506d1b;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admin-panel .form-actions button:hover {
+    background: #3e5516;
+}
+
+.top-right-pane {
+    flex: 2;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.top-right-top-pane {
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid black;
+}
+
+.top-right-bottom-pane {
+    flex: 2;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.company-item-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.item-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.item-controls {
+    padding: 12px;
+    border: 1px solid #c7c7c7;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.item-fields {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.item-fields label {
+    font-weight: 600;
+}
+
+.item-fields input,
+.item-fields textarea {
+    width: 100%;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid #c7c7c7;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+.item-fields textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.company-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.company-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.company-table th,
+.company-table td {
+    border: 1px solid #c7c7c7;
+    padding: 8px 10px;
+    text-align: left;
+}
+
+.company-table thead {
+    background: #f0f0f0;
+}
+
+.company-table tbody tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+/* --------- Buttons */
+
+.btn {
+    width: 220px;
+    height: 60px;
+    font-family: "Raleway", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: white;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn--big {
+    padding-top: 10px;
+    border-radius: 50%;
+    background-color: white;
+    border: 10px solid;
+    width: 100px;
+    height: 100px;
+    font-size: 3.2rem;
+    margin: 0 30px;
+    transition: all 0.5s;
+}
+
+.btn--big::after {
+    content: attr(data-type);
+    font-size: 1rem;
+    color: #445361;
+    position: relative;
+    left: -0.5em;
+}
+
+.btn--blue {
+    border-color: blue;
+    color: blue;
+}
+
+.btn--blue:active,
+.btn--blue:hover {
+    background-color: darkblue;
+    color: white;
+}
+
+.btn--orange {
+    border-color: orange;
+    color: orange;
+}
+
+.btn--orange:active,
+.btn--orange:hover {
+    background-color: darkorange;
+    color: white;
+}
+
+.btn--red {
+    border-color: red;
+    color: red;
+}
+
+.btn--red:active,
+.btn--red:hover {
+    background-color: darkred;
+    color: white;
+}
+
+.btn--green {
+    border-color: green;
+    color: green;
+}
+
+.btn--green:active,
+.btn--green:hover {
+    background-color: darkgreen;
+    color: white;
+}
+
+/* Visual selected state for mode buttons (mirror hover/active) */
+.btn--green.mode-selected {
+    background-color: darkgreen;
+    color: white;
+}
+.btn--blue.mode-selected {
+    background-color: darkblue;
+    color: white;
+}
+.btn--orange.mode-selected {
+    background-color: darkorange;
+    color: white;
+}
+
+code {
+    background: #eef;
+    padding: 0.125rem 0.25rem;
+    border-radius: 4px;
+}
+
+ol {
+    padding-left: 1.25rem;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #333;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0.75rem 1.25rem;
+    box-sizing: border-box;
+}
+
+.footer__section {
+    flex: 1 1 220px;
+    min-width: 200px;
+}
+
+.footer__title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer__subtitle {
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+}
+
+.footer__links,
+.footer__steps {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.footer__links li,
+.footer__steps li {
+    margin-bottom: 0.35rem;
+}
+
+.footer__links a {
+    color: white;
+    text-decoration: underline;
+}
+
+.footer__note {
+    margin-top: 0.35rem;
+}
+
+.footer__bottom-line {
+    flex: 1 1 100%;
+    text-align: center;
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+}

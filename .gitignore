@@ -39,7 +39,12 @@ hs_err_pid*
 .classpath
 .settings/
 
+############################
 # Jetty local server
+############################
+./jetty-base/logs
+jetty-base/logs/
+jetty-base/logs/**
 
 
 ############################
@@ -72,8 +77,6 @@ desktop.ini
 # Project-specific ignores
 ############################
 jdk-25/
-jetty-home-12.1.5/
-jetty-base/
 bin/
 ConcordiaWAR/WEB-INF/classes/
 ConcordiaWAR/WEB-INF/lib/

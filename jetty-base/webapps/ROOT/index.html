@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta tags for search engines -->
+    <meta name="description" content="Love Gardens.gardening enthusiasts,lawns, proper planting , drainage, Scarifying 
+        Aerating lawns      ">
+    <meta name="keywords"
+        content="Flowers and shrubs in season ,Power washing & moss removal , drains and shoots,  Hedges and trees maintenance  ">
+    <meta name="keywords"
+        content="Vegetable area - potatoes,Fruit trees and bushes ,Sustainable patch for bees ,Fallow area,Compost heaps  ,Mulch area   ">
+    <!-- Title -->
+    <title> Beautiful outdoor spaces | Home </title>
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        .bottom-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            padding: 16px;
+        }
+
+        .history-panel,
+        .history-control {
+            padding: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: #ffffff;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .history-panel h2 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .history-table tbody tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+
+        .history-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            align-items: stretch;
+            box-sizing: border-box;
+        }
+
+        .history-control label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .history-control input,
+        .history-control textarea {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 10px;
+        }
+
+        .history-control textarea {
+            min-height: 96px;
+            resize: vertical;
+        }
+    </style>
+
+    <title>Gardening Services </title>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <a href="index.html">
+            <h1 id="logo"> Concordia </h1>
+            <!--<h6> Maintain beautiful outdoor spaces</h6>-->
+        </a>
+        <input type="checkbox" id="nav-toggle" name="nav-toggle">
+        <label for="nav-toggle" class="nav-toggle-label">X</label>
+        <nav>
+            <ul id="menu">
+                <li>
+                    <a href="index.html" class="active" aria-current="page">Home</a>
+                </li>
+                <li>
+                    <a href="services.html">Services</a>
+                    <ul class="submenu" aria-label="Services submenu">
+                        <li><a href="#add-company">Add Company</a></li>
+                        <li><a href="#update-company">Update Company</a></li>
+                        <li><a href="#remove-company">Remove Company</a></li>
+                        <hr>
+                        <li><a href="#backup-db">Backup Database</a></li>
+                        <li><a href="#restore-db">Restore Database</a></li>
+                        <hr>
+                        <li><a href="#serial-backup">Serial Backup Database</a></li>
+                        <li><a href="#serial-restore">Serial Restore Database</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="request.html" class="CTA contact-button" id="call">Request</a>
+                </li>
+                <li>
+                    <a href="#contacts">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <main class="frame">
+        <!-- <div class="controls-area ">
+            <button data-type="population" class="btn btn--big btn--green"> -->
+        <!-- <i class="fas fa-plus"></i> -->
+        <!--   <i class=" fa-solid fa-people-group" style="color:green;"></i>
+            </button>
+            <button data-type="currency" class="btn btn--big btn--blue">
+                <i class=" fa-solid fa-euro-sign" style="color:blue;"></i>
+            </button>
+            <button data-type="languages" class="btn btn--big btn--orange">
+                <i class="fa-solid fa-language" style="color:orange"></i>
+            </button> -->
+        <!--       Difficulty selector -->
+        <!--   <label for="difficulty-select" class="sr-only">Difficulty</label>
+            <select id="difficulty-select" class="quiz__select" aria-label="Select difficulty">
+                <option value="easy" selected>Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select> -->
+        <!-- <button data-type="division" class="btn btn--big btn--red">
+                                <i class="fas fa-divide"></i>
+                            </button> -->
+        <!--    </div> -->
+        <div id="panes">
+            <div class="top-panes">
+                <div class="top-left-pane">
+                    <form class="admin-panel" aria-label="Admin panel">
+                        <div class="form-row">
+                            <label for="current-company">Current Company</label>
+                            <input id="current-company" type="text" name="currentCompany" placeholder="Current Company"
+                                value="Current Company">
+                        </div>
+                        <div class="form-row">
+                            <label for="service-name">Service Name</label>
+                            <input id="service-name" type="text" name="serviceName" placeholder="Service Name">
+                        </div>
+                        <div class="form-row">
+                            <label for="location">Location</label>
+                            <input id="location" type="text" name="location" placeholder="Location">
+                        </div>
+                        <div class="form-row">
+                            <label for="delivery-date">Delivery Date</label>
+                            <input id="delivery-date" type="date" name="deliveryDate" value="2026-01-01">
+                        </div>
+                        <div class="form-row">
+                            <label for="amount">Amount (1-5)</label>
+                            <input id="amount" type="number" name="amount" min="1" max="5" value="1">
+                        </div>
+                        <div class="form-row">
+                            <label for="admin-notes">Notes</label>
+                            <textarea id="admin-notes" name="adminNotes" placeholder="Notes"></textarea>
+                        </div>
+                        <div class="form-actions" aria-label="Transaction actions">
+                            <button type="button">Add Transaction</button>
+                            <button type="button">Update Transaction</button>
+                            <button type="button">Remove Transaction</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="top-right-pane">
+                    <div class="top-right-top-pane">
+                        <div class="company-item-panel" aria-label="Company item panel">
+                            <div class="company-table-wrapper">
+                                <table class="company-table" aria-label="Company list">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Company Name</th>
+                                            <th scope="col">Company ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Acme Corp</td>
+                                            <td>1001</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Globex Ltd</td>
+                                            <td>1002</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Initech</td>
+                                            <td>1003</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="top-right-bottom-pane">
+                        <div class="item-panel" aria-label="Item panel">
+
+                            <div class="company-table-wrapper item-table">
+                                <table class="company-table" aria-label="Item list">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Item Name</th>
+                                            <th scope="col">Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Widget A</td>
+                                            <td>12</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Widget B</td>
+                                            <td>8</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gadget C</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gizmo D</td>
+                                            <td>5</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="item-controls">
+                                <div class="item-fields">
+                                    <label for="item-filter">Filter</label>
+                                    <input id="item-filter" type="text" name="itemFilter" placeholder="Filter items">
+
+                                    <label for="item-notes">Notes</label>
+                                    <textarea id="item-notes" name="itemNotes" placeholder="Notes"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-pane">
+                <div class="history-panel" aria-label="History panel">
+                    <h2>History</h2>
+                    <div class="table-responsive">
+                        <table class="history-table" aria-label="History entries">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Service</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Quantity Changed</th>
+                                    <th scope="col">Supplier</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2026-01-02</td>
+                                    <td>Planting</td>
+                                    <td>North Garden</td>
+                                    <td>+12</td>
+                                    <td>GreenFields</td>
+                                </tr>
+                                <tr>
+                                    <td>2026-01-03</td>
+                                    <td>Pruning</td>
+                                    <td>Orchard</td>
+                                    <td>-5</td>
+                                    <td>TreeCare</td>
+                                </tr>
+                                <tr>
+                                    <td>2026-01-04</td>
+                                    <td>Irrigation</td>
+                                    <td>South Field</td>
+                                    <td>+8</td>
+                                    <td>AquaFlow</td>
+                                </tr>
+                                <tr>
+                                    <td>2026-01-05</td>
+                                    <td>Fertilizing</td>
+                                    <td>West Beds</td>
+                                    <td>+20</td>
+                                    <td>NutrientPro</td>
+                                </tr>
+                                <tr>
+                                    <td>2026-01-06</td>
+                                    <td>Harvest</td>
+                                    <td>Greenhouse</td>
+                                    <td>-15</td>
+                                    <td>LocalGrow</td>
+                                </tr>
+                                <tr>
+                                    <td>2026-01-07</td>
+                                    <td>Seeding</td>
+                                    <td>East Plot</td>
+                                    <td>+30</td>
+                                    <td>SeedWorks</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="history-controls">
+                    <div class="history-control">
+                        <label for="history-filter">Filter</label>
+                        <input id="history-filter" type="text" name="historyFilter"
+                            placeholder="Type to filter history">
+                    </div>
+                    <div class="history-control">
+                        <label for="history-notes">Notes</label>
+                        <textarea id="history-notes" name="historyNotes"
+                            placeholder="Add notes about this history"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__section">
+            <h2 class="footer__title">Concordia Backend</h2>
+            <p>Jetty is running. </p>
+        </div>
+
+        <div class="footer__section">
+            <h3 class="footer__subtitle">Quick links</h3>
+            <ul class="footer__links">
+                <li><a href="/Concordia/api/concordia?type=company">Companies</a></li>
+                <li><a href="/Concordia/api/concordia?type=user">Users</a></li>
+            </ul>
+        </div>
+
+        <div class="footer__section">
+            <h3 class="footer__subtitle">How to hit the servlet</h3>
+            <a href="/Concordia/api/concordia?type=item">Items</a>
+            <a href="/Concordia/api/concordia?type=history">History</a>
+        </div>
+
+        <div class="footer__bottom-line">
+
+        </div>
+    </footer>
+
+    <!--Javascript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Font Awesome kit -->
+    <script src="https://kit.fontawesome.com/aa9af45995.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
