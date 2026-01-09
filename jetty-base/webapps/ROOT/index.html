@@ -269,15 +269,37 @@
                             <input id="service-name" type="text" name="serviceName" placeholder="Service Name">
                         </div>
                         <div class="form-row">
+                            <label for="service-size">Service Size</label>
+                            <select id="service-size" name="serviceSize">
+                                <option value="" disabled selected>Select Size</option>
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                                <option value="xl-large">XL-Large</option>
+                                <option value="xxl-large">XXL-Large</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
                             <label for="location">Location</label>
                             <input id="location" type="text" name="location" placeholder="Location">
+                        </div>
+                        <div class="form-row">
+                            <label for="provider">Provider</label>
+                            <select id="provider" name="provider">
+                                <option value="" disabled selected>Select Provider</option>
+                                <option value="greenfields">GreenFields</option>
+                                <option value="treecare">TreeCare</option>
+                                <option value="aquaflow">AquaFlow</option>
+                                <option value="localgrow">LocalGrow</option>
+                                <option value="seedworks">SeedWorks</option>
+                            </select>
                         </div>
                         <div class="form-row">
                             <label for="delivery-date">Delivery Date</label>
                             <input id="delivery-date" type="date" name="deliveryDate" value="2026-01-01">
                         </div>
                         <div class="form-row">
-                            <label for="amount">Amount (1-5)</label>
+                            <label for="amount">Quantity (1-5)</label>
                             <input id="amount" type="number" name="amount" min="1" max="5" value="1">
                         </div>
                         <div class="form-row">
@@ -327,8 +349,8 @@
                                 <table class="company-table" aria-label="Item list">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Item Name</th>
-                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Service Type</th>
+                                            <th scope="col">Service ID</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -366,7 +388,7 @@
             </div>
             <div class="bottom-pane">
                 <div class="history-panel" aria-label="History panel">
-                    <h2>History</h2>
+                    <h2>Transaction History</h2>
                     <div class="table-responsive">
                         <table class="history-table" aria-label="History entries">
                             <thead>
@@ -374,8 +396,9 @@
                                     <th scope="col">Date</th>
                                     <th scope="col">Service</th>
                                     <th scope="col">Location</th>
+                                    <th scope="col">Service Size</th>
                                     <th scope="col">Quantity Changed</th>
-                                    <th scope="col">Supplier</th>
+                                    <th scope="col">Provider</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -383,6 +406,7 @@
                                     <td>2026-01-02</td>
                                     <td>Planting</td>
                                     <td>North Garden</td>
+                                    <td>Medium</td>
                                     <td>+12</td>
                                     <td>GreenFields</td>
                                 </tr>
@@ -390,6 +414,7 @@
                                     <td>2026-01-03</td>
                                     <td>Pruning</td>
                                     <td>Orchard</td>
+                                    <td>Small</td>
                                     <td>-5</td>
                                     <td>TreeCare</td>
                                 </tr>
@@ -397,6 +422,7 @@
                                     <td>2026-01-04</td>
                                     <td>Irrigation</td>
                                     <td>South Field</td>
+                                    <td>Large</td>
                                     <td>+8</td>
                                     <td>AquaFlow</td>
                                 </tr>
@@ -404,6 +430,7 @@
                                     <td>2026-01-05</td>
                                     <td>Fertilizing</td>
                                     <td>West Beds</td>
+                                    <td>XL-Large</td>
                                     <td>+20</td>
                                     <td>NutrientPro</td>
                                 </tr>
@@ -411,6 +438,7 @@
                                     <td>2026-01-06</td>
                                     <td>Harvest</td>
                                     <td>Greenhouse</td>
+                                    <td>XXL-Large</td>
                                     <td>-15</td>
                                     <td>LocalGrow</td>
                                 </tr>
@@ -418,6 +446,7 @@
                                     <td>2026-01-07</td>
                                     <td>Seeding</td>
                                     <td>East Plot</td>
+                                    <td>Medium</td>
                                     <td>+30</td>
                                     <td>SeedWorks</td>
                                 </tr>
